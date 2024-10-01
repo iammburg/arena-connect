@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
-          child: Text('Semangat!'),
+          child: Text('Ini adalah login'),
         ),
       ),
     );
