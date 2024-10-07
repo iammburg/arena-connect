@@ -1,4 +1,7 @@
+import 'package:arena_connect/authentication/login.dart';
+import 'package:arena_connect/homescreen.dart';
 import 'package:flutter/material.dart';
+import 'package:arena_connect/authentication/register.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,13 +12,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text('Ini adalah login'),
-        ),
-      ),
+      theme: ThemeData(primaryColor: Colors.white),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+      },
     );
   }
 }
