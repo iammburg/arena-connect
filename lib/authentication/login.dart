@@ -18,17 +18,22 @@ class LoginPageState extends State<LoginPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10, bottom: 100, top: 10),
-                child: Image.asset(
-                  'images/arena-connect1.png',
-                  width: 70,
-                  height: 70,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, top: 10),
+                    child: Image.asset(
+                      'images/arena-connect1.png',
+                      width: 70,
+                      height: 70,
+                    ),
+                  ),
+                ],
               ),
+              const SizedBox(height: 120)
             ],
           ),
           Center(

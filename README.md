@@ -1,3 +1,3 @@
 # arena_connect
 
-A new Flutter project.
+Arena Connect adalah aplikasi marketplace khusus untuk layanan lapangan olahraga.
