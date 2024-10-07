@@ -24,21 +24,21 @@ class RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 10, top: 10),
+                    padding: const EdgeInsets.only(left: 10, top: 40),
                     child: Image.asset(
                       'images/arena-connect1.png',
-                      width: 70,
-                      height: 70,
+                      width: 80,
+                      height: 80,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 80)
+              const SizedBox(height: 50)
             ],
           ),
           Center(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(18),
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 10),

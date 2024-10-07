@@ -16,11 +16,11 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 10, top: 10),
+                    padding: const EdgeInsets.only(left: 10, top: 40),
                     child: Image.asset(
                       'images/arena-connect1.png',
-                      width: 70,
-                      height: 70,
+                      width: 80,
+                      height: 80,
                     ),
                   ),
                 ],
