@@ -22,9 +22,9 @@ flutter:
         - images/arena-connect1.png
 
     fonts:
-        - family: Kanit
+        - family: Poppins
           fonts:
-              - asset: fonts/Kanit-Regular.ttf
-        - family: SourceSans3
+              - asset: fonts/Poppins-Regular.ttf
+        - family: Source Sans Pro
           fonts:
               - asset: fonts/SourceSans3-Regular.ttf
