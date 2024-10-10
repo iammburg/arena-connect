@@ -1,3 +1,4 @@
+import 'package:arena_connect/config/theme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,7 @@ class RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 50)
+                  const SizedBox(height: 10)
                 ],
               ),
               Center(
@@ -73,7 +74,7 @@ class RegisterPageState extends State<RegisterPage> {
                                 color: Color(0xFF12215C),
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                fontFamily: "SourceSans3"),
+                                fontFamily: "Source Sans Pro"),
                           ),
                         ),
                         const SizedBox(height: 30),
@@ -101,7 +102,7 @@ class RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           style: const TextStyle(
-                              fontFamily: "SourceSans3",
+                              fontFamily: "Source Sans Pro",
                               fontWeight: FontWeight.w100,
                               color: Color(0xFF0A0A0A),
                               fontSize: 14),
@@ -131,7 +132,7 @@ class RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           style: const TextStyle(
-                              fontFamily: "SourceSans3",
+                              fontFamily: "Source Sans Pro",
                               fontWeight: FontWeight.w100,
                               color: Color(0xFF0A0A0A),
                               fontSize: 14),
@@ -161,7 +162,7 @@ class RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           style: const TextStyle(
-                              fontFamily: "SourceSans3",
+                              fontFamily: "Source Sans Pro",
                               fontWeight: FontWeight.w100,
                               color: Color(0xFF0A0A0A),
                               fontSize: 14),
@@ -205,7 +206,7 @@ class RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           style: const TextStyle(
-                            fontFamily: "SourceSans3",
+                            fontFamily: "Source Sans Pro",
                             fontWeight: FontWeight.w100,
                             color: Color(0xFF0A0A0A),
                             fontSize: 14,
@@ -216,18 +217,10 @@ class RegisterPageState extends State<RegisterPage> {
                           onPressed: () {
                             Navigator.pushNamed(context, '/register');
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF489DD6),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 20),
-                            child: Text(
-                              "Daftar",
-                              style: TextStyle(
-                                  fontFamily: 'SourceSans3',
-                                  color: Color(0xFFffffff)),
-                            ),
+                          style: shortButtonSecondary,
+                          child: Text(
+                            "Daftar",
+                            style: buttonFont3,
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -237,7 +230,7 @@ class RegisterPageState extends State<RegisterPage> {
                             style: const TextStyle(
                               fontSize: 12,
                               color: Color(0xFF12215C),
-                              fontFamily: "SourceSans3",
+                              fontFamily: "Source Sans Pro",
                             ),
                             children: <TextSpan>[
                               TextSpan(

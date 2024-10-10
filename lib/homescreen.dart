@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:arena_connect/config/theme.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -35,14 +36,10 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Center(
+                  Center(
                     child: Text(
                       "Welcome to Arena Connect",
-                      style: TextStyle(
-                          fontFamily: "Kanit",
-                          color: Color(0xFF12215C),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
+                      style: superFont1,
                     ),
                   )
                 ],
@@ -61,41 +58,25 @@ class HomeScreen extends StatelessWidget {
                             onPressed: () {
                               Navigator.pushNamed(context, '/login');
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF489DD6),
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 18),
-                              child: Text(
-                                "Masuk",
-                                style: TextStyle(
-                                    fontFamily: 'SourceSans3',
-                                    color: Color(0xFFffffff)),
-                              ),
+                            style: shortButtonSecondary,
+                            child: Text(
+                              "Masuk",
+                              style: buttonFont3,
                             ),
                           ),
                           ElevatedButton(
                             onPressed: () {
                               Navigator.pushNamed(context, '/register');
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF12215C),
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 18),
-                              child: Text(
-                                "Daftar",
-                                style: TextStyle(
-                                    fontFamily: 'SourceSans3',
-                                    color: Color(0xFFffffff)),
-                              ),
+                            style: shortButtonPrimary,
+                            child: Text(
+                              "Daftar",
+                              style: buttonFont3,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
