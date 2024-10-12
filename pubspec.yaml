@@ -20,6 +20,13 @@ flutter:
     assets:
         - images/background-image.png
         - images/arena-connect1.png
+        - images/element.png
+        - images/futsal1.jpg
+        - images/futsal2.jpg
+        - images/futsal3.jpg
+        - images/badminton1.jpg
+        - images/badminton2.jpg
+        - images/badminton3.jpg
 
     fonts:
         - family: Poppins
