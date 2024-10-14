@@ -59,7 +59,7 @@ TextStyle regulerFont1 = TextStyle(
 
 TextStyle regulerFont2 = TextStyle(
   fontFamily: 'Source Sans Pro',
-  fontWeight: FontWeight.normal,
+  fontWeight: FontWeight.bold,
   fontSize: 12,
   color: primary,
 );
@@ -95,7 +95,7 @@ TextStyle regulerFont6 = TextStyle(
 TextStyle regulerFont7 = TextStyle(
   fontFamily: 'Source Sans Pro',
   fontWeight: FontWeight.normal,
-  fontSize: 8,
+  fontSize: 10,
   color: secondary,
 );
 
@@ -176,7 +176,7 @@ ButtonStyle longButton1 = ElevatedButton.styleFrom(
   minimumSize: const Size(301, 37),
   backgroundColor: secondary,
   shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(5),
+    borderRadius: BorderRadius.circular(3),
   ),
 );
 
@@ -224,6 +224,6 @@ ButtonStyle shortButton2 = ElevatedButton.styleFrom(
     minimumSize: const Size(82, 22),
     backgroundColor: secondary,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(5),
     ),
     padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20));
