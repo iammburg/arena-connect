@@ -57,6 +57,13 @@ TextStyle regulerFont1 = TextStyle(
   color: primary,
 );
 
+TextStyle regulerFontSelected1 = TextStyle(
+  fontFamily: 'Source Sans Pro',
+  fontWeight: FontWeight.normal,
+  fontSize: 14,
+  color: white,
+);
+
 TextStyle regulerFont2 = TextStyle(
   fontFamily: 'Source Sans Pro',
   fontWeight: FontWeight.bold,

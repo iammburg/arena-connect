@@ -38,6 +38,26 @@ class DashedLinePainter extends CustomPainter {
 }
 
 class _SelectScheduleState extends State<SelectSchedule> {
+  int selectedIndex = -1;
+  String _selectedPrice = 'Rp0';
+  List<Map<String, dynamic>> options = [
+    {
+      'duration': '60 Menit',
+      'hoursDuration': '07:00 - 08:00',
+      'pricing': 'Rp30.000',
+    },
+    {
+      'duration': '60 Menit',
+      'hoursDuration': '08:00 - 09:00',
+      'pricing': 'Rp35.000',
+    },
+    {
+      'duration': '60 Menit',
+      'hoursDuration': '10:00 - 11:00',
+      'pricing': 'Rp40.000',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     Widget scheduleChooseIcon() {
@@ -94,52 +114,75 @@ class _SelectScheduleState extends State<SelectSchedule> {
       );
     }
 
-    Widget scheduleChooseOption() {
-      return Container(
-        padding: const EdgeInsets.only(left: 24, top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Card.outlined(
-              margin: const EdgeInsets.all(0),
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(color: Colors.grey, width: 1),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12, top: 6, bottom: 6),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("60 Menit", style: regulerFont3),
-                        const SizedBox(height: 1),
-                        Text("07:00 - 08:00", style: regulerFont1)
-                      ],
+    Widget scheduleChooseOption(
+      int index,
+      String duration,
+      String hoursDuration,
+      String pricing,
+    ) {
+      return GestureDetector(
+        onTap: () {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.only(left: 24, top: 8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Card.outlined(
+                color: selectedIndex == index ? primary : white,
+                margin: const EdgeInsets.all(0),
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 12, top: 6, bottom: 6),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(duration,
+                              style: selectedIndex == index
+                                  ? regulerFontSelected1
+                                  : regulerFont1),
+                          const SizedBox(height: 1),
+                          Text(hoursDuration,
+                              style: selectedIndex == index
+                                  ? regulerFontSelected1
+                                  : regulerFont1)
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(right: 12, top: 6, bottom: 6),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Kasih pengkondisian di text Booked
-                        // Text("Booked", style: regulerFont3),
-                        const SizedBox(height: 1),
-                        Text("Rp30.000", style: regulerFont1),
-                      ],
-                    ),
-                  )
-                ],
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(right: 12, top: 6, bottom: 6),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Kasih pengkondisian di text Booked
+                          // Text("Booked", style: regulerFont3),
+                          const SizedBox(height: 1),
+                          Text(pricing,
+                              style: selectedIndex == index
+                                  ? regulerFontSelected1
+                                  : regulerFont1),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     }
@@ -312,14 +355,30 @@ class _SelectScheduleState extends State<SelectSchedule> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
-                                          scheduleChooseOption(),
+                                          ...options
+                                              .map((Map<String, dynamic> data) {
+                                            return scheduleChooseOption(
+                                              options.indexOf(data),
+                                              data['duration'],
+                                              data['hoursDuration'],
+                                              data['pricing'],
+                                            );
+                                          }),
                                           const SizedBox(height: 10),
-                                          ElevatedButton(
-                                            onPressed: () {},
-                                            style: shortButton2,
-                                            child: Text(
-                                              "Buat Booking",
-                                              style: buttonFont6,
+                                          GestureDetector(
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  _selectedPrice =
+                                                      options[selectedIndex]
+                                                          ['pricing'];
+                                                });
+                                              },
+                                              style: shortButton2,
+                                              child: Text(
+                                                "Buat Booking",
+                                                style: buttonFont6,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(height: 10),
@@ -356,7 +415,8 @@ class _SelectScheduleState extends State<SelectSchedule> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Mulai", style: regulerFont10),
-                        Text("Rp30.000", style: superFont4),
+                        // Nampilin harga dinamis sesuai option jadwal yang dipilih
+                        Text(_selectedPrice, style: superFont4),
                         const SizedBox(
                           height: 12,
                         ),
