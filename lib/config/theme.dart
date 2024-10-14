@@ -173,7 +173,7 @@ TextStyle buttonFont7 = TextStyle(
 // Button Styles //
 
 ButtonStyle longButton1 = ElevatedButton.styleFrom(
-  minimumSize: const Size(301, 37),
+  minimumSize: const Size(double.infinity, 37),
   backgroundColor: secondary,
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(3),
