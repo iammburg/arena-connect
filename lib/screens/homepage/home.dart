@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:arena_connect/config/theme.dart'; // Pastikan tema diimpor dengan benar
+import 'package:arena_connect/config/theme.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,7 +15,6 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
-          // Gambar Background
           Positioned(
             top: 0,
             left: 0,
@@ -25,7 +24,6 @@ class _HomeState extends State<Home> {
               fit: BoxFit.contain,
             ),
           ),
-          // Pencarian dan Notifikasi
           Positioned(
             top: 50,
             left: 20,
@@ -80,9 +78,7 @@ class _HomeState extends State<Home> {
                           Icons.notifications,
                           color: Color(0xFF12215c),
                         ),
-                        onPressed: () {
-                          // Aksi ketika ikon notifikasi ditekan
-                        },
+                        onPressed: () {},
                       ),
                     ),
                   ],
@@ -92,16 +88,13 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
                     'LAPANGAN POPULER DI SEKITAR KAMU',
-                    style:
-                        buttonFont4, // Pastikan buttonFont4 sudah terdefinisi di theme.dart
+                    style: buttonFont4,
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                // Gambar dengan Teks di Atasnya
                 Center(
                   child: Stack(
                     children: [
-                      // Gambar
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Image.asset(
@@ -111,12 +104,11 @@ class _HomeState extends State<Home> {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      // Teks di Atas Gambar
                       Positioned(
-                        bottom: 30, // Jarak dari bawah
-                        left: 15, // Jarak dari kiri
+                        bottom: 30,
+                        left: 15,
                         child: Text(
-                          'Maxs Sport Center', // Teks yang ingin ditampilkan
+                          'Maxs Sport Center',
                           style: buttonFont2,
                         ),
                       ),
@@ -181,7 +173,7 @@ class _HomeState extends State<Home> {
                                     const Icon(
                                       Icons.sports_soccer,
                                       color: Color(0xFF12215c),
-                                      size: 30, // Sesuaikan ukuran ikon
+                                      size: 30,
                                     ),
                                     Text(
                                       'Lapangan',
@@ -213,7 +205,7 @@ class _HomeState extends State<Home> {
                                     const Icon(
                                       Icons.scoreboard,
                                       color: Color(0xFF12215c),
-                                      size: 30, // Sesuaikan ukuran ikon
+                                      size: 30,
                                     ),
                                     Text(
                                       'Sparring',
@@ -245,7 +237,7 @@ class _HomeState extends State<Home> {
                                     const Icon(
                                       Icons.sports_score_sharp,
                                       color: Color(0xFF12215c),
-                                      size: 30, // Sesuaikan ukuran ikon
+                                      size: 30,
                                     ),
                                     Text(
                                       'Kompetisi',
@@ -272,27 +264,23 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: SizedBox(
-                    height: 100, // Tinggi untuk ListView
+                    height: 100,
                     child: ListView(
-                      scrollDirection: Axis
-                          .horizontal, // Mengatur ListView untuk menggulir horizontal
+                      scrollDirection: Axis.horizontal,
                       children: [
                         const SizedBox(width: 5.0),
-                        // Item pertama
                         Stack(
-                          alignment: Alignment
-                              .bottomLeft, // Mengatur posisi kotak di bawah gambar
+                          alignment: Alignment.bottomLeft,
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(5),
                               child: Image.asset(
                                 'images/futsal2.jpg',
-                                width: 100, // Lebar gambar
-                                height: 84, // Tinggi gambar
-                                fit: BoxFit.cover, // Menjaga proporsi gambar
+                                width: 100,
+                                height: 84,
+                                fit: BoxFit.cover,
                               ),
                             ),
-                            // Kotak teks di bawah gambar
                             Positioned(
                               child: Container(
                                 width: 100,
@@ -336,7 +324,6 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                         const SizedBox(width: 5.0),
-                        // Item kedua
                         Stack(
                           alignment: Alignment.bottomLeft,
                           children: [
@@ -392,7 +379,6 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                         const SizedBox(width: 5.0),
-                        // Item kedua
                         Stack(
                           alignment: Alignment.bottomLeft,
                           children: [
@@ -448,7 +434,6 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                         const SizedBox(width: 5.0),
-                        // Item kedua
                         Stack(
                           alignment: Alignment.bottomLeft,
                           children: [
@@ -503,8 +488,6 @@ class _HomeState extends State<Home> {
                             ),
                           ],
                         ),
-
-                        // Item ketiga dan seterusnya...
                       ],
                     ),
                   ),
