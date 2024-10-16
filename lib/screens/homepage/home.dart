@@ -155,123 +155,109 @@ class _HomeState extends State<Home> {
                 Column(
                   children: [
                     const SizedBox(height: 20.0),
-                    Row(
-                      children: [
-                        const SizedBox(height: 20.0),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Container(
-                            width: 93,
-                            height: 81,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              color: Color(0xFFA5D2F1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8.0)),
-                            ),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  bottom: 20.0,
-                                  left: 20,
-                                  child: IconButton(
-                                    icon: const Icon(
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 20.0),
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.all(3),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  color: Color(0xFFA5D2F1),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
                                       Icons.sports_soccer,
                                       color: Color(0xFF12215c),
-                                      size: 40, // Sesuaikan ukuran ikon
+                                      size: 30,
                                     ),
-                                    onPressed: () {},
-                                  ),
+                                    Text(
+                                      'Lapangan',
+                                      style: superFont5,
+                                    ),
+                                  ],
                                 ),
-                                Positioned(
-                                  bottom: 15,
-                                  left: 24,
-                                  child: Text(
-                                    'Lapangan',
-                                    style: superFont5,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 5.0),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Container(
-                            width: 93,
-                            height: 81,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              color: Color(0xFFA5D2F1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8.0)),
-                            ),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  bottom: 20.0,
-                                  left: 18,
-                                  child: IconButton(
-                                    icon: const Icon(
+                          const SizedBox(width: 5.0),
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.all(3),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  color: Color(0xFFA5D2F1),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
                                       Icons.scoreboard,
                                       color: Color(0xFF12215c),
-                                      size: 40, // Sesuaikan ukuran ikon
+                                      size: 30,
                                     ),
-                                    onPressed: () {},
-                                  ),
+                                    Text(
+                                      'Sparring',
+                                      style: superFont5,
+                                    ),
+                                  ],
                                 ),
-                                Positioned(
-                                  bottom: 15,
-                                  left: 24,
-                                  child: Text(
-                                    'Sparring',
-                                    style: superFont5,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 5.0),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Container(
-                            width: 93,
-                            height: 81,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              color: Color(0xFFA5D2F1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8.0)),
-                            ),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  bottom: 20.0,
-                                  left: 18,
-                                  child: IconButton(
-                                    icon: const Icon(
+                          const SizedBox(width: 5.0),
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.all(3),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  color: Color(0xFFA5D2F1),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
                                       Icons.sports_score_sharp,
                                       color: Color(0xFF12215c),
-                                      size: 40, // Sesuaikan ukuran ikon
+                                      size: 30,
                                     ),
-                                    onPressed: () {},
-                                  ),
+                                    Text(
+                                      'Kompetisi',
+                                      style: superFont5,
+                                    ),
+                                  ],
                                 ),
-                                Positioned(
-                                  bottom: 15,
-                                  left: 22,
-                                  child: Text(
-                                    'Kompetisi',
-                                    style: superFont5,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
