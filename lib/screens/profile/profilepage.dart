@@ -35,7 +35,7 @@ class ProfilePage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran dialog
               mainAxisAlignment: MainAxisAlignment.center, // Center the content
               children: [
-                SizedBox(height: 30), // Jarak antara teks dan tombol
+                const SizedBox(height: 30), // Jarak antara teks dan tombol
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
