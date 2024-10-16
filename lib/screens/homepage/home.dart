@@ -181,7 +181,7 @@ class _HomeState extends State<Home> {
                                     const Icon(
                                       Icons.sports_soccer,
                                       color: Color(0xFF12215c),
-                                      size: 30, // Sesuaikan ukuran ikon
+                                      size: 30,
                                     ),
                                     Text(
                                       'Lapangan',
@@ -213,7 +213,7 @@ class _HomeState extends State<Home> {
                                     const Icon(
                                       Icons.scoreboard,
                                       color: Color(0xFF12215c),
-                                      size: 30, // Sesuaikan ukuran ikon
+                                      size: 30,
                                     ),
                                     Text(
                                       'Sparring',
@@ -245,7 +245,7 @@ class _HomeState extends State<Home> {
                                     const Icon(
                                       Icons.sports_score_sharp,
                                       color: Color(0xFF12215c),
-                                      size: 30, // Sesuaikan ukuran ikon
+                                      size: 30,
                                     ),
                                     Text(
                                       'Kompetisi',
