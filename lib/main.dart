@@ -3,6 +3,7 @@ import 'package:arena_connect/homescreen.dart';
 import 'package:arena_connect/screens/field-search/select_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:arena_connect/screens/authentication/register.dart';
+import 'package:arena_connect/screens/profile/profilepage.dart';
 
 void main() {
   runApp(const MainApp());
@@ -24,6 +25,7 @@ class MainApp extends StatelessWidget {
       // },
       // Panggil halamannya di const home ini.
       // home: const SelectSchedule(),
+      // home: ProfilePage()
     );
   }
 }
