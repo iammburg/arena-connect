@@ -1,35 +1,13 @@
+import 'package:arena_connect/config/theme.dart';
 import 'package:flutter/material.dart';
 
 // Color Palettes
 Color primary = const Color(0xFF12215C);
-Color secondary = const Color.fromARGB(255, 255, 255, 255);
 Color tertiary = const Color(0xFFA7ADC3);
 Color white = const Color(0xFFFFFFFF);
 
-// Font Styles
-TextStyle superFont1 = TextStyle(
-  fontFamily: 'Poppins',
-  fontWeight: FontWeight.w900,
-  fontSize: 19,
-  color: primary,
-);
-
-TextStyle superFont2 = TextStyle(
-  fontFamily: 'Poppins',
-  fontWeight: FontWeight.bold,
-  fontSize: 16,
-  color: primary,
-);
-
-// Regular Font Styles
-TextStyle regulerFont1 = TextStyle(
-  fontFamily: 'Source Sans Pro',
-  fontWeight: FontWeight.normal,
-  fontSize: 14,
-  color: primary,
-);
-
 class HistoryDetail extends StatefulWidget {
+
   @override
   _HistoryDetailState createState() => _HistoryDetailState();
 }
@@ -37,9 +15,6 @@ class HistoryDetail extends StatefulWidget {
 class _HistoryDetailState extends State<HistoryDetail> {
   int _rating = 0;
   int _currentIndex = 1;
-
-  double _topContainerHeight = 150;
-  Color _topContainerColor = secondary; // Warna dari palet warna
 
   void _showThankYouDialog() {
     showDialog(
@@ -89,27 +64,26 @@ class _HistoryDetailState extends State<HistoryDetail> {
       appBar: AppBar(
         title: Text(
           'History Pertandingan',
-          style: superFont1.copyWith(color: white),
+          style: buttonFont1,
         ),
         backgroundColor: primary,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(6.0),
           child: Container(
             height: 4.0,
-          ),
+          ),  
         ),
       ),
       body: Column(
         children: [
           Container(
-            height: _topContainerHeight,
-            color: _topContainerColor,
+
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Tanding Berani??', style: superFont1),
-                  const SizedBox(height: 10),
+                  Text('Tanding Berani??', style: superFont3),
+                  const SizedBox(height: 1),
                   Text('Bulusan, Tembalang, Kota Semarang',
                       style: regulerFont1),
                 ],
@@ -130,32 +104,42 @@ class _HistoryDetailState extends State<HistoryDetail> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Badminton - semua level',
-                            style: superFont2,
-                          ),
-                          const SizedBox(height: 10),
-                          const Row(
+                          Row(
                             children: [
-                              Icon(Icons.calendar_today),
-                              SizedBox(width: 10),
-                              Text('Minggu, 22 September 2024\n10:00 - 12:00'),
+                              const Icon(Icons.sports_tennis),
+                              const SizedBox(width: 10),
+                              Text('Badminton - semua level' ,
+                              style: superFont5,
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Icon(Icons.calendar_today),
+                              const SizedBox(width: 10),
+                              Text('Minggu, 22 September 2024\n10:00 - 12:00' ,
+                              style: superFont5,
+                              )
                             ],
                           ),
                           const SizedBox(height: 10),
-                          const Row(
+                          Row(
                             children: [
-                              Icon(Icons.location_on),
-                              SizedBox(width: 10),
-                              Text('Lapangan Badminton Bulusan\nLapangan 2'),
+                              const Icon(Icons.location_on),
+                              const SizedBox(width: 10),
+                              Text('Lapangan Badminton Bulusan\nLapangan 2' ,
+                              style: superFont5,
+                              ),
                             ],
                           ),
                           const SizedBox(height: 10),
-                          const Row(
+                          Row(
                             children: [
-                              Icon(Icons.monetization_on),
-                              SizedBox(width: 10),
-                              Text('Biaya: 60.000'),
+                              const Icon(Icons.monetization_on),
+                              const SizedBox(width: 10),
+                              Text('Biaya: 60.000' ,
+                              style: superFont5,
+                              ),
                             ],
                           ),
                         ],
@@ -177,32 +161,6 @@ class _HistoryDetailState extends State<HistoryDetail> {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onTabTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Cari',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        selectedItemColor: white,
-        unselectedItemColor: tertiary,
-        backgroundColor: primary,
-        type: BottomNavigationBarType.fixed,
       ),
     );
   }

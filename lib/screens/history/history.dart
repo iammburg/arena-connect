@@ -1,4 +1,5 @@
 import 'package:arena_connect/config/theme.dart';
+import 'package:arena_connect/screens/history/history_detail.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -35,6 +36,7 @@ class HistoryScreen extends StatelessWidget {
               child: ListView(
                 children: [
                   buildSimpleCard(
+                    context: context,
                     title: "Mabar Yok Guys -",
                     icon: Icons.sports_soccer,
                     level: "Futsal - semua level",
@@ -43,11 +45,13 @@ class HistoryScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   buildSimpleCard(
+                    context: context,
                     title: "Tanding berani??",
                     icon: Icons.sports_tennis,
                     level: "Badminton - semua level",
                     dateTime: "Min, 22 Sep 2024, 10.00-12.00",
                     location: "Lap. Bad Bulusan, Temb",
+                    navigateToDetails: true,
                   ),
                 ],
               ),
@@ -59,18 +63,31 @@ class HistoryScreen extends StatelessWidget {
   }
 
 Widget buildSimpleCard({
+  required BuildContext context,
   required String title,
   required IconData icon,
   required String level,
   required String dateTime,
   required String location,
+  bool navigateToDetails = false,
 }) {
-  return Container(
-    padding: const EdgeInsets.all(8),
-    decoration: BoxDecoration(
-      border: Border.all(color: const Color(0xFF12215C), width: 2),
-      borderRadius: BorderRadius.circular(10),
-    ),
+  return InkWell(
+      onTap: navigateToDetails
+          ? () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HistoryDetail(),
+                ),
+              );
+            }
+          : null,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          border: Border.all(color: const Color(0xFF12215C), width: 2),
+          borderRadius: BorderRadius.circular(10),
+        ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -129,21 +146,9 @@ Widget buildSimpleCard({
         ),
       ],
     ),
+  ),
   );
 }
 
 }
 
-// class HistoryDetail extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('History Detail'),
-//       ),
-//       body: const Center(
-//         child: Text('This is the History Detail page'),
-//       ),
-//     );
-//   }
-// }
