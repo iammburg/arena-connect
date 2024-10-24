@@ -7,6 +7,7 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
+  carousel_slider: 5.0.0
   flutter:
     sdk: flutter
 
@@ -27,6 +28,7 @@ flutter:
     - images/badminton1.jpg
     - images/badminton2.jpg
     - images/badminton3.jpg
+    - images/badminton4.jpg
     - images/badminton.jpg
     - images/futsal.jpg
     - images/footballcup.jpg
@@ -34,6 +36,7 @@ flutter:
     - images/top-wave-cropped.png
     - images/lapangan-futsal.jpg
     - images/lapangan-badminton.jpg
+    - images/mapreham.png
 
 
   fonts:
