@@ -31,8 +31,7 @@ TextStyle regulerFont1 = TextStyle(
 
 class HistoryDetail extends StatefulWidget {
   @override
-  _HistoryDetailState createState() =>
-      _HistoryDetailState();
+  _HistoryDetailState createState() => _HistoryDetailState();
 }
 
 class _HistoryDetailState extends State<HistoryDetail> {
@@ -109,15 +108,10 @@ class _HistoryDetailState extends State<HistoryDetail> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Tanding Berani??',
-                    style: superFont1
-                  ),
+                  Text('Tanding Berani??', style: superFont1),
                   const SizedBox(height: 10),
-                  Text(
-                    'Bulusan, Tembalang, Kota Semarang',
-                    style: regulerFont1
-                  ),
+                  Text('Bulusan, Tembalang, Kota Semarang',
+                      style: regulerFont1),
                 ],
               ),
             ),
@@ -213,3 +207,4 @@ class _HistoryDetailState extends State<HistoryDetail> {
     );
   }
 }
+//
