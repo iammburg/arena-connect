@@ -9,6 +9,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +90,7 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 40.0),
+                const SizedBox(height: 35.0),
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
@@ -91,7 +98,7 @@ class _HomeState extends State<Home> {
                     style: buttonFont4,
                   ),
                 ),
-                const SizedBox(height: 20.0),
+                const SizedBox(height: 15.0),
                 Center(
                   child: Stack(
                     children: [
@@ -146,7 +153,7 @@ class _HomeState extends State<Home> {
                 ),
                 Column(
                   children: [
-                    const SizedBox(height: 20.0),
+                    const SizedBox(height: 15.0),
                     Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -253,7 +260,7 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20.0),
+                const SizedBox(height: 15.0),
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
@@ -492,10 +499,93 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 15.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    'LAPANGAN DI SEKITAR KAMU',
+                    style: superFont4,
+                  ),
+                ),
+                const SizedBox(height: 10.0),
+                Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: SizedBox(
+                    height: 153.0,
+                    width: 315.0,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        SizedBox(width: 5.0),
+                        Stack(
+                          alignment: Alignment.bottomLeft,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(9),
+                              child: Image.asset(
+                                'images/futsal3.jpg',
+                                width: 308.0,
+                                height: 153.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned(
+                              child: Container(
+                                width: 308,
+                                height: 45,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 20,
+                              left: 10,
+                              child: Text(
+                                'Kota Semarang',
+                                style: regulerFont10,
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 5,
+                              left: 10,
+                              child: Text(
+                                'LAPANGAN BARATA',
+                                style: superFont5,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'History',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Cari',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Color(0xFF12215c),
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped, // Fungsi untuk menangani klik
       ),
     );
   }
