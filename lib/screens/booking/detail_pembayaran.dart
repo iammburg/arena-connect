@@ -1,19 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:arena_connect/config/theme.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: PaymentScreen(),
-    );
-  }
-}
-
 class PaymentScreen extends StatefulWidget {
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
@@ -24,61 +11,61 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(150), 
+        preferredSize: Size.fromHeight(150),
         child: Container(
-          color: primary, 
+          color: primary,
           child: Stack(
             children: [
               Positioned(
-                top: 55, 
+                top: 55,
                 left: 0,
                 right: 0,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center, 
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        scheduleChooseIcon(), 
+                        scheduleChooseIcon(),
                         Text(
                           'Pilih Jadwal',
-                          style: TextStyle(color: Colors.white), 
+                          style: TextStyle(color: Colors.white),
                         ),
                       ],
                     ),
-                    SizedBox(width: 10), 
+                    SizedBox(width: 10),
                     Column(
                       children: [
-                        buildDashedLine(), 
-                        SizedBox(height: 20), 
+                        buildDashedLine(),
+                        SizedBox(height: 20),
                       ],
                     ),
-                    SizedBox(width: 10), 
+                    SizedBox(width: 10),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center, 
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        bookingDetailIcon(), 
+                        bookingDetailIcon(),
                         Text(
                           'Detail Booking',
-                          style: TextStyle(color: Colors.white), 
+                          style: TextStyle(color: Colors.white),
                         ),
                       ],
                     ),
-                    SizedBox(width: 10), 
+                    SizedBox(width: 10),
                     Column(
                       children: [
-                        buildDashedLine(), 
-                        SizedBox(height: 20), 
+                        buildDashedLine(),
+                        SizedBox(height: 20),
                       ],
                     ),
-                    SizedBox(width: 10), 
+                    SizedBox(width: 10),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center, 
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        paymentIcon(), 
+                        paymentIcon(),
                         Text(
                           'Pembayaran',
-                          style: TextStyle(color: Colors.white), 
+                          style: TextStyle(color: Colors.white),
                         ),
                       ],
                     ),
@@ -86,12 +73,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
               Positioned(
-                top: 20, 
-                left: 10, 
+                top: 20,
+                left: 10,
                 child: IconButton(
                   icon: Icon(Icons.arrow_back, color: white),
                   onPressed: () {
-                    Navigator.pop(context); 
+                    Navigator.pop(context);
                   },
                 ),
               ),
@@ -99,15 +86,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView( 
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.all(20), 
+              margin: EdgeInsets.all(20),
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: white, 
-                borderRadius: BorderRadius.circular(15), 
+                color: white,
+                borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.shade300,
@@ -119,51 +106,52 @@ class _PaymentScreenState extends State<PaymentScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row( 
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Menunggu Pembayaran',
-                        style: superFont1.copyWith(color: primary), 
+                        style: superFont1.copyWith(color: primary),
                       ),
                       Icon(Icons.access_time, color: primary),
                     ],
                   ),
                   SizedBox(height: 5),
-                  Row( 
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Selesaikan pembayaran sebelum',
-                        style: regulerFont1.copyWith(color: primary), 
+                        style: regulerFont1.copyWith(color: primary),
                       ),
                       Stack(
                         alignment: Alignment.center,
                         children: [
                           Container(
-                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      Text(
-                        '00:59:11',
-                        style: regulerFont1.copyWith(color: primary), 
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 40, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          Text(
+                            '00:59:11',
+                            style: regulerFont1.copyWith(color: primary),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
                   SizedBox(height: 15),
-                  Divider(color: Colors.grey.shade300), 
+                  Divider(color: Colors.grey.shade300),
                   SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Order ID',
-                        style: superFont4.copyWith(color: primary), 
+                        style: superFont4.copyWith(color: primary),
                       ),
                       Text(
                         'XXXXXXXX',
@@ -176,7 +164,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     padding: EdgeInsets.symmetric(vertical: 15),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(10), 
+                      borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.shade300,
@@ -188,24 +176,24 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     child: Row(
                       children: [
                         Container(
-                          width: 80, 
+                          width: 80,
                           child: Center(
                             child: Text(
                               'BRI',
-                              style: buttonFont1.copyWith(color: primary), 
+                              style: buttonFont1.copyWith(color: primary),
                             ),
                           ),
                         ),
                         Container(
                           width: 1,
-                          height: 30, 
+                          height: 30,
                           color: Colors.grey.shade300,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: Text(
                             'BAYAR MELALUI BRI',
-                            style: buttonFont2.copyWith(color: primary), 
+                            style: buttonFont2.copyWith(color: primary),
                           ),
                         ),
                       ],
@@ -214,23 +202,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   SizedBox(height: 15),
                   Divider(color: Colors.grey.shade300),
                   SizedBox(height: 10),
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                  Text(
-                    'Total Pembayaran',
-                    style: superFont3.copyWith(color: primary),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    'Rp30.000',
-                    style: superFont3.copyWith(color: primary), 
-                  ),
-                  ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total Pembayaran',
+                        style: superFont3.copyWith(color: primary),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        'Rp30.000',
+                        style: superFont3.copyWith(color: primary),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-
             SizedBox(height: 30),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -244,23 +232,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     color: Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(width: 10),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 25),
-                          child: Text(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
                           'Upload Bukti Pembayaran',
                           style: superFont2.copyWith(color: primary),
                         ),
-                        ),
-                        SizedBox(width: 162),
-                        Icon(Icons.upload_file, color: primary), 
-                        SizedBox(width: 10),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Icon(Icons.upload_file, color: primary),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -280,7 +266,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-
   Widget bookingDetailIcon() {
     return IconButton(
       icon: Icon(Icons.list_alt_rounded),
@@ -290,7 +275,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-
   Widget paymentIcon() {
     return Column(
       children: [
@@ -298,12 +282,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
           padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.white, 
+            color: Colors.white,
             border: Border.all(color: Colors.white, width: 1),
           ),
           child: IconButton(
             icon: const Icon(Icons.payments_outlined),
-            color: primary, 
+            color: primary,
             onPressed: null,
             disabledColor: primary,
           ),
@@ -312,20 +296,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-
   Widget buildDashedLine() {
     return Container(
-      width: 60, 
+      width: 60,
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return Flex(
             children: List.generate(
-             10,
+              10,
               (index) => SizedBox(
                 width: 3,
-                height: 2, 
+                height: 2,
                 child: DecoratedBox(
-                  decoration: BoxDecoration(color: Colors.grey), 
+                  decoration: BoxDecoration(color: Colors.grey),
                 ),
               ),
             ),
