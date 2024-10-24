@@ -4,6 +4,7 @@ import 'package:arena_connect/screens/history/history.dart';
 // import 'package:arena_connect/screens/search/select_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:arena_connect/screens/authentication/register.dart';
+import 'package:arena_connect/screens/profile/profilepage.dart';
 
 void main() {
   runApp(const MainApp());
