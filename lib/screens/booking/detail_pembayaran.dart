@@ -17,57 +17,57 @@ class _PaymentScreenState extends State<PaymentScreen> {
           child: Stack(
             children: [
               Positioned(
-                top: 55,
+                top: 50,
                 left: 0,
                 right: 0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        scheduleChooseIcon(),
-                        Text(
-                          'Pilih Jadwal',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
+                    Flexible(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 5),
+                          scheduleChooseIcon(),
+                          SizedBox(height: 10),
+                          Text(
+                            'Pilih Jadwal',
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(width: 10),
-                    Column(
-                      children: [
-                        buildDashedLine(),
-                        SizedBox(height: 20),
-                      ],
+                    buildDashedLine(),
+                    Flexible(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 5),
+                          bookingDetailIcon(),
+                          SizedBox(height: 10),
+                          Text(
+                            'Detail Booking',
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(width: 10),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        bookingDetailIcon(),
-                        Text(
-                          'Detail Booking',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 10),
-                    Column(
-                      children: [
-                        buildDashedLine(),
-                        SizedBox(height: 20),
-                      ],
-                    ),
-                    SizedBox(width: 10),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        paymentIcon(),
-                        Text(
-                          'Pembayaran',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
+                    buildDashedLine(),
+                    Flexible(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          paymentIcon(),
+                          SizedBox(height: 9),
+                          Text(
+                            'Pembayaran',
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -76,7 +76,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 top: 20,
                 left: 10,
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: white),
+                  icon: Icon(Icons.arrow_back, color: Colors.white),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -297,25 +297,28 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   Widget buildDashedLine() {
-    return Container(
-      width: 60,
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return Flex(
-            children: List.generate(
-              10,
-              (index) => SizedBox(
-                width: 3,
-                height: 2,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(color: Colors.grey),
+    return Transform.translate(
+    offset: Offset(0, -10), 
+      child: Container(
+        width: 60,
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return Flex(
+              children: List.generate(
+                10,
+                (index) => SizedBox(
+                  width: 3,
+                  height: 2,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(color: Colors.grey),
+                  ),
                 ),
               ),
-            ),
-            direction: Axis.horizontal,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          );
-        },
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            );
+          },
+        ),
       ),
     );
   }
