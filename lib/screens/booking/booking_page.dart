@@ -1,3 +1,4 @@
+import 'package:arena_connect/screens/booking/pembayaran.dart';
 import 'package:flutter/material.dart';
 import 'package:arena_connect/config/theme.dart';
 import 'package:arena_connect/screens/field-search/select_schedule.dart';
@@ -415,7 +416,12 @@ class BookingPage extends StatelessWidget {
                       ],
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Pembayaran()));
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF489DD6),
                         foregroundColor: Colors.white,
