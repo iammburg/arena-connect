@@ -209,12 +209,18 @@ class _PembayaranState extends State<Pembayaran> {
                     children: <Widget>[
                       Row(
                         children: [
-                          const SizedBox(width: 20),
+                          const SizedBox(width: 18),
+                          Image.asset(
+                            'images/bri.png',
+                            width: 48,
+                            height: 48,
+                          ),
+                          const SizedBox(width: 23),
                           Text(
                             'BRI',
                             style: superFont3,
                           ),
-                          const SizedBox(width: 35),
+                          const SizedBox(width: 15),
                           Text("26215-xxxxxxxxxxxx", style: regulerFont1),
                         ],
                       ),
@@ -268,12 +274,22 @@ class _PembayaranState extends State<Pembayaran> {
                       Row(
                         children: [
                           const SizedBox(width: 20),
+                          Image.asset(
+                            'images/bni.png',
+                            width: 40,
+                            height: 40,
+                            fit: BoxFit.contain,
+                          ),
+                          const SizedBox(width: 30),
                           Text(
                             'BNI',
                             style: superFont3,
                           ),
-                          const SizedBox(width: 35),
-                          Text("26215-xxxxxxxxxxxx", style: regulerFont1),
+                          const SizedBox(width: 15),
+                          Text(
+                            "26215-xxxxxxxxxxxx",
+                            style: regulerFont1,
+                          ),
                         ],
                       ),
                       Padding(
