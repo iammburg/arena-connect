@@ -34,7 +34,8 @@ flutter:
     - images/top-wave-cropped.png
     - images/lapangan-futsal.jpg
     - images/lapangan-badminton.jpg
-
+    - images/bni.png
+    - images/bri.png
 
   fonts:
     - family: Poppins
