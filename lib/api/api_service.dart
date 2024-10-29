@@ -20,11 +20,14 @@ class ApiService {
     );
 
     if (response.statusCode == 201) {
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      return {'success': true, 'data': User.fromJson(responseData['data'])};
+      final responseData = jsonDecode(response.body);
+      return {
+        'success': true,
+        'data': User.fromJson(responseData['data']),
+      };
     } else {
-      final Map<String, dynamic> errorData = jsonDecode(response.body);
-      return {'success': false, 'errors': errorData['data']};
+      final errorData = jsonDecode(response.body);
+      return {'success': false, 'errors': errorData['data'] ?? errorData};
     }
   }
 
@@ -39,13 +42,16 @@ class ApiService {
       }),
     );
 
-    if (response.statusCode == 201) {
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      return {'success': true, 'data': User.fromJson(responseData['data'])};
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      return {
+        'success': true,
+        'token': responseData['token'],
+        'data': User.fromJson(responseData['user']),
+      };
     } else {
-      final Map<String, dynamic> errorData = jsonDecode(response.body);
-      print(errorData);
-      return {'success': false, 'errors': errorData['data']};
+      final errorData = jsonDecode(response.body);
+      return {'success': false, 'errors': errorData['data'] ?? errorData};
     }
   }
 }

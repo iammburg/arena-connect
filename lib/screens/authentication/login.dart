@@ -38,7 +38,7 @@ class LoginPageState extends State<LoginPage> {
       );
       Navigator.pushNamed(context, '/homepage');
     } else {
-      final errors = result['errors'] ?? {}; // Default to empty map if null
+      final errors = result['errors'] ?? {};
 
       setState(() {
         _emailError = errors['email']?.first ?? null;
