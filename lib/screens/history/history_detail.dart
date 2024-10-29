@@ -1,7 +1,6 @@
 import 'package:arena_connect/config/theme.dart';
 import 'package:flutter/material.dart';
 
-// Color Palettes
 Color primary = const Color(0xFF12215C);
 Color tertiary = const Color(0xFFA7ADC3);
 Color white = const Color(0xFFFFFFFF);
