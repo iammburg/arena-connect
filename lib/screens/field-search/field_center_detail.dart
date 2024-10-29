@@ -20,7 +20,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: CustomBackButton(),
+        leading: Icon(Icons.arrow_back_ios, size: 18),
         title: Text(''),
       ),
       body: Column(
@@ -467,16 +467,16 @@ class FieldCenterState extends State<FieldCenterDetails> {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    margin: EdgeInsets.only(top: 10, bottom: 10, right: 30),
+                    margin: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 30),
                     child: ElevatedButton(
                       onPressed: () {
                         // Aksi ketika tombol ditekan
                       },
-                      style: shortButton2,
+                      style: shortButton3,
                       child: Text(
                         'Pilih Lapangan',
                         style: TextStyle(
-                          fontSize: 14, // Ukuran teks tombol
+                          fontSize: 12, // Ukuran teks tombol
                           color: Colors.white, // Warna teks putih
                         ),
                       ),
@@ -519,43 +519,4 @@ class FieldCenterState extends State<FieldCenterDetails> {
       ),
     );
   }
-}
-
-
-class CustomBackButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: CustomPaint(
-        size: Size(12, 12), // Ukuran ikon
-        painter: CustomBackIcon(),
-      ),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-  }
-}
-
-class CustomBackIcon extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-  final Paint paint = Paint()
-    ..color = Colors.black
-    ..strokeWidth = 1.6;
-
-    // Gambar garis membentuk tanda "<"
-    canvas.drawLine(
-      Offset(size.width * 0.8, size.height * 0.0), // Ujung atas kanan
-      Offset(size.width * 0.2, size.height * 0.5), // Titik tengah
-      paint,
-    );
-    canvas.drawLine(
-      Offset(size.width * 0.2, size.height * 0.5), // Titik tengah
-      Offset(size.width * 0.8, size.height * 1.0), // Ujung bawah kanan
-      paint,
-    );
-  }
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
