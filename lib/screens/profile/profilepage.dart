@@ -1,8 +1,12 @@
+import 'package:arena_connect/config/theme.dart';
+import 'package:flutter/material.dart';
+
+
+class ProfilePage extends StatelessWidget {
 import 'package:flutter/material.dart';
 import 'package:arena_connect/config/theme.dart';
 
 class ProfilePage extends StatelessWidget {
-  // Fungsi untuk menampilkan dialog keluar akun
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -11,7 +15,7 @@ class ProfilePage extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          backgroundColor: white, // Mengubah background rectangle menjadi warna putih
+          backgroundColor: white,
           title: Center(
             child: Column(
               children: [
@@ -19,7 +23,7 @@ class ProfilePage extends StatelessWidget {
                   'Keluar Akun',
                   style: superFont1.copyWith(color: primary),
                 ),
-                SizedBox(height: 20), // Reduce the gap between title and the content
+                SizedBox(height: 20), 
                 Text(
                   'Apakah kamu yakin ingin keluar akun kamu saat ini?',
                   textAlign: TextAlign.center,
@@ -28,21 +32,21 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           ),
-          contentPadding: EdgeInsets.all(20), // Adjusted padding for more space
+          contentPadding: EdgeInsets.all(20), 
           content: Container(
-            height: 80, // Set height to maintain a balanced shape
+            height: 80, 
             child: Column(
-              mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran dialog
-              mainAxisAlignment: MainAxisAlignment.center, // Center the content
+              mainAxisSize: MainAxisSize.min, 
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 30), // Jarak antara teks dan tombol
+                SizedBox(height: 30), 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: primary, // Warna tombol "Kembali"
+                          backgroundColor: primary, 
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -52,15 +56,15 @@ class ProfilePage extends StatelessWidget {
                           style: buttonFont2,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop(); // Menutup dialog
+                          Navigator.of(context).pop(); 
                         },
                       ),
                     ),
-                    SizedBox(width: 20), // Tambahkan jarak antara dua tombol
+                    SizedBox(width: 20), 
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: secondary, // Warna tombol "Keluar"
+                          backgroundColor: secondary, 
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -70,9 +74,89 @@ class ProfilePage extends StatelessWidget {
                           style: buttonFont2,
                         ),
                         onPressed: () {
-                          // Logika keluar
-                          Navigator.of(context).pop(); // Menutup dialog
-                          // Tambahkan logika untuk keluar di sini, misalnya pindah ke halaman login
+                          Navigator.of(context).pop(); 
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showRegisterFieldDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          backgroundColor: white, 
+          title: Center(
+            child: Column(
+              children: [
+                Text(
+                  'Daftarkan Lapanganmu',
+                  style: superFont1.copyWith(color: primary),
+                ),
+                SizedBox(height: 20), 
+                Text(
+                  'Apakah Kamu Siap Jadi Owner Lapangan?',
+                  textAlign: TextAlign.center,
+                  style: regulerFont1.copyWith(color: primary),
+                ),
+              ],
+            ),
+          ),
+          contentPadding: EdgeInsets.all(20), 
+          content: Container(
+            height: 80, 
+            child: Column(
+              mainAxisSize: MainAxisSize.min, 
+              mainAxisAlignment: MainAxisAlignment.center, 
+              children: [
+                SizedBox(height: 30), 
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primary, 
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          'Kembali',
+                          style: buttonFont2,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop(); 
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 20), 
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: secondary, 
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          'Daftar',
+                          style: buttonFont2,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop(); 
+                          // Tambahkan logika untuk daftar lapangan di sini
                         },
                       ),
                     ),
@@ -139,7 +223,17 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                // Ketika tombol "KELUAR" ditekan, tampilkan pop-up dialog
+                _showRegisterFieldDialog(context);
+              },
+              style: longButton1,
+              child: Text(
+                'DAFTARKAN LAPANGANMU',
+                style: buttonFont1,
+              ),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
                 _showLogoutDialog(context);
               },
               style: longButton1,
@@ -152,7 +246,7 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3, // Set to Profile page index
+        currentIndex: 3, 
         type: BottomNavigationBarType.fixed,
         selectedItemColor: primary,
         unselectedItemColor: tertiary,
