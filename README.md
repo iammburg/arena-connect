@@ -1,4 +1,4 @@
-# arena_connect
+# Arena Connect
 
 Arena Connect is a dedicated marketplace app for sports field services.
 

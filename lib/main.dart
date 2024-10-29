@@ -1,11 +1,20 @@
+import 'package:arena_connect/screens/authentication/register.dart';
 import 'package:arena_connect/screens/authentication/login.dart';
 import 'package:arena_connect/homescreen.dart';
-import 'package:arena_connect/screens/search/select_schedule.dart';
+import 'package:arena_connect/screens/homepage/home.dart';
 import 'package:flutter/material.dart';
-import 'package:arena_connect/screens/authentication/register.dart';
+import 'package:device_preview/device_preview.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    DevicePreview(
+      enabled: true,
+      tools: const [
+        ...DevicePreview.defaultTools,
+      ],
+      builder: (context) => const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -16,13 +25,14 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.white),
-      // initialRoute: '/',
-      // routes: {
-      //   '/': (context) => const HomeScreen(),
-      //   '/login': (context) => const LoginPage(),
-      //   '/register': (context) => const RegisterPage(),
-      // },
-      home: const SelectSchedule(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+        '/homepage': (context) => const Home(),
+      },
+      // home: ProfilePage()
     );
   }
 }
