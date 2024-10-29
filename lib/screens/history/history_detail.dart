@@ -113,6 +113,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
                               )
                             ],
                           ),
+                          const SizedBox(height: 10),
                           Row(
                             children: [
                               const Icon(Icons.calendar_today),
