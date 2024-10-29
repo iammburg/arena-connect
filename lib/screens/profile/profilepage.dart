@@ -1,12 +1,22 @@
 import 'package:arena_connect/config/theme.dart';
 import 'package:flutter/material.dart';
 
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
-class ProfilePage extends StatelessWidget {
-import 'package:flutter/material.dart';
-import 'package:arena_connect/config/theme.dart';
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
 
-class ProfilePage extends StatelessWidget {
+class _ProfilePageState extends State<ProfilePage> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -23,7 +33,7 @@ class ProfilePage extends StatelessWidget {
                   'Keluar Akun',
                   style: superFont1.copyWith(color: primary),
                 ),
-                SizedBox(height: 20), 
+                SizedBox(height: 20),
                 Text(
                   'Apakah kamu yakin ingin keluar akun kamu saat ini?',
                   textAlign: TextAlign.center,
@@ -32,21 +42,21 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           ),
-          contentPadding: EdgeInsets.all(20), 
+          contentPadding: EdgeInsets.all(20),
           content: Container(
-            height: 80, 
+            height: 80,
             child: Column(
-              mainAxisSize: MainAxisSize.min, 
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 30), 
+                SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: primary, 
+                          backgroundColor: primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -56,15 +66,15 @@ class ProfilePage extends StatelessWidget {
                           style: buttonFont2,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop(); 
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
-                    SizedBox(width: 20), 
+                    SizedBox(width: 20),
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: secondary, 
+                          backgroundColor: secondary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -74,7 +84,7 @@ class ProfilePage extends StatelessWidget {
                           style: buttonFont2,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop(); 
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
@@ -96,7 +106,7 @@ class ProfilePage extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          backgroundColor: white, 
+          backgroundColor: white,
           title: Center(
             child: Column(
               children: [
@@ -104,7 +114,7 @@ class ProfilePage extends StatelessWidget {
                   'Daftarkan Lapanganmu',
                   style: superFont1.copyWith(color: primary),
                 ),
-                SizedBox(height: 20), 
+                SizedBox(height: 20),
                 Text(
                   'Apakah Kamu Siap Jadi Owner Lapangan?',
                   textAlign: TextAlign.center,
@@ -113,21 +123,21 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           ),
-          contentPadding: EdgeInsets.all(20), 
+          contentPadding: EdgeInsets.all(20),
           content: Container(
-            height: 80, 
+            height: 80,
             child: Column(
-              mainAxisSize: MainAxisSize.min, 
-              mainAxisAlignment: MainAxisAlignment.center, 
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 30), 
+                SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: primary, 
+                          backgroundColor: primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -137,15 +147,15 @@ class ProfilePage extends StatelessWidget {
                           style: buttonFont2,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop(); 
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
-                    SizedBox(width: 20), 
+                    SizedBox(width: 20),
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: secondary, 
+                          backgroundColor: secondary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -155,7 +165,7 @@ class ProfilePage extends StatelessWidget {
                           style: buttonFont2,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop(); 
+                          Navigator.of(context).pop();
                           // Tambahkan logika untuk daftar lapangan di sini
                         },
                       ),
@@ -246,11 +256,7 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3, 
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: primary,
-        unselectedItemColor: tertiary,
-        items: const [
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -268,6 +274,12 @@ class ProfilePage extends StatelessWidget {
             label: 'Profile',
           ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Color(0xFF12215c),
+        unselectedItemColor: Colors.grey,
+        selectedLabelStyle: TextStyle(color: Color(0xFF12215c)),
+        unselectedLabelStyle: TextStyle(color: Colors.grey),
+        onTap: _onItemTapped,
       ),
     );
   }
@@ -283,7 +295,8 @@ class ProfileOption extends StatefulWidget {
     required this.icon,
     required this.text,
     required this.onTap,
-    required this.color, required Color selectedItemColor,
+    required this.color,
+    required Color selectedItemColor,
   });
 
   @override
