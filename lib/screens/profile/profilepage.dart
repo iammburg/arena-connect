@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 
 
 class ProfilePage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:arena_connect/config/theme.dart';
+
+class ProfilePage extends StatelessWidget {
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -11,7 +15,7 @@ class ProfilePage extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          backgroundColor: white, 
+          backgroundColor: white,
           title: Center(
             child: Column(
               children: [
@@ -71,7 +75,6 @@ class ProfilePage extends StatelessWidget {
                         ),
                         onPressed: () {
                           Navigator.of(context).pop(); 
-                          // Tambahkan logika untuk keluar di sini, misalnya pindah ke halaman login
                         },
                       ),
                     ),
@@ -84,7 +87,6 @@ class ProfilePage extends StatelessWidget {
       },
     );
   }
-
 
   void _showRegisterFieldDialog(BuildContext context) {
     showDialog(
@@ -270,6 +272,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
 class ProfileOption extends StatefulWidget {
   final IconData icon;
   final String text;

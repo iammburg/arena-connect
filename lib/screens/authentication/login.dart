@@ -1,6 +1,8 @@
 import 'package:arena_connect/config/theme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:arena_connect/api/api_service.dart';
+import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +13,43 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage> {
   bool _isPasswordObscured = true;
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final ApiService _apiService = ApiService();
+
+  String? _emailError;
+  String? _passwordError;
+
+  void _login() async {
+    setState(() {
+      _emailError = null;
+      _passwordError = null;
+    });
+
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    final result = await _apiService.login(email, password);
+
+    if (result['success']) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Login berhasil')),
+      );
+      Navigator.pushNamed(context, '/homepage');
+    } else {
+      final errors = result['errors'] ?? {};
+
+      setState(() {
+        _emailError = errors['email']?.first ?? null;
+        _passwordError = errors['password']?.first ?? null;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Login gagal, periksa input Anda')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +118,7 @@ class LoginPageState extends State<LoginPage> {
                         ),
                         const SizedBox(height: 30),
                         TextFormField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                             prefixIcon: const Icon(Icons.email,
                                 color: Colors.grey, size: 20),
@@ -100,6 +140,7 @@ class LoginPageState extends State<LoginPage> {
                                 width: 0.8,
                               ),
                             ),
+                            errorText: _emailError,
                           ),
                           style: const TextStyle(
                               fontFamily: "Source Sans Pro",
@@ -109,6 +150,7 @@ class LoginPageState extends State<LoginPage> {
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
+                          controller: _passwordController,
                           obscureText: _isPasswordObscured,
                           decoration: InputDecoration(
                             prefixIcon: const Icon(Icons.lock,
@@ -131,6 +173,7 @@ class LoginPageState extends State<LoginPage> {
                                 width: 0.8,
                               ),
                             ),
+                            errorText: _passwordError,
                             suffixIcon: IconButton(
                               icon: Icon(
                                   _isPasswordObscured
@@ -154,9 +197,7 @@ class LoginPageState extends State<LoginPage> {
                         ),
                         const SizedBox(height: 30),
                         ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/register');
-                          },
+                          onPressed: _login,
                           style: shortButtonSecondary,
                           child: Text(
                             "Login",

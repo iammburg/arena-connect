@@ -7,8 +7,10 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
+  device_preview: ^1.2.0
   flutter:
     sdk: flutter
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:
@@ -34,7 +36,8 @@ flutter:
     - images/top-wave-cropped.png
     - images/lapangan-futsal.jpg
     - images/lapangan-badminton.jpg
-
+    - images/bni.png
+    - images/bri.png
 
   fonts:
     - family: Poppins
