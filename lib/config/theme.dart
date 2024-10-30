@@ -234,3 +234,11 @@ ButtonStyle shortButton2 = ElevatedButton.styleFrom(
       borderRadius: BorderRadius.circular(5),
     ),
     padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20));
+
+ButtonStyle shortButton3 = ElevatedButton.styleFrom(
+    minimumSize: const Size(42, 22),
+    backgroundColor: secondary,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5),
+    ),
+    padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 2));
