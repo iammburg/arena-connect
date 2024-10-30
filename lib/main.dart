@@ -1,4 +1,3 @@
-import 'package:arena_connect/layouts/bottom_navigation.dart';
 import 'package:arena_connect/screens/authentication/register.dart';
 import 'package:arena_connect/screens/authentication/login.dart';
 import 'package:arena_connect/homescreen.dart';
@@ -8,6 +7,7 @@ import 'package:arena_connect/screens/profile/profilepage.dart';
 import 'package:arena_connect/screens/search/sparring_search.dart';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:arena_connect/layouts/bottom_navigation.dart';
 
 void main() {
   runApp(
