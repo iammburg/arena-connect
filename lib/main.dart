@@ -10,15 +10,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:arena_connect/layouts/bottom_navigation.dart';
 
 void main() {
-  runApp(
-    DevicePreview(
-      enabled: true,
-      tools: const [
-        ...DevicePreview.defaultTools,
-      ],
-      builder: (context) => const MainApp(),
-    ),
-  );
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
