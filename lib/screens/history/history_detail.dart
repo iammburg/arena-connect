@@ -65,6 +65,12 @@ class _HistoryDetailState extends State<HistoryDetail> {
           style: buttonFont1,
         ),
         backgroundColor: primary,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(6.0),
           child: Container(

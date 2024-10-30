@@ -1,3 +1,4 @@
+import 'package:arena_connect/layouts/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:arena_connect/config/theme.dart';
 
@@ -688,32 +689,33 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Cari',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFF12215c),
-        unselectedItemColor: Colors.grey,
-        selectedLabelStyle: TextStyle(color: Color(0xFF12215c)),
-        unselectedLabelStyle: TextStyle(color: Colors.grey),
-        onTap: _onItemTapped,
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.history),
+      //       label: 'History',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.search),
+      //       label: 'Cari',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.person),
+      //       label: 'Profile',
+      //     ),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   selectedItemColor: Color(0xFF12215c),
+      //   unselectedItemColor: Colors.grey,
+      //   selectedLabelStyle: TextStyle(color: Color(0xFF12215c)),
+      //   unselectedLabelStyle: TextStyle(color: Colors.grey),
+      //   onTap: _onItemTapped,
+      // ),
+      // bottomNavigationBar: const CustomBottomNavigationBar(),
     );
   }
 }

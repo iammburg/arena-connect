@@ -1,7 +1,11 @@
+import 'package:arena_connect/layouts/bottom_navigation.dart';
 import 'package:arena_connect/screens/authentication/register.dart';
 import 'package:arena_connect/screens/authentication/login.dart';
 import 'package:arena_connect/homescreen.dart';
-import 'package:arena_connect/screens/homepage/home.dart';
+import 'package:arena_connect/screens/history/history.dart';
+import 'package:arena_connect/screens/homepage/home.dart'; // Ensure HomePage is imported
+import 'package:arena_connect/screens/profile/profilepage.dart';
+import 'package:arena_connect/screens/search/sparring_search.dart';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
 
@@ -30,9 +34,25 @@ class MainApp extends StatelessWidget {
         '/': (context) => const HomeScreen(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
-        '/homepage': (context) => const Home(),
+        '/homepage': (context) => const BottomNavWrapper(child: Home()),
+        '/profile': (context) => const BottomNavWrapper(child: ProfilePage()),
+        '/search': (context) => const BottomNavWrapper(child: SparringSearch()),
+        '/history': (context) => BottomNavWrapper(child: HistoryScreen()),
       },
-      // home: ProfilePage()
+    );
+  }
+}
+
+class BottomNavWrapper extends StatelessWidget {
+  final Widget child;
+
+  const BottomNavWrapper({required this.child, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: child,
+      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }

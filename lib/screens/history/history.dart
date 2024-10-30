@@ -8,16 +8,14 @@ class HistoryScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        toolbarHeight: 100,
         backgroundColor: const Color(0xFF12215C),
-        elevation: 0,
-        title: Text('History Pertandingan', style: buttonFont1),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(10),
-          child: Container(
-            color: const Color(0xFF12215C),
-            height: 4.0,
-          ),
+        title: Padding(
+          padding: const EdgeInsets.only(top: 30.0),
+          child: Text('History Pertandingan',
+              style: superFont1.copyWith(color: Colors.white)),
         ),
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
