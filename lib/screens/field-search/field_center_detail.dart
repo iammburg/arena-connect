@@ -321,7 +321,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.chair, color: secondary, size: 22),
+                                      Icon(Icons.wc, color: secondary, size: 22),
                                       SizedBox(width: 8),
                                       Text('Toilet', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black)),
                                     ],
