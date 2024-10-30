@@ -2,6 +2,7 @@ import 'package:arena_connect/screens/authentication/login.dart';
 import 'package:arena_connect/homescreen.dart';
 import 'package:arena_connect/screens/field-search/field_center_detail.dart';
 import 'package:arena_connect/screens/field-search/select_schedule.dart';
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:arena_connect/screens/authentication/register.dart';
 
@@ -24,7 +25,13 @@ class MainApp extends StatelessWidget {
       //   '/register': (context) => const RegisterPage(),
       // },
       // Panggil halamannya di const home ini.
-      home: const FieldCenterDetails(),
+      home: DeviceFrame(
+        device: Devices.android.samsungGalaxyA50,
+        orientation: Orientation.portrait,
+        screen: Builder(
+          builder:(context) => const FieldCenterDetails(),
+        ),
+      ),
     );
   }
 }
