@@ -9,6 +9,7 @@ environment:
 dependencies:
   carousel_slider: 5.0.0
   device_frame: 1.2.0
+  device_preview: ^1.2.0
   flutter:
     sdk: flutter
 
@@ -38,7 +39,8 @@ flutter:
     - images/lapangan-futsal.jpg
     - images/lapangan-badminton.jpg
     - images/mapreham.png
-
+    - images/bni.png
+    - images/bri.png
 
   fonts:
     - family: Poppins
