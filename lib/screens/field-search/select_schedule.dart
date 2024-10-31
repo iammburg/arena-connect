@@ -49,12 +49,12 @@ class _SelectScheduleState extends State<SelectSchedule> {
     {
       'duration': '60 Menit',
       'hoursDuration': '08:00 - 09:00',
-      'pricing': 'Rp35.000',
+      'pricing': 'Rp30.000',
     },
     {
       'duration': '60 Menit',
       'hoursDuration': '10:00 - 11:00',
-      'pricing': 'Rp40.000',
+      'pricing': 'Rp30.000',
     },
   ];
 
@@ -201,7 +201,7 @@ class _SelectScheduleState extends State<SelectSchedule> {
           ),
           Column(
             children: [
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,7 +210,7 @@ class _SelectScheduleState extends State<SelectSchedule> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: const Icon(Icons.chevron_left),
+                    icon: const Icon(Icons.arrow_back),
                     color: white,
                   ),
                 ],
@@ -415,18 +415,16 @@ class _SelectScheduleState extends State<SelectSchedule> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Mulai", style: regulerFont10),
-                        // Nampilin harga dinamis sesuai option jadwal yang dipilih
                         Text(_selectedPrice, style: superFont4),
-                        const SizedBox(
-                          height: 12,
-                        ),
+                        const SizedBox(height: 12),
                         ElevatedButton(
                             onPressed: () {},
                             style: longButton1,
                             child: Text(
                               "Selanjutnya",
                               style: buttonFont4,
-                            ))
+                            )),
+                        const SizedBox(height: 18),
                       ],
                     ),
                   ),

@@ -219,6 +219,15 @@ ButtonStyle shortButtonPrimary = ElevatedButton.styleFrom(
     ),
     padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20));
 
+ButtonStyle shortButtonPrimary2 = OutlinedButton.styleFrom(
+    minimumSize: const Size(90, 32),
+    backgroundColor: primary,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(6),
+    ),
+    side: BorderSide(color: primary),
+    padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20));
+
 ButtonStyle shortButtonSecondary = ElevatedButton.styleFrom(
     minimumSize: const Size(131, 32),
     backgroundColor: secondary,

@@ -1,4 +1,5 @@
-import 'package:arena_connect/layouts/bottom_navigation.dart';
+import 'package:arena_connect/screens/field-search/field_search.dart';
+import 'package:arena_connect/screens/search/sparring_search.dart';
 import 'package:flutter/material.dart';
 import 'package:arena_connect/config/theme.dart';
 
@@ -10,13 +11,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,21 +165,32 @@ class _HomeState extends State<Home> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8.0)),
                                   ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.sports_soccer,
-                                        color: Color(0xFF12215c),
-                                        size: 30,
-                                      ),
-                                      Text(
-                                        'Lapangan',
-                                        style: superFont5,
-                                      ),
-                                    ],
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                FieldSearch()),
+                                      );
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        const Icon(
+                                          Icons.sports_soccer,
+                                          color: Color(0xFF12215c),
+                                          size: 30,
+                                        ),
+                                        Text(
+                                          'Lapangan',
+                                          style: superFont5,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
