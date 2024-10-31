@@ -1,4 +1,5 @@
 import 'package:arena_connect/config/theme.dart';
+import 'package:arena_connect/screens/field-search/select_schedule.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -20,20 +21,30 @@ class FieldCenterState extends State<FieldCenterDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios, size: 18),
-        title: Text(''),
+        leading: Padding(
+          padding: const EdgeInsets.only(bottom: 16, left: 16),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        // title: Text(''),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 10.0), //Tambahkan Margin bawah untuk BoxShadow
+            margin: const EdgeInsets.only(
+                bottom: 10.0), //Tambahkan Margin bawah untuk BoxShadow
             child: Stack(
               children: [
                 // Container untuk bayangan
                 Container(
-                  margin: const EdgeInsets.only(bottom: 10.0), // Margin agar bayangan tidak terpotong
+                  margin: const EdgeInsets.only(
+                      bottom: 10.0), // Margin agar bayangan tidak terpotong
                   // Carousel untuk gambar lapangan
                   child: CarouselSlider(
                     options: CarouselOptions(
@@ -89,20 +100,24 @@ class FieldCenterState extends State<FieldCenterDetails> {
                               ),
 
                               //Informasi Lapangan
-                              child : Padding(
+                              child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               'Kota Semarang',
-                                              style: TextStyle(color: secondary, fontSize: 8),
+                                              style: TextStyle(
+                                                  color: secondary,
+                                                  fontSize: 8),
                                             ),
                                             SizedBox(height: 2),
                                             Text(
@@ -119,54 +134,72 @@ class FieldCenterState extends State<FieldCenterDetails> {
                                         Column(
                                           children: [
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
                                               children: [
-                                                Icon(Icons.star, color: Colors.orangeAccent, size: 22),
+                                                Icon(Icons.star,
+                                                    color: Colors.orangeAccent,
+                                                    size: 22),
                                                 SizedBox(width: 6),
-                                                Text('4.5', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.black)),
+                                                Text('4.5',
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black)),
                                               ],
                                             ),
                                           ],
                                         ),
                                       ],
                                     ),
-
                                     SizedBox(height: 4),
-
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
                                           children: [
                                             Row(
                                               children: [
-                                                _buildChip('Badminton', Icons.sports_tennis),
+                                                _buildChip('Badminton',
+                                                    Icons.sports_tennis),
                                                 SizedBox(width: 8),
-                                                _buildChip('Futsal', Icons.sports_soccer),
+                                                _buildChip('Futsal',
+                                                    Icons.sports_soccer),
                                               ],
                                             ),
                                           ],
                                         ),
-
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
                                           children: [
                                             Column(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text(
                                                   'Mulai',
-                                                  style: TextStyle(fontSize: 10, color: secondary),
+                                                  style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: secondary),
                                                 )
                                               ],
                                             ),
                                             SizedBox(width: 6),
                                             Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   'Rp 30.000',
-                                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black),
+                                                  style: TextStyle(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
                                                 )
                                               ],
                                             ),
@@ -184,7 +217,6 @@ class FieldCenterState extends State<FieldCenterDetails> {
                     }).toList(),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -197,18 +229,19 @@ class FieldCenterState extends State<FieldCenterDetails> {
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.7), // Warna bayangan
                   spreadRadius: 1, // Sebaran bayangan
-                  blurRadius: 2,   // Jarak blur
+                  blurRadius: 2, // Jarak blur
                   offset: Offset(-0.5, 4), // Perpindahan bayangan (x,y)
                 ),
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 25, right: 0),
+              padding: const EdgeInsets.only(
+                  top: 0.0, bottom: 0.0, left: 25, right: 0),
               child: Row(
                 children: [
                   //Kolom Pertama
                   Expanded(
-                    flex: 3,                 
+                    flex: 3,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -246,8 +279,10 @@ class FieldCenterState extends State<FieldCenterDetails> {
 
           //ATURAN LAPANGAN
           Container(
-            margin: const EdgeInsets.only(top: 0, bottom: 0, left: 16, right: 16),
-            padding: const EdgeInsets.only(top: 10, bottom: 0, left: 16, right: 16),
+            margin:
+                const EdgeInsets.only(top: 0, bottom: 0, left: 16, right: 16),
+            padding:
+                const EdgeInsets.only(top: 10, bottom: 0, left: 16, right: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -267,17 +302,27 @@ class FieldCenterState extends State<FieldCenterDetails> {
                     children: [
                       Row(
                         children: [
-                          Text("• ", style: TextStyle(fontSize: 16,  color: secondary)), // Bullet point
+                          Text("• ",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: secondary)), // Bullet point
                           Expanded(
-                            child: Text("Dilarang Meludah sembarangan", style: TextStyle(fontSize: 12, color: secondary)),
+                            child: Text("Dilarang Meludah sembarangan",
+                                style:
+                                    TextStyle(fontSize: 12, color: secondary)),
                           ),
                         ],
                       ),
                       Row(
                         children: [
-                          Text("• ", style: TextStyle(fontSize: 16, color: secondary)), // Bullet point
+                          Text("• ",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: secondary)), // Bullet point
                           Expanded(
-                            child: Text("Masuk sesuai waktu booking", style: TextStyle(fontSize: 12, color: secondary)),
+                            child: Text("Masuk sesuai waktu booking",
+                                style:
+                                    TextStyle(fontSize: 12, color: secondary)),
                           ),
                         ],
                       ),
@@ -290,8 +335,10 @@ class FieldCenterState extends State<FieldCenterDetails> {
 
           //FASILITAS LAPANGAN
           Container(
-            margin: const EdgeInsets.only(top: 0, bottom: 0, left: 16, right: 16),
-            padding: const EdgeInsets.only(top: 10, bottom: 0, left: 16, right: 16),
+            margin:
+                const EdgeInsets.only(top: 0, bottom: 0, left: 16, right: 16),
+            padding:
+                const EdgeInsets.only(top: 10, bottom: 0, left: 16, right: 16),
             // padding: const EdgeInsets.all(4.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -304,15 +351,14 @@ class FieldCenterState extends State<FieldCenterDetails> {
                   ),
                 ),
                 SizedBox(height: 16),
-                
+
                 // Daftar Fasilitas Lapangan dengan Ikon
                 Container(
                   padding: EdgeInsets.only(left: 30, right: 30),
                   child: Column(
                     children: [
                       Container(
-                        child: 
-                        Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             //Kolom Pertama dengan Expanded
@@ -321,9 +367,14 @@ class FieldCenterState extends State<FieldCenterDetails> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.wc, color: secondary, size: 22),
+                                      Icon(Icons.wc,
+                                          color: secondary, size: 22),
                                       SizedBox(width: 8),
-                                      Text('Toilet', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black)),
+                                      Text('Toilet',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black)),
                                     ],
                                   ),
                                 ],
@@ -337,9 +388,14 @@ class FieldCenterState extends State<FieldCenterDetails> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.motorcycle, color: secondary, size: 22),
+                                      Icon(Icons.motorcycle,
+                                          color: secondary, size: 22),
                                       SizedBox(width: 8),
-                                      Text('Parkir Motor', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black)),
+                                      Text('Parkir Motor',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black)),
                                     ],
                                   ),
                                 ],
@@ -348,11 +404,9 @@ class FieldCenterState extends State<FieldCenterDetails> {
                           ],
                         ),
                       ),
-
                       SizedBox(height: 10),
                       Container(
-                        child: 
-                        Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             //Kolom Pertama dengan Expanded
@@ -361,9 +415,14 @@ class FieldCenterState extends State<FieldCenterDetails> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.wifi, color: secondary, size: 22),
+                                      Icon(Icons.wifi,
+                                          color: secondary, size: 22),
                                       SizedBox(width: 8),
-                                      Text('WiFi', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black)),
+                                      Text('WiFi',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black)),
                                     ],
                                   ),
                                 ],
@@ -376,9 +435,14 @@ class FieldCenterState extends State<FieldCenterDetails> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.mosque, color: secondary, size: 22),
+                                      Icon(Icons.mosque,
+                                          color: secondary, size: 22),
                                       SizedBox(width: 8),
-                                      Text('Musholla', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black)),
+                                      Text('Musholla',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black)),
                                     ],
                                   ),
                                 ],
@@ -387,12 +451,10 @@ class FieldCenterState extends State<FieldCenterDetails> {
                           ],
                         ),
                       ),
-
                       SizedBox(height: 10),
                       Container(
                         margin: EdgeInsets.only(right: 10),
-                        child: 
-                        Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             //Kolom Pertama dengan Expanded
@@ -401,9 +463,14 @@ class FieldCenterState extends State<FieldCenterDetails> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.car_rental, color: secondary, size: 22),
+                                      Icon(Icons.car_rental,
+                                          color: secondary, size: 22),
                                       SizedBox(width: 8),
-                                      Text('Parkir Mobil', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black)),
+                                      Text('Parkir Mobil',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black)),
                                     ],
                                   ),
                                 ],
@@ -434,9 +501,9 @@ class FieldCenterState extends State<FieldCenterDetails> {
                 ),
               ],
             ),
-
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Membuat jarak antara dua elemen
+              mainAxisAlignment: MainAxisAlignment
+                  .spaceBetween, // Membuat jarak antara dua elemen
               children: [
                 Expanded(
                   flex: 2,
@@ -467,10 +534,16 @@ class FieldCenterState extends State<FieldCenterDetails> {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    margin: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 30),
+                    margin: EdgeInsets.only(
+                        top: 10, bottom: 10, left: 20, right: 30),
                     child: ElevatedButton(
                       onPressed: () {
                         // Aksi ketika tombol ditekan
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SelectSchedule()),
+                        );
                       },
                       style: shortButton3,
                       child: Text(
