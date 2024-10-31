@@ -22,8 +22,9 @@ flutter:
         - images/arena-connect1.png
         - images/badminton.jpg
         - images/futsal.jpg
-        - images/footballcup.jpg
         - images/badmintoncup.jpg
+        - images/futsal1.jpg
+        - images/footballcup1.jpg
 
     fonts:
         - family: Poppins
