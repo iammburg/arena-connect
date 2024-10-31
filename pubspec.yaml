@@ -21,6 +21,7 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
+<<<<<<< HEAD
   uses-material-design: true
   assets:
     - images/background-image.png
@@ -43,6 +44,17 @@ flutter:
     - images/mapreham.png
     - images/bni.png
     - images/bri.png
+=======
+    uses-material-design: true
+    assets:
+        - images/background-image.png
+        - images/arena-connect1.png
+        - images/badminton.jpg
+        - images/futsal.jpg
+        - images/badmintoncup.jpg
+        - images/futsal1.jpg
+        - images/footballcup1.jpg
+>>>>>>> c5a11760eba085e244ec9ea6866a962575650af4
 
   fonts:
     - family: Poppins
