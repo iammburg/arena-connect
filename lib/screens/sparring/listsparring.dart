@@ -454,8 +454,4 @@ class _ListsparringState extends State<Listsparring> {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: Listsparring(),
-  ));
-}
+
