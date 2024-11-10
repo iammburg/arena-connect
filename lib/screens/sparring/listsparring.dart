@@ -1,4 +1,5 @@
 import 'package:arena_connect/config/theme.dart';
+import 'package:arena_connect/screens/sparring/detailsparring.dart';
 import 'package:flutter/material.dart';
 
 class Listsparring extends StatefulWidget {
@@ -65,92 +66,100 @@ class _ListsparringState extends State<Listsparring> {
                 ],
               ),
               const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: Container(
-                  height: 185,
-                  width: screenWidth * 0.9,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 0,
-                        blurRadius: 4,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 25.0, top: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              'images/logobolaA.png',
-                              width: 45,
-                              height: 45,
-                            ),
-                            const SizedBox(width: 10),
-                            Text('VS', style: superFont2),
-                            const SizedBox(width: 10),
-                            Image.asset(
-                              'images/logobolaB.png',
-                              width: 45,
-                              height: 45,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Text(
-                              'HAPPY SUNDAY',
-                              style: superFont3,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.sports_soccer,
-                              color: Color(0xFF12215C),
-                              size: 18,
-                            ),
-                            const SizedBox(width: 8),
-                            Text('Futsal', style: regulerFont1),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.calendar_month,
-                              color: Color(0xFF12215C),
-                              size: 18,
-                            ),
-                            const SizedBox(width: 8),
-                            Text('Sab, 25 September 2024, 14:00 - 15:00',
-                                style: regulerFont1),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.location_on_outlined,
-                              color: Color(0xFF12215C),
-                              size: 18,
-                            ),
-                            const SizedBox(width: 8),
-                            Text('Reham, Semarang', style: regulerFont1),
-                          ],
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Detailsparring()),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Container(
+                    height: 185,
+                    width: screenWidth * 0.9,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 0,
+                          blurRadius: 4,
+                          offset: const Offset(0, 5),
                         ),
                       ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 25.0, top: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset(
+                                'images/logobolaA.png',
+                                width: 45,
+                                height: 45,
+                              ),
+                              const SizedBox(width: 10),
+                              Text('VS', style: superFont2),
+                              const SizedBox(width: 10),
+                              Image.asset(
+                                'images/logobolaB.png',
+                                width: 45,
+                                height: 45,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Text(
+                                'HAPPY SUNDAY',
+                                style: superFont3,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.sports_soccer,
+                                color: Color(0xFF12215C),
+                                size: 18,
+                              ),
+                              const SizedBox(width: 8),
+                              Text('Futsal', style: regulerFont1),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.calendar_month,
+                                color: Color(0xFF12215C),
+                                size: 18,
+                              ),
+                              const SizedBox(width: 8),
+                              Text('Sab, 25 September 2024, 14:00 - 15:00',
+                                  style: regulerFont1),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.location_on_outlined,
+                                color: Color(0xFF12215C),
+                                size: 18,
+                              ),
+                              const SizedBox(width: 8),
+                              Text('Reham, Semarang', style: regulerFont1),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
