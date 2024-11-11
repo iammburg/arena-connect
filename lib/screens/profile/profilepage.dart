@@ -1,9 +1,42 @@
+import 'dart:convert';
+import 'package:arena_connect/api/api_service.dart';
+import 'package:http/http.dart' as http;
+import 'package:arena_connect/screens/edit_password/edit_password.dart';
 import 'package:arena_connect/screens/profile/change_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:arena_connect/config/theme.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String userName = '';
+  String userEmail = '';
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserProfile();
+  }
+
+  Future<void> _getUserProfile() async {
+    final token = await ApiService().getToken();
+    if (token != null) {
+      final response = await ApiService().getUserProfile(token);
+      if (response['success']) {
+        setState(() {
+          userName = response['data']['name'];
+          userEmail = response['data']['email'];
+          isLoading = false;
+        });
+      }
+    }
+  }
 
   void _showJoinAsOwnerDialog(BuildContext context) {
     showDialog(
@@ -13,7 +46,7 @@ class ProfilePage extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          backgroundColor: white, // Mengubah background rectangle menjadi warna putih
+          backgroundColor: white,
           title: Center(
             child: Column(
               children: [
@@ -21,7 +54,7 @@ class ProfilePage extends StatelessWidget {
                   'Daftarkan Lapanganmu',
                   style: superFont1.copyWith(color: primary),
                 ),
-                const SizedBox(height: 20), // Reduce the gap between title and the content
+                const SizedBox(height: 20),
                 Text(
                   'Apakah kamu siap menjadi owner lapangan?',
                   textAlign: TextAlign.center,
@@ -30,21 +63,21 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           ),
-          contentPadding: const EdgeInsets.all(20), // Adjusted padding for more space
+          contentPadding: const EdgeInsets.all(20),
           content: SizedBox(
-            height: 80, // Set height to maintain a balanced shape
+            height: 80,
             child: Column(
-              mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran dialog
-              mainAxisAlignment: MainAxisAlignment.center, // Center the content
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 30), // Jarak antara teks dan tombol
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: primary, // Warna tombol "Kembali"
+                          backgroundColor: primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -54,15 +87,15 @@ class ProfilePage extends StatelessWidget {
                           style: buttonFont2,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop(); // Menutup dialog
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
-                    const SizedBox(width: 20), // Tambahkan jarak antara dua tombol
+                    const SizedBox(width: 20),
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: secondary, // Warna tombol "Keluar"
+                          backgroundColor: secondary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -72,9 +105,7 @@ class ProfilePage extends StatelessWidget {
                           style: buttonFont2,
                         ),
                         onPressed: () {
-                          // Logika keluar
-                          Navigator.of(context).pop(); // Menutup dialog
-                          // Tambahkan logika untuk keluar di sini, misalnya pindah ke halaman login
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
@@ -87,7 +118,7 @@ class ProfilePage extends StatelessWidget {
       },
     );
   }
-  // Fungsi untuk menampilkan dialog keluar akun
+
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -96,7 +127,7 @@ class ProfilePage extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          backgroundColor: white, // Mengubah background rectangle menjadi warna putih
+          backgroundColor: white,
           title: Center(
             child: Column(
               children: [
@@ -104,7 +135,7 @@ class ProfilePage extends StatelessWidget {
                   'Keluar Akun',
                   style: superFont1.copyWith(color: primary),
                 ),
-                const SizedBox(height: 20), // Reduce the gap between title and the content
+                const SizedBox(height: 20),
                 Text(
                   'Apakah kamu yakin ingin keluar akun kamu saat ini?',
                   textAlign: TextAlign.center,
@@ -113,21 +144,21 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           ),
-          contentPadding: const EdgeInsets.all(20), // Adjusted padding for more space
+          contentPadding: const EdgeInsets.all(20),
           content: SizedBox(
-            height: 80, // Set height to maintain a balanced shape
+            height: 80,
             child: Column(
-              mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran dialog
-              mainAxisAlignment: MainAxisAlignment.center, // Center the content
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 30), // Jarak antara teks dan tombol
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: primary, // Warna tombol "Kembali"
+                          backgroundColor: primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -137,15 +168,15 @@ class ProfilePage extends StatelessWidget {
                           style: buttonFont2,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop(); // Menutup dialog
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
-                    const SizedBox(width: 20), // Tambahkan jarak antara dua tombol
+                    const SizedBox(width: 20),
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: secondary, // Warna tombol "Keluar"
+                          backgroundColor: secondary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -155,9 +186,7 @@ class ProfilePage extends StatelessWidget {
                           style: buttonFont2,
                         ),
                         onPressed: () {
-                          // Logika keluar
-                          Navigator.of(context).pop(); // Menutup dialog
-                          // Tambahkan logika untuk keluar di sini, misalnya pindah ke halaman login
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
@@ -174,143 +203,130 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned( 
-            top: 0,
-            left: 0,
-            right: 0,
-            child: AppBar(
-              backgroundColor: primary, // Dark blue background
-              automaticallyImplyLeading: false, // Remove the default back button
-              flexibleSpace: Padding(
-                padding: const EdgeInsets.only(left: 10, top: 10, right: 10), // Adjust padding
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: AppBar(
+                backgroundColor: primary,
+                automaticallyImplyLeading: false,
+                flexibleSpace: Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 30, right: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text('Profile',
+                              style: superFont1.copyWith(color: white)),
+                        ],
+                      ),
+                      const SizedBox(height: 50),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Positioned.fill(
+              child: Container(
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+                  children: <Widget>[
+                    const SizedBox(height: 15),
+                    Stack(
                       children: [
-                        Text('Profile', style: superFont1.copyWith(color: white)),
+                        Container(
+                          width: 115,
+                          height: 115,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: primary,
+                              width: 10,
+                            ),
+                          ),
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundColor: tertiary,
+                            child: Icon(
+                              Icons.person,
+                              size: 50,
+                              color: white,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                    const SizedBox(height: 50,),
+                    const SizedBox(height: 10),
+                    isLoading
+                        ? CircularProgressIndicator()
+                        : Text(
+                            userName,
+                            style: superFont1,
+                          ),
+                    const SizedBox(height: 5),
+                    Text(
+                      userEmail,
+                      style: regulerFont1,
+                    ),
+                    const SizedBox(height: 20),
+                    ProfileOption(
+                      icon: Icons.person,
+                      text: 'Ubah Profile',
+                      selectedItemColor: primary,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangeProfile()),
+                        );
+                      },
+                      color: primary,
+                    ),
+                    ProfileOption(
+                      icon: Icons.lock,
+                      text: 'Ubah Password',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePasswordScreen()),
+                        );
+                      },
+                      color: primary,
+                      selectedItemColor: primary,
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        _showJoinAsOwnerDialog(context);
+                      },
+                      style: longButton1,
+                      child: Text(
+                        'DAFTARKAN LAPANGANMU',
+                        style: buttonFont1,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        _showLogoutDialog(context);
+                      },
+                      style: longButton1,
+                      child: Text(
+                        'KELUAR',
+                        style: buttonFont1,
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-          ),
-          Positioned.fill(
-            child: Container(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: <Widget>[
-                  const SizedBox(height: 15),
-                  Stack(
-                    children: [
-                      Container(
-                        width: 115,
-                        height: 115,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: primary,
-                            width: 10,
-                          ),
-                        ),
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundColor: tertiary,
-                          child: Icon(
-                            Icons.person,
-                            size: 50,
-                            color: white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Thora`s Times',
-                    style: superFont1,
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    'thoraatime@gmail.com',
-                    style: regulerFont1,
-                  ),
-                  const SizedBox(height: 20),
-                  ProfileOption(
-                    icon: Icons.person,
-                    text: 'Ubah Profile',
-                    selectedItemColor: primary,
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChangeProfile()),);// Add your profile editing logic here
-                    },
-                    color: primary,
-                  ),
-                  ProfileOption(
-                    icon: Icons.lock,
-                    text: 'Ubah Password',
-                    onTap: () {
-                      // Add password changing logic here
-                    },
-                    color: primary,
-                    selectedItemColor: primary,
-                  ),
-                  const SizedBox(height: 30),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Ketika tombol "KELUAR" ditekan, tampilkan pop-up dialog
-                      _showJoinAsOwnerDialog(context);
-                    },
-                    style: longButton1,
-                    child: Text(
-                      'DAFTARKAN LAPANGANMU',
-                      style: buttonFont1,
-                    ),
-                  ),
-                  const SizedBox(height: 10,),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Ketika tombol "KELUAR" ditekan, tampilkan pop-up dialog
-                      _showLogoutDialog(context);
-                    },
-                    style: longButton1,
-                    child: Text(
-                      'KELUAR',
-                      style: buttonFont1,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3, // Set to Profile page index
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: primary,
-        unselectedItemColor: tertiary,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Cari',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -322,11 +338,13 @@ class ProfileOption extends StatefulWidget {
   final VoidCallback onTap;
   final Color color;
 
-  const ProfileOption({super.key, 
+  const ProfileOption({
+    super.key,
     required this.icon,
     required this.text,
     required this.onTap,
-    required this.color, required Color selectedItemColor,
+    required this.color,
+    required Color selectedItemColor,
   });
 
   @override

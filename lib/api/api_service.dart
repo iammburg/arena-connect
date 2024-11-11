@@ -64,4 +64,26 @@ class ApiService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
+
+  Future<Map<String, dynamic>> getUserProfile(String token) async {
+    final url = Uri.parse('$baseUrl/user');
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      return {
+        'success': true,
+        'data': responseData,
+      };
+    } else {
+      final errorData = jsonDecode(response.body);
+      return {'success': false, 'errors': errorData};
+    }
+  }
 }

@@ -16,11 +16,11 @@ class _ChangeProfileState extends State<ChangeProfile> {
   TextEditingController emailController = TextEditingController();
   File? _profileImage;
   final ImagePicker _picker = ImagePicker();
-  
+
   String initialUsername = 'Thora`s Times';
   String initialPhone = '081234567891';
   String initialEmail = 'thoraatime@gmail.com';
-  
+
   bool isChanged = false;
 
   @override
@@ -57,8 +57,8 @@ class _ChangeProfileState extends State<ChangeProfile> {
   void checkChanges() {
     setState(() {
       isChanged = usernameController.text != initialUsername ||
-                  phoneController.text != initialPhone ||
-                  emailController.text != initialEmail;
+          phoneController.text != initialPhone ||
+          emailController.text != initialEmail;
     });
   }
 
@@ -78,7 +78,8 @@ class _ChangeProfileState extends State<ChangeProfile> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          backgroundColor: white, // Mengubah background rectangle menjadi warna putih
+          backgroundColor:
+              white, // Mengubah background rectangle menjadi warna putih
           title: Center(
             child: Column(
               children: [
@@ -86,7 +87,8 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   'Simpan Perubahan',
                   style: superFont1.copyWith(color: primary),
                 ),
-                const SizedBox(height: 20), // Reduce the gap between title and the content
+                const SizedBox(
+                    height: 20), // Reduce the gap between title and the content
                 Text(
                   'Apakah kamu yakin ingin menyimpan perubahan?',
                   textAlign: TextAlign.center,
@@ -95,7 +97,8 @@ class _ChangeProfileState extends State<ChangeProfile> {
               ],
             ),
           ),
-          contentPadding: const EdgeInsets.all(20), // Adjusted padding for more space
+          contentPadding:
+              const EdgeInsets.all(20), // Adjusted padding for more space
           content: SizedBox(
             height: 80, // Set height to maintain a balanced shape
             child: Column(
@@ -132,20 +135,30 @@ class _ChangeProfileState extends State<ChangeProfile> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text("Simpan", style: buttonFont2, selectionColor: secondary,),
+                        child: Text(
+                          "Simpan",
+                          style: buttonFont2,
+                          selectionColor: secondary,
+                        ),
                         onPressed: () {
-                          Navigator.of(context).pop(); // Tutup dialog setelah menyimpan
-                          // Tampilkan SnackBar untuk konfirmasi berhasil 
+                          Navigator.of(context)
+                              .pop(); // Tutup dialog setelah menyimpan
+                          // Tampilkan SnackBar untuk konfirmasi berhasil
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: const Text("Perubahan berhasil disimpan!"),
-                              backgroundColor: Colors.lightGreen, // Warna hijau sesuai gambar
-                              duration: const Duration(seconds: 2), // Durasi tampilan SnackBar
-                              behavior: SnackBarBehavior.floating, // Menampilkan di tengah layar
+                              content:
+                                  const Text("Perubahan berhasil disimpan!"),
+                              backgroundColor: Colors
+                                  .lightGreen, // Warna hijau sesuai gambar
+                              duration: const Duration(
+                                  seconds: 2), // Durasi tampilan SnackBar
+                              behavior: SnackBarBehavior
+                                  .floating, // Menampilkan di tengah layar
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              margin: const EdgeInsets.symmetric(horizontal: 40.0), // Margin horizontal
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 40.0), // Margin horizontal
                             ),
                           );
                         },
@@ -160,38 +173,46 @@ class _ChangeProfileState extends State<ChangeProfile> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned( 
+          Positioned(
             top: 0,
             left: 0,
             right: 0,
             child: AppBar(
               backgroundColor: primary, // Dark blue background
-              automaticallyImplyLeading: false, // Remove the default back button
+              automaticallyImplyLeading:
+                  false, // Remove the default back button
               flexibleSpace: Padding(
-                padding: const EdgeInsets.only(left: 10, top: 10, right: 10), // Adjust padding
+                padding: const EdgeInsets.only(
+                    left: 10, top: 50, right: 10), // Adjust padding
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.arrow_back_ios, size: 20, color: white),
+                          icon: Icon(Icons.arrow_back_ios,
+                              size: 20, color: white),
                           onPressed: () {
                             Navigator.pop(context); // Handle back navigation
                           },
                           padding: EdgeInsets.zero, // Remove default padding
-                          constraints: const BoxConstraints(), // Remove default size constraints
+                          constraints:
+                              const BoxConstraints(), // Remove default size constraints
                         ),
-                        const SizedBox(width: 5), // Add space between icon and text
-                        Text('Ubah Profile', style: superFont1.copyWith(color: white)),
+                        const SizedBox(
+                            width: 5), // Add space between icon and text
+                        Text('Ubah Profile',
+                            style: superFont1.copyWith(color: white)),
                       ],
                     ),
-                    const SizedBox(height: 50), // Space between title and profile avatar
+                    const SizedBox(
+                        height: 50), // Space between title and profile avatar
                   ],
                 ),
               ),
@@ -202,7 +223,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: <Widget>[
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 55),
                   Stack(
                     children: [
                       Container(
@@ -218,7 +239,9 @@ class _ChangeProfileState extends State<ChangeProfile> {
                         child: CircleAvatar(
                           radius: 50,
                           backgroundColor: tertiary,
-                          backgroundImage: _profileImage != null ? FileImage(_profileImage!) : null,
+                          backgroundImage: _profileImage != null
+                              ? FileImage(_profileImage!)
+                              : null,
                           child: _profileImage == null
                               ? Icon(Icons.person, size: 50, color: white)
                               : null,
@@ -238,19 +261,29 @@ class _ChangeProfileState extends State<ChangeProfile> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       ListTile(
-                                        leading: Icon(Icons.camera_alt, color: primary,),
-                                        title: const Text('Ambil Foto dari Kamera'),
+                                        leading: Icon(
+                                          Icons.camera_alt,
+                                          color: primary,
+                                        ),
+                                        title: const Text(
+                                            'Ambil Foto dari Kamera'),
                                         onTap: () {
-                                          pickImageFromCamera();// Tambahkan logika untuk mengambil foto dari kamera
-                                          Navigator.pop(context); // Tutup popup setelah memilih opsi
+                                          pickImageFromCamera(); // Tambahkan logika untuk mengambil foto dari kamera
+                                          Navigator.pop(
+                                              context); // Tutup popup setelah memilih opsi
                                         },
                                       ),
                                       ListTile(
-                                        leading: Icon(Icons.photo,color: primary,),
-                                        title: const Text('Tambahkan dari Galeri'),
+                                        leading: Icon(
+                                          Icons.photo,
+                                          color: primary,
+                                        ),
+                                        title:
+                                            const Text('Tambahkan dari Galeri'),
                                         onTap: () {
-                                          pickImageFromGallery();// Tambahkan logika untuk memilih foto dari galeri
-                                          Navigator.pop(context); // Tutup popup setelah memilih opsi
+                                          pickImageFromGallery(); // Tambahkan logika untuk memilih foto dari galeri
+                                          Navigator.pop(
+                                              context); // Tutup popup setelah memilih opsi
                                         },
                                       ),
                                     ],
@@ -258,56 +291,71 @@ class _ChangeProfileState extends State<ChangeProfile> {
                                 );
                               },
                             );
-                          }, 
-                        child: CircleAvatar(
-                          backgroundColor: white,
-                          radius: 12, // Adjust the size of the small circle
-                          child: const Icon(
-                            Icons.add_a_photo_outlined,
-                            size: 15,
-                            color: Colors.black,
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: white,
+                            radius: 12, // Adjust the size of the small circle
+                            child: const Icon(
+                              Icons.add_a_photo_outlined,
+                              size: 15,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
-                      ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 50),
                   // Mengatur padding yang lebih kecil untuk input fields
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10), // Padding horizontal lebih kecil
-                    child: buildInputField(labelText: 'Username', controller: usernameController,),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10), // Padding horizontal lebih kecil
+                    child: buildInputField(
+                      labelText: 'Username',
+                      controller: usernameController,
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10,), // Padding horizontal lebih kecil
-                    child: buildInputField(labelText: 'No Telepon', controller: phoneController,),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ), // Padding horizontal lebih kecil
+                    child: buildInputField(
+                      labelText: 'No Telepon',
+                      controller: phoneController,
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10), // Padding horizontal lebih kecil
-                    child: buildInputField(labelText: 'Email', controller: emailController,),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10), // Padding horizontal lebih kecil
+                    child: buildInputField(
+                      labelText: 'Email',
+                      controller: emailController,
+                    ),
                   ),
                   const SizedBox(height: 30),
-                    
-                    ProfileOption(
-                      text: 'Hapus Akun',
-                      selectedItemColor: primary,
-                      onTap: () {
-                        // Add your profile editing logic here
-                      },
-                      color: primary,
+
+                  ProfileOption(
+                    text: 'Hapus Akun',
+                    selectedItemColor: primary,
+                    onTap: () {
+                      // Add your profile editing logic here
+                    },
+                    color: primary,
+                  ),
+                  // Modifikasi untuk "Simpan Perubahan"
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: isChanged ? _showSaveConfirmationDialog : null,
+                    style: longButton1,
+                    child: Text(
+                      'Simpan Perubahan',
+                      style: buttonFont1,
                     ),
-                    // Modifikasi untuk "Simpan Perubahan"
-                    const SizedBox(height: 10,),
-                    ElevatedButton(
-                      onPressed: isChanged ? _showSaveConfirmationDialog : null,
-                      style: longButton1,
-                      child: Text(
-                        'Simpan Perubahan',
-                        style: buttonFont1,
-                      ), 
-                    ),
+                  ),
                 ],
               ),
             ),
@@ -316,7 +364,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
       ),
       //   appBar: PreferredSize(
       //   preferredSize: Size.fromHeight(150), // Increase the height to accommodate the profile picture
-        
+
       // ),
 
       bottomNavigationBar: BottomNavigationBar(
@@ -374,7 +422,8 @@ Widget buildInputField({
         ),
         borderRadius: BorderRadius.circular(10), // Border radius
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15), // Padding dalam kotak input
+      contentPadding: const EdgeInsets.symmetric(
+          horizontal: 10, vertical: 15), // Padding dalam kotak input
     ),
     style: superFont4,
   );
@@ -385,10 +434,12 @@ class ProfileOption extends StatefulWidget {
   final VoidCallback onTap;
   final Color color;
 
-  const ProfileOption({super.key, 
+  const ProfileOption({
+    super.key,
     required this.text,
     required this.onTap,
-    required this.color, required Color selectedItemColor,
+    required this.color,
+    required Color selectedItemColor,
   });
 
   @override

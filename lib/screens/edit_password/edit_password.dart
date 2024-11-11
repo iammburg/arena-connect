@@ -1,3 +1,4 @@
+import 'package:arena_connect/screens/edit_password/kode_otp.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -87,7 +88,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             ElevatedButton(
               onPressed: isButtonEnabled
                   ? () {
-                      // Aksi saat tombol diklik jika aktif
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OtpVerificationScreen()),
+                      );
                     }
                   : null,
               style: ElevatedButton.styleFrom(
@@ -104,7 +109,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 'Kirim Kode OTP',
                 style: TextStyle(
                   fontSize: 16.0,
-                  color: Colors.white,
+                  color: Colors.white, 
                 ),
               ),
             ),
