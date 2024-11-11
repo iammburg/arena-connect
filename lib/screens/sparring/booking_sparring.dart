@@ -441,4 +441,3 @@ class BookingPage extends StatelessWidget {
     );
   }
 }
-
