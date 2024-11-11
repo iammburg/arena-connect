@@ -30,8 +30,12 @@ class _SparringSearchState extends State<SparringSearch>
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title:
-            IconButton(onPressed: () {}, icon: const Icon(Icons.chevron_left)),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, "/homepage");
+          },
+        ),
         bottom: TabBar(
           controller: _tabController,
           labelColor: Colors.blue,
