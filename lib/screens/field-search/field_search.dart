@@ -151,8 +151,11 @@ class _FieldSearchState extends State<FieldSearch> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const FieldCenterDetails()),
+                                  builder: (context) => FieldCenterDetails(
+                                    fieldCentreId:
+                                        filteredFieldCentre[index].id,
+                                  ),
+                                ),
                               );
                             },
                             child: Card(
@@ -271,9 +274,7 @@ class _FieldSearchState extends State<FieldSearch> {
                                                       MainAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      filteredFieldCentre[index]
-                                                          .priceFrom
-                                                          .toString(),
+                                                      "Rp${filteredFieldCentre[index].priceFrom.toString()}",
                                                       style: superFont3,
                                                     )
                                                   ],
@@ -313,13 +314,13 @@ class _FieldSearchState extends State<FieldSearch> {
         children: [
           Icon(
             icon,
-            size: 12, // Ukuran ikon
+            size: 12,
             color: Colors.white,
           ),
-          const SizedBox(width: 7), // Jarak antara ikon dan teks
+          const SizedBox(width: 7),
           Text(
             label,
-            style: buttonFont6, // Ukuran teks
+            style: buttonFont6,
           ),
         ],
       ),
