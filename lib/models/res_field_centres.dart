@@ -48,6 +48,7 @@ class FieldCentre {
   List<String> images;
   DateTime createdAt;
   DateTime updatedAt;
+  User? user;
 
   FieldCentre({
     required this.id,
@@ -64,6 +65,7 @@ class FieldCentre {
     required this.images,
     required this.createdAt,
     required this.updatedAt,
+    this.user,
   });
 
   factory FieldCentre.fromJson(Map<String, dynamic> json) => FieldCentre(
@@ -82,6 +84,7 @@ class FieldCentre {
         images: List<String>.from(jsonDecode(json["images"])),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        user: json["user"] != null ? User.fromJson(json["user"]) : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -99,6 +102,31 @@ class FieldCentre {
         "images": jsonEncode(images),
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "user": user?.toJson(),
+      };
+}
+
+class User {
+  int id;
+  String name;
+  String email;
+
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        id: json["id"],
+        name: json["name"],
+        email: json["email"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "email": email,
       };
 }
 

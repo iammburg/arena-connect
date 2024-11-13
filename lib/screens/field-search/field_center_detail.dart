@@ -207,15 +207,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
                                                                         ?.name ??
                                                                     '',
                                                                 style:
-                                                                    TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 14,
-                                                                  color:
-                                                                      primary,
-                                                                ),
-                                                              ),
+                                                                    superFont3),
                                                         const SizedBox(
                                                             height: 4),
                                                       ],
@@ -363,6 +355,12 @@ class FieldCenterState extends State<FieldCenterDetails> {
                             fontSize: 10,
                           ),
                         ),
+                        Text(
+                          fieldCentre?.maps ?? '',
+                          style: const TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -424,16 +422,13 @@ class FieldCenterState extends State<FieldCenterDetails> {
                                     ),
                                   ),
                                 )
-                              : Text(" ",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: secondary)), // Bullet point
-                          Expanded(
-                            child: Text(
-                                "Telepon: ${fieldCentre?.phoneNumber ?? ''}, Pemilik: ${fieldCentre?.userId ?? ''}",
-                                style:
-                                    TextStyle(fontSize: 12, color: secondary)),
-                          ),
+                              : // Bullet point
+                              Expanded(
+                                  child: Text(
+                                      "Telepon: ${fieldCentre?.phoneNumber ?? ''}, Pemilik: ${fieldCentre?.user?.name ?? ''}",
+                                      style: TextStyle(
+                                          fontSize: 12, color: secondary)),
+                                ),
                         ],
                       ),
                     ],
@@ -466,15 +461,12 @@ class FieldCenterState extends State<FieldCenterDetails> {
                                     ),
                                   ),
                                 )
-                              : Text(" ",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: secondary)), // Bullet point
-                          Expanded(
-                            child: Text(fieldCentre?.descriptions ?? '',
-                                style:
-                                    TextStyle(fontSize: 12, color: secondary)),
-                          ),
+                              : // Bullet point
+                              Expanded(
+                                  child: Text(fieldCentre?.descriptions ?? '',
+                                      style: TextStyle(
+                                          fontSize: 12, color: secondary)),
+                                ),
                         ],
                       ),
                     ],
@@ -507,15 +499,12 @@ class FieldCenterState extends State<FieldCenterDetails> {
                                     ),
                                   ),
                                 )
-                              : Text(" ",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: secondary)), // Bullet point
-                          Expanded(
-                            child: Text(fieldCentre?.rules ?? '',
-                                style:
-                                    TextStyle(fontSize: 12, color: secondary)),
-                          ),
+                              : // Bullet point
+                              Expanded(
+                                  child: Text(fieldCentre?.rules ?? '',
+                                      style: TextStyle(
+                                          fontSize: 12, color: secondary)),
+                                ),
                         ],
                       ),
                     ],
@@ -546,7 +535,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
 
                 // Daftar Fasilitas Lapangan dengan Ikon
                 Container(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Column(
                     children: [
                       Container(
@@ -554,123 +543,185 @@ class FieldCenterState extends State<FieldCenterDetails> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             //Kolom Pertama dengan Expanded
-                            Expanded(
-                              child: Column(
+                            Flexible(
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.start,
+                                alignment: WrapAlignment.start,
+                                spacing: 22,
+                                runSpacing: 10,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.wc,
-                                          color: secondary, size: 22),
-                                      const SizedBox(width: 8),
-                                      const Text('Toilet',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black)),
-                                    ],
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(
+                                  //       horizontal: 8.0),
+                                  //   child: Row(
+                                  //     mainAxisSize: MainAxisSize
+                                  //         .min, // Membatasi ukuran Row
+                                  //     children: [
+                                  //       Icon(Icons.wc,
+                                  //           color: secondary, size: 22),
+                                  //       const SizedBox(width: 8),
+                                  //       const Text('Toilet',
+                                  //           style: TextStyle(
+                                  //               fontSize: 14,
+                                  //               fontWeight: FontWeight.w600,
+                                  //               color: Colors.black)),
+                                  //     ],
+                                  //   ),
+                                  // ),
+
+                                  for (var facility
+                                      in fieldCentre?.facilities ?? [])
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize
+                                            .min, // Membatasi ukuran Row
+                                        children: [
+                                          Icon(
+                                              facility.name == 'Toilet'
+                                                  ? Icons.wc
+                                                  : facility.name == 'WiFi'
+                                                      ? Icons.wifi
+                                                      : facility.name ==
+                                                              'Cafe & Resto'
+                                                          ? Icons.coffee_maker
+                                                          : facility.name ==
+                                                                  'Musholla'
+                                                              ? Icons.mosque
+                                                              : facility.name ==
+                                                                      'Parkir Mobil'
+                                                                  ? Icons
+                                                                      .car_rental
+                                                                  : facility.name ==
+                                                                          'Parkir Motor'
+                                                                      ? Icons
+                                                                          .motorcycle
+                                                                      : facility.name ==
+                                                                              'Ruang Ganti'
+                                                                          ? Icons
+                                                                              .meeting_room
+                                                                          : facility.name == 'Tribun'
+                                                                              ? Icons.sports_soccer
+                                                                              : facility.name == 'Jual Makanan'
+                                                                                  ? Icons.food_bank
+                                                                                  : facility.name == 'Jual Minuman'
+                                                                                      ? Icons.local_drink_rounded
+                                                                                      : Icons.circle,
+                                              color: secondary,
+                                              size: 22),
+                                          const SizedBox(width: 8),
+                                          Text(facility.name,
+                                              style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.black)),
+                                        ],
+                                      ),
+                                    ),
+                                  // Tambahkan padding atau children tambahan sesuai kebutuhan
                                 ],
                               ),
                             ),
 
                             const SizedBox(width: 20),
                             //Kolom Kedua dengan Expanded
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.motorcycle,
-                                          color: secondary, size: 22),
-                                      const SizedBox(width: 8),
-                                      const Text('Parkir Motor',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Expanded(
+                            //   child: Column(
+                            //     children: [
+                            //       Row(
+                            //         children: [
+                            //           Icon(Icons.motorcycle,
+                            //               color: secondary, size: 22),
+                            //           const SizedBox(width: 8),
+                            //           const Text('Parkir Motor',
+                            //               style: TextStyle(
+                            //                   fontSize: 14,
+                            //                   fontWeight: FontWeight.w600,
+                            //                   color: Colors.black)),
+                            //         ],
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            //Kolom Pertama dengan Expanded
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.wifi,
-                                          color: secondary, size: 22),
-                                      const SizedBox(width: 8),
-                                      const Text('WiFi',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            //Kolom Kedua dengan Expanded
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.mosque,
-                                          color: secondary, size: 22),
-                                      const SizedBox(width: 8),
-                                      const Text('Musholla',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            //Kolom Pertama dengan Expanded
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.car_rental,
-                                          color: secondary, size: 22),
-                                      const SizedBox(width: 8),
-                                      const Text('Parkir Mobil',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // const SizedBox(height: 10),
+                      // Container(
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       //Kolom Pertama dengan Expanded
+                      //       Expanded(
+                      //         child: Column(
+                      //           children: [
+                      //             Row(
+                      //               children: [
+                      //                 Icon(Icons.wifi,
+                      //                     color: secondary, size: 22),
+                      //                 const SizedBox(width: 8),
+                      //                 const Text('WiFi',
+                      //                     style: TextStyle(
+                      //                         fontSize: 14,
+                      //                         fontWeight: FontWeight.w600,
+                      //                         color: Colors.black)),
+                      //               ],
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //       const SizedBox(width: 20),
+                      //       //Kolom Kedua dengan Expanded
+                      //       Expanded(
+                      //         child: Column(
+                      //           children: [
+                      //             Row(
+                      //               children: [
+                      //                 Icon(Icons.mosque,
+                      //                     color: secondary, size: 22),
+                      //                 const SizedBox(width: 8),
+                      //                 const Text('Musholla',
+                      //                     style: TextStyle(
+                      //                         fontSize: 14,
+                      //                         fontWeight: FontWeight.w600,
+                      //                         color: Colors.black)),
+                      //               ],
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 10),
+                      // Container(
+                      //   margin: const EdgeInsets.only(right: 10),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       //Kolom Pertama dengan Expanded
+                      //       Expanded(
+                      //         child: Column(
+                      //           children: [
+                      //             Row(
+                      //               children: [
+                      //                 Icon(Icons.car_rental,
+                      //                     color: secondary, size: 22),
+                      //                 const SizedBox(width: 8),
+                      //                 const Text('Parkir Mobil',
+                      //                     style: TextStyle(
+                      //                         fontSize: 14,
+                      //                         fontWeight: FontWeight.w600,
+                      //                         color: Colors.black)),
+                      //               ],
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -680,12 +731,12 @@ class FieldCenterState extends State<FieldCenterDetails> {
 
           const Spacer(),
           Container(
-            height: 55,
+            height: 75,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(2.0),
-              boxShadow: [
-                const BoxShadow(
+              boxShadow: const [
+                BoxShadow(
                   color: Colors.black26, // Warna bayangan
                   offset: Offset(4.5, 0), // Posisi bayangan
                   blurRadius: 4.0, // Jarak blur bayangan
@@ -701,7 +752,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
                   flex: 2,
                   child: Container(
                     margin:
-                        const EdgeInsets.only(top: 10, bottom: 10, left: 30),
+                        const EdgeInsets.only(top: 12, bottom: 10, left: 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -713,12 +764,8 @@ class FieldCenterState extends State<FieldCenterDetails> {
                           ),
                         ),
                         Text(
-                          'Rp 30.000',
-                          style: TextStyle(
-                            fontSize: 15, // Ukuran font untuk harga
-                            fontWeight: FontWeight.bold,
-                            color: primary, // Warna teks biru gelap
-                          ),
+                          "Rp${fieldCentre?.priceFrom.toString() ?? ''}",
+                          style: superFont2,
                         ),
                       ],
                     ),
@@ -738,13 +785,10 @@ class FieldCenterState extends State<FieldCenterDetails> {
                               builder: (context) => const SelectSchedule()),
                         );
                       },
-                      style: shortButton3,
-                      child: const Text(
+                      style: shortButton2,
+                      child: Text(
                         'Pilih Lapangan',
-                        style: TextStyle(
-                          fontSize: 12, // Ukuran teks tombol
-                          color: Colors.white, // Warna teks putih
-                        ),
+                        style: buttonFont4,
                       ),
                     ),
                   ),
