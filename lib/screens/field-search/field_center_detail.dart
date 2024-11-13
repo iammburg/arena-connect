@@ -1,16 +1,65 @@
+import 'dart:convert';
+
+import 'package:arena_connect/api/api_service.dart';
 import 'package:arena_connect/config/theme.dart';
+import 'package:arena_connect/models/res_field_centres.dart';
 import 'package:arena_connect/screens/field-search/select_schedule.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class FieldCenterDetails extends StatefulWidget {
-  const FieldCenterDetails({super.key});
+  final int fieldCentreId;
+  const FieldCenterDetails({super.key, required this.fieldCentreId});
 
   @override
   FieldCenterState createState() => FieldCenterState();
 }
 
 class FieldCenterState extends State<FieldCenterDetails> {
+  bool isLoading = false;
+  FieldCentre? fieldCentre;
+
+  @override
+  void initState() {
+    super.initState();
+    getFieldCentreDetails();
+  }
+
+  Future<void> getFieldCentreDetails() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      String? token = await ApiService().getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+      http.Response res = await http.get(
+        Uri.parse("$baseUrl/field_centres/${widget.fieldCentreId}"),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      if (res.statusCode == 200) {
+        setState(() {
+          fieldCentre = FieldCentre.fromJson(jsonDecode(res.body)['data']);
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load field centre details');
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: Colors.green,
+          ),
+        );
+      });
+    }
+  }
+
   final List<String> imgList = [
     'images/badminton4.jpg',
     'images/badminton2.jpg',
@@ -54,167 +103,222 @@ class FieldCenterState extends State<FieldCenterDetails> {
                       aspectRatio: 16 / 9,
                       autoPlayCurve: Curves.fastOutSlowIn,
                       enableInfiniteScroll: true,
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayAnimationDuration:
+                          const Duration(milliseconds: 800),
                       viewportFraction: 0.8,
                     ),
-                    items: imgList.map((item) {
-                      return Stack(
-                        children: [
-                          //Gambar Latar Belakang
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26, // Warna bayangan
-                                  offset: Offset(0, 1), // Posisi bayangan
-                                  blurRadius: 0.5, // Jarak blur bayangan
-                                  spreadRadius: 0.25, // Jarak sebar bayangan
-                                ),
-                              ],
-                              image: DecorationImage(
-                                image: AssetImage(item),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-
-                          //Background putih dengan Informasi di atasnya
-                          Positioned(
-                            bottom: 0.55,
-                            left: 0.1,
-                            right: 0.1,
-                            child: Container(
-                              height: 85.0,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(7.75),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26, // Warna bayangan
-                                    offset: Offset(0, 1), // Posisi bayangan
-                                    blurRadius: 0.5, // Jarak blur bayangan
-                                    spreadRadius: 0.25, // Jarak sebar bayangan
-                                  ),
-                                ],
-                              ),
-
-                              //Informasi Lapangan
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Kota Semarang',
-                                              style: TextStyle(
-                                                  color: secondary,
-                                                  fontSize: 8),
+                    items: fieldCentre?.images != null
+                        ? fieldCentre!.images!.map((item) {
+                            return isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : Stack(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Colors
+                                                  .black26, // Warna bayangan
+                                              offset: Offset(
+                                                  0, 1), // Posisi bayangan
+                                              blurRadius:
+                                                  0.5, // Jarak blur bayangan
+                                              spreadRadius:
+                                                  0.25, // Jarak sebar bayangan
                                             ),
-                                            SizedBox(height: 2),
-                                            Text(
-                                              'REHAM',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
-                                                color: primary,
+                                          ],
+                                          image: DecorationImage(
+                                            image: NetworkImage(item),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+
+                                      //Background putih dengan Informasi di atasnya
+                                      Positioned(
+                                        bottom: 0.55,
+                                        left: 0.1,
+                                        right: 0.1,
+                                        child: Container(
+                                          height: 85.0,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(7.75),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                color: Colors
+                                                    .black26, // Warna bayangan
+                                                offset: Offset(
+                                                    0, 1), // Posisi bayangan
+                                                blurRadius:
+                                                    0.5, // Jarak blur bayangan
+                                                spreadRadius:
+                                                    0.25, // Jarak sebar bayangan
                                               ),
+                                            ],
+                                          ),
+
+                                          //Informasi Lapangan
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          fieldCentre
+                                                                  ?.address ??
+                                                              '',
+                                                          style: TextStyle(
+                                                              color: secondary,
+                                                              fontSize: 8),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 2),
+                                                        isLoading
+                                                            ? const Center(
+                                                                child: SizedBox(
+                                                                  width: 10,
+                                                                  height: 10,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    strokeWidth:
+                                                                        2,
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : Text(
+                                                                fieldCentre
+                                                                        ?.name ??
+                                                                    '',
+                                                                style:
+                                                                    superFont3),
+                                                        const SizedBox(
+                                                            height: 4),
+                                                      ],
+                                                    ),
+                                                    Column(
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            const Icon(
+                                                                Icons.star,
+                                                                color: Colors
+                                                                    .orangeAccent,
+                                                                size: 22),
+                                                            const SizedBox(
+                                                                width: 6),
+                                                            Text(
+                                                                fieldCentre
+                                                                        ?.rating
+                                                                        .toString() ??
+                                                                    '0.0',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black)),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 4),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Column(
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            _buildChip(
+                                                                'Badminton',
+                                                                Icons
+                                                                    .sports_tennis),
+                                                            const SizedBox(
+                                                                width: 8),
+                                                            _buildChip(
+                                                                'Futsal',
+                                                                Icons
+                                                                    .sports_soccer),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              'Mulai',
+                                                              style: TextStyle(
+                                                                  fontSize: 10,
+                                                                  color:
+                                                                      secondary),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 6),
+                                                        Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              'Rp${fieldCentre?.priceFrom.toString()}',
+                                                              style: const TextStyle(
+                                                                  fontSize: 13,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: Colors
+                                                                      .black),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
                                             ),
-                                            SizedBox(height: 4),
-                                          ],
+                                          ),
                                         ),
-                                        Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Icon(Icons.star,
-                                                    color: Colors.orangeAccent,
-                                                    size: 22),
-                                                SizedBox(width: 6),
-                                                Text('4.5',
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.black)),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 4),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                _buildChip('Badminton',
-                                                    Icons.sports_tennis),
-                                                SizedBox(width: 8),
-                                                _buildChip('Futsal',
-                                                    Icons.sports_soccer),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Mulai',
-                                                  style: TextStyle(
-                                                      fontSize: 10,
-                                                      color: secondary),
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(width: 6),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Rp 30.000',
-                                                  style: TextStyle(
-                                                      fontSize: 13,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }).toList(),
+                                      ),
+                                    ],
+                                  );
+                          }).toList()
+                        : [],
                   ),
                 ),
               ],
@@ -230,7 +334,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
                   color: Colors.grey.withOpacity(0.7), // Warna bayangan
                   spreadRadius: 1, // Sebaran bayangan
                   blurRadius: 2, // Jarak blur
-                  offset: Offset(-0.5, 4), // Perpindahan bayangan (x,y)
+                  offset: const Offset(-0.5, 4), // Perpindahan bayangan (x,y)
                 ),
               ],
             ),
@@ -246,8 +350,14 @@ class FieldCenterState extends State<FieldCenterDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Jl.Mulawarman Selatan, Tembalang, Semarang',
-                          style: TextStyle(
+                          fieldCentre?.address ?? '',
+                          style: const TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
+                        Text(
+                          fieldCentre?.maps ?? '',
+                          style: const TextStyle(
                             fontSize: 10,
                           ),
                         ),
@@ -275,7 +385,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
             ),
           ),
 
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
 
           //ATURAN LAPANGAN
           Container(
@@ -286,44 +396,115 @@ class FieldCenterState extends State<FieldCenterDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
+                  "Informasi Kontak",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                // Daftar aturan dengan bullet poin
+                Container(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          isLoading
+                              ? const Center(
+                                  child: SizedBox(
+                                    width: 10,
+                                    height: 10,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                )
+                              : // Bullet point
+                              Expanded(
+                                  child: Text(
+                                      "Telepon: ${fieldCentre?.phoneNumber ?? ''}, Pemilik: ${fieldCentre?.user?.name ?? ''}",
+                                      style: TextStyle(
+                                          fontSize: 12, color: secondary)),
+                                ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                const Text(
+                  "Deskripsi Lapangan",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                // Daftar aturan dengan bullet poin
+                Container(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          isLoading
+                              ? const Center(
+                                  child: SizedBox(
+                                    width: 10,
+                                    height: 10,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                )
+                              : // Bullet point
+                              Expanded(
+                                  child: Text(fieldCentre?.descriptions ?? '',
+                                      style: TextStyle(
+                                          fontSize: 12, color: secondary)),
+                                ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                const Text(
                   "Aturan Lapangan",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
                 // Daftar aturan dengan bullet poin
                 Container(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: const EdgeInsets.only(left: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          Text("• ",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: secondary)), // Bullet point
-                          Expanded(
-                            child: Text("Dilarang Meludah sembarangan",
-                                style:
-                                    TextStyle(fontSize: 12, color: secondary)),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text("• ",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: secondary)), // Bullet point
-                          Expanded(
-                            child: Text("Masuk sesuai waktu booking",
-                                style:
-                                    TextStyle(fontSize: 12, color: secondary)),
-                          ),
+                          isLoading
+                              ? const Center(
+                                  child: SizedBox(
+                                    width: 10,
+                                    height: 10,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                )
+                              : // Bullet point
+                              Expanded(
+                                  child: Text(fieldCentre?.rules ?? '',
+                                      style: TextStyle(
+                                          fontSize: 12, color: secondary)),
+                                ),
                         ],
                       ),
                     ],
@@ -343,18 +524,18 @@ class FieldCenterState extends State<FieldCenterDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Fasilitas',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
 
                 // Daftar Fasilitas Lapangan dengan Ikon
                 Container(
-                  padding: EdgeInsets.only(left: 30, right: 30),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Column(
                     children: [
                       Container(
@@ -362,123 +543,185 @@ class FieldCenterState extends State<FieldCenterDetails> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             //Kolom Pertama dengan Expanded
-                            Expanded(
-                              child: Column(
+                            Flexible(
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.start,
+                                alignment: WrapAlignment.start,
+                                spacing: 22,
+                                runSpacing: 10,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.wc,
-                                          color: secondary, size: 22),
-                                      SizedBox(width: 8),
-                                      Text('Toilet',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black)),
-                                    ],
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(
+                                  //       horizontal: 8.0),
+                                  //   child: Row(
+                                  //     mainAxisSize: MainAxisSize
+                                  //         .min, // Membatasi ukuran Row
+                                  //     children: [
+                                  //       Icon(Icons.wc,
+                                  //           color: secondary, size: 22),
+                                  //       const SizedBox(width: 8),
+                                  //       const Text('Toilet',
+                                  //           style: TextStyle(
+                                  //               fontSize: 14,
+                                  //               fontWeight: FontWeight.w600,
+                                  //               color: Colors.black)),
+                                  //     ],
+                                  //   ),
+                                  // ),
+
+                                  for (var facility
+                                      in fieldCentre?.facilities ?? [])
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize
+                                            .min, // Membatasi ukuran Row
+                                        children: [
+                                          Icon(
+                                              facility.name == 'Toilet'
+                                                  ? Icons.wc
+                                                  : facility.name == 'WiFi'
+                                                      ? Icons.wifi
+                                                      : facility.name ==
+                                                              'Cafe & Resto'
+                                                          ? Icons.coffee_maker
+                                                          : facility.name ==
+                                                                  'Musholla'
+                                                              ? Icons.mosque
+                                                              : facility.name ==
+                                                                      'Parkir Mobil'
+                                                                  ? Icons
+                                                                      .car_rental
+                                                                  : facility.name ==
+                                                                          'Parkir Motor'
+                                                                      ? Icons
+                                                                          .motorcycle
+                                                                      : facility.name ==
+                                                                              'Ruang Ganti'
+                                                                          ? Icons
+                                                                              .meeting_room
+                                                                          : facility.name == 'Tribun'
+                                                                              ? Icons.sports_soccer
+                                                                              : facility.name == 'Jual Makanan'
+                                                                                  ? Icons.food_bank
+                                                                                  : facility.name == 'Jual Minuman'
+                                                                                      ? Icons.local_drink_rounded
+                                                                                      : Icons.circle,
+                                              color: secondary,
+                                              size: 22),
+                                          const SizedBox(width: 8),
+                                          Text(facility.name,
+                                              style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.black)),
+                                        ],
+                                      ),
+                                    ),
+                                  // Tambahkan padding atau children tambahan sesuai kebutuhan
                                 ],
                               ),
                             ),
 
-                            SizedBox(width: 20),
+                            const SizedBox(width: 20),
                             //Kolom Kedua dengan Expanded
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.motorcycle,
-                                          color: secondary, size: 22),
-                                      SizedBox(width: 8),
-                                      Text('Parkir Motor',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Expanded(
+                            //   child: Column(
+                            //     children: [
+                            //       Row(
+                            //         children: [
+                            //           Icon(Icons.motorcycle,
+                            //               color: secondary, size: 22),
+                            //           const SizedBox(width: 8),
+                            //           const Text('Parkir Motor',
+                            //               style: TextStyle(
+                            //                   fontSize: 14,
+                            //                   fontWeight: FontWeight.w600,
+                            //                   color: Colors.black)),
+                            //         ],
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 10),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            //Kolom Pertama dengan Expanded
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.wifi,
-                                          color: secondary, size: 22),
-                                      SizedBox(width: 8),
-                                      Text('WiFi',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: 20),
-                            //Kolom Kedua dengan Expanded
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.mosque,
-                                          color: secondary, size: 22),
-                                      SizedBox(width: 8),
-                                      Text('Musholla',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            //Kolom Pertama dengan Expanded
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.car_rental,
-                                          color: secondary, size: 22),
-                                      SizedBox(width: 8),
-                                      Text('Parkir Mobil',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // const SizedBox(height: 10),
+                      // Container(
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       //Kolom Pertama dengan Expanded
+                      //       Expanded(
+                      //         child: Column(
+                      //           children: [
+                      //             Row(
+                      //               children: [
+                      //                 Icon(Icons.wifi,
+                      //                     color: secondary, size: 22),
+                      //                 const SizedBox(width: 8),
+                      //                 const Text('WiFi',
+                      //                     style: TextStyle(
+                      //                         fontSize: 14,
+                      //                         fontWeight: FontWeight.w600,
+                      //                         color: Colors.black)),
+                      //               ],
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //       const SizedBox(width: 20),
+                      //       //Kolom Kedua dengan Expanded
+                      //       Expanded(
+                      //         child: Column(
+                      //           children: [
+                      //             Row(
+                      //               children: [
+                      //                 Icon(Icons.mosque,
+                      //                     color: secondary, size: 22),
+                      //                 const SizedBox(width: 8),
+                      //                 const Text('Musholla',
+                      //                     style: TextStyle(
+                      //                         fontSize: 14,
+                      //                         fontWeight: FontWeight.w600,
+                      //                         color: Colors.black)),
+                      //               ],
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 10),
+                      // Container(
+                      //   margin: const EdgeInsets.only(right: 10),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       //Kolom Pertama dengan Expanded
+                      //       Expanded(
+                      //         child: Column(
+                      //           children: [
+                      //             Row(
+                      //               children: [
+                      //                 Icon(Icons.car_rental,
+                      //                     color: secondary, size: 22),
+                      //                 const SizedBox(width: 8),
+                      //                 const Text('Parkir Mobil',
+                      //                     style: TextStyle(
+                      //                         fontSize: 14,
+                      //                         fontWeight: FontWeight.w600,
+                      //                         color: Colors.black)),
+                      //               ],
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -488,11 +731,11 @@ class FieldCenterState extends State<FieldCenterDetails> {
 
           const Spacer(),
           Container(
-            height: 55,
+            height: 75,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(2.0),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black26, // Warna bayangan
                   offset: Offset(4.5, 0), // Posisi bayangan
@@ -508,11 +751,12 @@ class FieldCenterState extends State<FieldCenterDetails> {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    margin: EdgeInsets.only(top: 10, bottom: 10, left: 30),
+                    margin:
+                        const EdgeInsets.only(top: 12, bottom: 10, left: 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Mulai',
                           style: TextStyle(
                             fontSize: 10, // Ukuran font yang lebih kecil
@@ -520,12 +764,8 @@ class FieldCenterState extends State<FieldCenterDetails> {
                           ),
                         ),
                         Text(
-                          'Rp 30.000',
-                          style: TextStyle(
-                            fontSize: 15, // Ukuran font untuk harga
-                            fontWeight: FontWeight.bold,
-                            color: primary, // Warna teks biru gelap
-                          ),
+                          "Rp${fieldCentre?.priceFrom.toString() ?? ''}",
+                          style: superFont2,
                         ),
                       ],
                     ),
@@ -534,7 +774,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                         top: 10, bottom: 10, left: 20, right: 30),
                     child: ElevatedButton(
                       onPressed: () {
@@ -542,16 +782,13 @@ class FieldCenterState extends State<FieldCenterDetails> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SelectSchedule()),
+                              builder: (context) => const SelectSchedule()),
                         );
                       },
-                      style: shortButton3,
+                      style: shortButton2,
                       child: Text(
                         'Pilih Lapangan',
-                        style: TextStyle(
-                          fontSize: 12, // Ukuran teks tombol
-                          color: Colors.white, // Warna teks putih
-                        ),
+                        style: buttonFont4,
                       ),
                     ),
                   ),
@@ -567,7 +804,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
   // Widget untuk kategori chip (misalnya Badminton dan Futsal)
   Widget _buildChip(String label, IconData icon) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
       decoration: BoxDecoration(
         color: primary,
         borderRadius: BorderRadius.circular(4.0),
@@ -580,10 +817,10 @@ class FieldCenterState extends State<FieldCenterDetails> {
             size: 12, // Ukuran ikon
             color: Colors.white,
           ),
-          SizedBox(width: 7), // Jarak antara ikon dan teks
+          const SizedBox(width: 7), // Jarak antara ikon dan teks
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 8,
               color: Colors.white,
             ), // Ukuran teks

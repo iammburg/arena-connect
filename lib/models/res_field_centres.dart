@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final resFieldCentres = resFieldCentresFromJson(jsonString);
-
 import 'dart:convert';
 import 'package:decimal/decimal.dart';
 
@@ -47,11 +43,12 @@ class FieldCentre {
   String maps;
   String phoneNumber;
   Decimal priceFrom;
-  String facilities;
+  List<Facility> facilities;
   double rating;
   List<String> images;
   DateTime createdAt;
   DateTime updatedAt;
+  User? user;
 
   FieldCentre({
     required this.id,
@@ -68,6 +65,7 @@ class FieldCentre {
     required this.images,
     required this.createdAt,
     required this.updatedAt,
+    this.user,
   });
 
   factory FieldCentre.fromJson(Map<String, dynamic> json) => FieldCentre(
@@ -80,11 +78,13 @@ class FieldCentre {
         maps: json["maps"],
         phoneNumber: json["phone_number"],
         priceFrom: Decimal.parse(json["price_from"].toString()),
-        facilities: json["facilities"],
+        facilities: List<Facility>.from(
+            json["facilities"].map((x) => Facility.fromJson(x))),
         rating: json["rating"].toDouble(),
         images: List<String>.from(jsonDecode(json["images"])),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        user: json["user"] != null ? User.fromJson(json["user"]) : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -97,10 +97,75 @@ class FieldCentre {
         "maps": maps,
         "phone_number": phoneNumber,
         "price_from": priceFrom,
-        "facilities": facilities,
+        "facilities": List<dynamic>.from(facilities.map((x) => x.toJson())),
         "rating": rating,
         "images": jsonEncode(images),
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "user": user?.toJson(),
+      };
+}
+
+class User {
+  int id;
+  String name;
+  String email;
+
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        id: json["id"],
+        name: json["name"],
+        email: json["email"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "email": email,
+      };
+}
+
+class Facility {
+  String name;
+  Pivot pivot;
+
+  Facility({
+    required this.name,
+    required this.pivot,
+  });
+
+  factory Facility.fromJson(Map<String, dynamic> json) => Facility(
+        name: json["name"],
+        pivot: Pivot.fromJson(json["pivot"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "pivot": pivot.toJson(),
+      };
+}
+
+class Pivot {
+  int fieldCentreId;
+  int facilityId;
+
+  Pivot({
+    required this.fieldCentreId,
+    required this.facilityId,
+  });
+
+  factory Pivot.fromJson(Map<String, dynamic> json) => Pivot(
+        fieldCentreId: json["field_centre_id"],
+        facilityId: json["facility_id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "field_centre_id": fieldCentreId,
+        "facility_id": facilityId,
       };
 }
