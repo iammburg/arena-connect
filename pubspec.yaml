@@ -8,6 +8,7 @@ environment:
 
 dependencies:
     carousel_slider: 5.0.0
+    decimal: ^3.0.2
     device_frame: 1.2.0
     device_preview: ^1.2.0
     flutter:
@@ -15,6 +16,7 @@ dependencies:
     get: ^4.6.6
     http: ^1.2.2
     url_launcher: ^6.0.10
+    shared_preferences: ^2.3.2
 
 dev_dependencies:
     flutter_test:

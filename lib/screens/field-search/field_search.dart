@@ -1,6 +1,9 @@
 import 'package:arena_connect/config/theme.dart';
 import 'package:arena_connect/screens/field-search/field_center_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:arena_connect/models/res_field_centres.dart';
+import 'package:arena_connect/api/api_service.dart';
+import 'package:http/http.dart' as http;
 
 class FieldSearch extends StatefulWidget {
   const FieldSearch({super.key});
@@ -10,11 +13,65 @@ class FieldSearch extends StatefulWidget {
 }
 
 class _FieldSearchState extends State<FieldSearch> {
-  final List<String> imgList = [
-    'images/badminton4.jpg',
-    'images/badminton2.jpg',
-    'images/futsal1.jpg',
-  ];
+  bool isLoading = false;
+  List<FieldCentre> listFieldCentre = [];
+  List<FieldCentre> filteredFieldCentre = [];
+  String searchQuery = '';
+
+  Future<void> getFieldCentres() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      String? token = await ApiService().getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+      http.Response res = await http.get(
+        Uri.parse("$baseUrl/field_centres"),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      List<FieldCentre>? data = resFieldCentresFromJson(res.body).data;
+      setState(() {
+        isLoading = false;
+        listFieldCentre = data ?? [];
+        filteredFieldCentre = listFieldCentre;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: Colors.green,
+          ),
+        );
+      });
+    }
+  }
+
+  void updateSearchQuery(String query) {
+    setState(() {
+      searchQuery = query;
+      filteredFieldCentre = listFieldCentre
+          .where((fieldcentre) => fieldcentre.name!
+              .toLowerCase()
+              .contains(searchQuery.toLowerCase()))
+          .toList();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getFieldCentres();
+  }
+
+  // final List<String> imgList = [
+  //   'images/badminton4.jpg',
+  //   'images/badminton2.jpg',
+  //   'images/futsal1.jpg',
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +84,7 @@ class _FieldSearchState extends State<FieldSearch> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, "/homepage");
           },
         ),
         bottom: PreferredSize(
@@ -36,6 +93,7 @@ class _FieldSearchState extends State<FieldSearch> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: TextField(
+              onChanged: updateSearchQuery,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
@@ -79,141 +137,162 @@ class _FieldSearchState extends State<FieldSearch> {
             ),
             const SizedBox(height: 16),
             Expanded(
-              child: ListView.builder(
-                itemCount: imgList.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 16.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FieldCenterDetails()),
-                        );
-                      },
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6.0),
-                        ),
-                        elevation: 4.0,
-                        child: Column(
-                          children: [
-                            // Gambar Latar Belakang
-                            Container(
-                              height: 200.0,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(8.0)),
-                                image: DecorationImage(
-                                  image: AssetImage(imgList[index]),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Kota Semarang',
-                                            style: regulerFont7,
-                                          ),
-                                          const SizedBox(height: 2),
-                                          Text(
-                                            'REHAM',
-                                            style: superFont3,
-                                          ),
-                                          const SizedBox(height: 4),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              const Icon(Icons.star,
-                                                  color: Colors.orangeAccent,
-                                                  size: 20),
-                                              const SizedBox(width: 6),
-                                              Text('4.5', style: superFont1),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+              child: isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(color: primary),
+                    )
+                  : ListView.builder(
+                      itemCount: filteredFieldCentre.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 16.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FieldCenterDetails(
+                                    fieldCentreId:
+                                        filteredFieldCentre[index].id,
                                   ),
-                                  const SizedBox(height: 4),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              _buildChip('Badminton',
-                                                  Icons.sports_tennis),
-                                              const SizedBox(width: 8),
-                                              _buildChip('Futsal',
-                                                  Icons.sports_soccer),
-                                            ],
-                                          ),
-                                        ],
+                                ),
+                              );
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6.0),
+                              ),
+                              elevation: 4.0,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 200.0,
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.vertical(
+                                          top: Radius.circular(8.0)),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            filteredFieldCentre[index]
+                                                .images[0]),
+                                        fit: BoxFit.cover,
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'Mulai',
-                                                style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: secondary),
-                                              )
-                                            ],
-                                          ),
-                                          const SizedBox(width: 6),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Rp30.000',
-                                                style: superFont4,
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  filteredFieldCentre[index]
+                                                      .address,
+                                                  style: regulerFont7,
+                                                ),
+                                                const SizedBox(height: 2),
+                                                Text(
+                                                  filteredFieldCentre[index]
+                                                          .name ??
+                                                      'No Name',
+                                                  style: superFont3,
+                                                ),
+                                                const SizedBox(height: 4),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    const Icon(Icons.star,
+                                                        color:
+                                                            Colors.orangeAccent,
+                                                        size: 20),
+                                                    const SizedBox(width: 6),
+                                                    Text(
+                                                        filteredFieldCentre[
+                                                                    index]
+                                                                .rating
+                                                                ?.toString() ??
+                                                            'N/A',
+                                                        style: superFont1),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    _buildChip('Badminton',
+                                                        Icons.sports_tennis),
+                                                    const SizedBox(width: 8),
+                                                    _buildChip('Futsal',
+                                                        Icons.sports_soccer),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      'Mulai',
+                                                      style: TextStyle(
+                                                          fontSize: 10,
+                                                          color: secondary),
+                                                    )
+                                                  ],
+                                                ),
+                                                const SizedBox(width: 6),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Rp${filteredFieldCentre[index].priceFrom.toString()}",
+                                                      style: superFont3,
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ),
           ],
         ),
@@ -235,13 +314,13 @@ class _FieldSearchState extends State<FieldSearch> {
         children: [
           Icon(
             icon,
-            size: 12, // Ukuran ikon
+            size: 12,
             color: Colors.white,
           ),
-          const SizedBox(width: 7), // Jarak antara ikon dan teks
+          const SizedBox(width: 7),
           Text(
             label,
-            style: buttonFont6, // Ukuran teks
+            style: buttonFont6,
           ),
         ],
       ),
