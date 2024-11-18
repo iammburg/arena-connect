@@ -156,7 +156,7 @@ class _HomeState extends State<Home> {
                                 padding: const EdgeInsets.all(3),
                                 child: Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.25,
+                                      MediaQuery.of(context).size.width * 0.5,
                                   height:
                                       MediaQuery.of(context).size.height * 0.1,
                                   decoration: const BoxDecoration(
@@ -201,7 +201,7 @@ class _HomeState extends State<Home> {
                                 padding: const EdgeInsets.all(3),
                                 child: Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.25,
+                                      MediaQuery.of(context).size.width * 0.5,
                                   height:
                                       MediaQuery.of(context).size.height * 0.1,
                                   decoration: const BoxDecoration(
@@ -229,40 +229,40 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 5.0),
-                            Flexible(
-                              child: Padding(
-                                padding: const EdgeInsets.all(3),
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.25,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.1,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.rectangle,
-                                    color: Color(0xFFA5D2F1),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.sports_score_sharp,
-                                        color: Color(0xFF12215c),
-                                        size: 30,
-                                      ),
-                                      Text(
-                                        'Kompetisi',
-                                        style: superFont5,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // const SizedBox(width: 5.0),
+                            // Flexible(
+                            //   child: Padding(
+                            //     padding: const EdgeInsets.all(3),
+                            //     child: Container(
+                            //       width:
+                            //           MediaQuery.of(context).size.width * 0.25,
+                            //       height:
+                            //           MediaQuery.of(context).size.height * 0.1,
+                            //       decoration: const BoxDecoration(
+                            //         shape: BoxShape.rectangle,
+                            //         color: Color(0xFFA5D2F1),
+                            //         borderRadius:
+                            //             BorderRadius.all(Radius.circular(8.0)),
+                            //       ),
+                            //       child: Column(
+                            //         mainAxisAlignment: MainAxisAlignment.center,
+                            //         crossAxisAlignment:
+                            //             CrossAxisAlignment.center,
+                            //         children: [
+                            //           const Icon(
+                            //             Icons.sports_score_sharp,
+                            //             color: Color(0xFF12215c),
+                            //             size: 30,
+                            //           ),
+                            //           Text(
+                            //             'Kompetisi',
+                            //             style: superFont5,
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
