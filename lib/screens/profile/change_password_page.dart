@@ -114,7 +114,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
               },
               child: Icon(Icons.arrow_back, color: white), // Arrow back icon
             ),
-            const SizedBox(height: 10), // Space between icon and text
+            const SizedBox(height: 15), // Space between icon and text
             Text(
               'Ubah Kata Sandi Baru',
               style: TextStyle(
@@ -146,7 +146,11 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(Icons.lock, color: secondary, size: 100),
+                Image.asset(
+                  'assets/images/iconpassword.png',  // Path gambar yang ingin ditampilkan
+                  width: 100,  // Lebar gambar
+                  height: 100, // Tinggi gambar
+                ),
                 const SizedBox(height: 20),
                 Text(
                   'Masukkan kata sandi baru',
