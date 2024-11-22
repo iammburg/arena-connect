@@ -45,24 +45,27 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Simpan Perubahan', style: buttonFont1.copyWith(color: primary)),
+          title: Text('Simpan Perubahan',
+              style: buttonFont1.copyWith(color: primary)),
           content: Text(
             'Apakah kamu yakin ingin menyimpan perubahan?',
-            style: buttonFont1.copyWith(fontSize: 13, color: primary), 
+            style: buttonFont1.copyWith(fontSize: 13, color: primary),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Kembali', style: buttonFont1.copyWith(color: primary)),
+              child:
+                  Text('Kembali', style: buttonFont1.copyWith(color: primary)),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 _showSuccessDialog();
               },
-              child: Text('Simpan', style: buttonFont1.copyWith(color: secondary)),
+              child:
+                  Text('Simpan', style: buttonFont1.copyWith(color: secondary)),
             ),
           ],
         );
@@ -75,13 +78,15 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(Icons.check_circle, color: secondary, size: 60),
               const SizedBox(height: 10),
-              Text('Kata Sandi Berhasil diperbarui!', style: buttonFont1.copyWith(color: primary)),
+              Text('Kata Sandi Berhasil diperbarui!',
+                  style: buttonFont1.copyWith(color: primary)),
             ],
           ),
           actions: [
@@ -147,14 +152,15 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  'images/iconpassword.png',  // Path gambar yang ingin ditampilkan
-                  width: 100,  // Lebar gambar
+                  'images/iconpassword.png', // Path gambar yang ingin ditampilkan
+                  width: 100, // Lebar gambar
                   height: 100, // Tinggi gambar
                 ),
                 const SizedBox(height: 20),
                 Text(
                   'Masukkan kata sandi baru',
-                  style: buttonFont1.copyWith(color: primary, fontWeight: FontWeight.bold),
+                  style: buttonFont1.copyWith(
+                      color: primary, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
                 TextField(
