@@ -147,7 +147,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/iconpassword.png',  // Path gambar yang ingin ditampilkan
+                  'images/iconpassword.png',  // Path gambar yang ingin ditampilkan
                   width: 100,  // Lebar gambar
                   height: 100, // Tinggi gambar
                 ),

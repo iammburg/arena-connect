@@ -38,6 +38,7 @@ flutter:
     - images/lapangan-badminton.jpg
     - images/bni.png
     - images/bri.png
+    - images/iconpassword.png
 
   fonts:
     - family: Poppins
