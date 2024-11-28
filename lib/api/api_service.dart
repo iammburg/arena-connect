@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:arena_connect/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:arena_connect/models/booking.dart';
 
 // const String baseUrl = 'http://127.0.0.1:8000/api';
 const String baseUrl = 'http://localhost:8000/api';
@@ -57,6 +58,38 @@ class ApiService {
     } else {
       final errorData = jsonDecode(response.body);
       return {'success': false, 'errors': errorData['data'] ?? errorData};
+    }
+  }
+
+  Future<Booking?> createBooking(int userId, int fieldId, String bookingStart,
+      String bookingEnd, String date, String cost) async {
+    try {
+      String? token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+      final response = await http.post(
+        Uri.parse("$baseUrl/bookings"),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          "user_id": userId,
+          "field_id": fieldId,
+          "booking_start": bookingStart,
+          "booking_end": bookingEnd,
+          "date": date,
+          "cost": cost,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        return bookingFromJson(response.body);
+      }
+    } catch (e) {
+      print('Error creating booking: $e');
+      return null;
     }
   }
 
