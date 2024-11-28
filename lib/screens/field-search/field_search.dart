@@ -28,7 +28,7 @@ class _FieldSearchState extends State<FieldSearch> {
         throw Exception('Token not found');
       }
       http.Response res = await http.get(
-        Uri.parse("$baseUrl/field_centres"),
+        Uri.parse("$baseUrl/field-centres"),
         headers: {'Authorization': 'Bearer $token'},
       );
       List<FieldCentre>? data = resFieldCentresFromJson(res.body).data;

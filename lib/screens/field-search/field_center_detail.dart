@@ -36,7 +36,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
         throw Exception('Token not found');
       }
       http.Response res = await http.get(
-        Uri.parse("$baseUrl/field_centres/${widget.fieldCentreId}"),
+        Uri.parse("$baseUrl/field-centres/${widget.fieldCentreId}"),
         headers: {'Authorization': 'Bearer $token'},
       );
       if (res.statusCode == 200) {
@@ -350,12 +350,6 @@ class FieldCenterState extends State<FieldCenterDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          fieldCentre?.address ?? '',
-                          style: const TextStyle(
-                            fontSize: 10,
-                          ),
-                        ),
-                        Text(
                           fieldCentre?.maps ?? '',
                           style: const TextStyle(
                             fontSize: 10,
@@ -388,348 +382,289 @@ class FieldCenterState extends State<FieldCenterDetails> {
           const SizedBox(height: 10),
 
           //ATURAN LAPANGAN
-          Container(
-            margin:
-                const EdgeInsets.only(top: 0, bottom: 0, left: 16, right: 16),
-            padding:
-                const EdgeInsets.only(top: 10, bottom: 0, left: 16, right: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Informasi Kontak",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                // Daftar aturan dengan bullet poin
-                Container(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          isLoading
-                              ? const Center(
-                                  child: SizedBox(
-                                    width: 10,
-                                    height: 10,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  ),
-                                )
-                              : // Bullet point
-                              Expanded(
-                                  child: Text(
-                                      "Telepon: ${fieldCentre?.phoneNumber ?? ''}, Pemilik: ${fieldCentre?.user?.name ?? ''}",
-                                      style: TextStyle(
-                                          fontSize: 12, color: secondary)),
-                                ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  "Deskripsi Lapangan",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                // Daftar aturan dengan bullet poin
-                Container(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          isLoading
-                              ? const Center(
-                                  child: SizedBox(
-                                    width: 10,
-                                    height: 10,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  ),
-                                )
-                              : // Bullet point
-                              Expanded(
-                                  child: Text(fieldCentre?.descriptions ?? '',
-                                      style: TextStyle(
-                                          fontSize: 12, color: secondary)),
-                                ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  "Aturan Lapangan",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                // Daftar aturan dengan bullet poin
-                Container(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          isLoading
-                              ? const Center(
-                                  child: SizedBox(
-                                    width: 10,
-                                    height: 10,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  ),
-                                )
-                              : // Bullet point
-                              Expanded(
-                                  child: Text(fieldCentre?.rules ?? '',
-                                      style: TextStyle(
-                                          fontSize: 12, color: secondary)),
-                                ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          //FASILITAS LAPANGAN
-          Container(
-            margin:
-                const EdgeInsets.only(top: 0, bottom: 0, left: 16, right: 16),
-            padding:
-                const EdgeInsets.only(top: 10, bottom: 0, left: 16, right: 16),
-            // padding: const EdgeInsets.all(4.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Fasilitas',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Daftar Fasilitas Lapangan dengan Ikon
-                Container(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Column(
-                    children: [
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            //Kolom Pertama dengan Expanded
-                            Flexible(
-                              child: Wrap(
-                                crossAxisAlignment: WrapCrossAlignment.start,
-                                alignment: WrapAlignment.start,
-                                spacing: 22,
-                                runSpacing: 10,
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(
+                        top: 0, bottom: 20, left: 16, right: 16),
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 0, left: 16, right: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Informasi Kontak",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        // Daftar aturan dengan bullet poin
+                        Container(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
-                                  // Padding(
-                                  //   padding: const EdgeInsets.symmetric(
-                                  //       horizontal: 8.0),
-                                  //   child: Row(
-                                  //     mainAxisSize: MainAxisSize
-                                  //         .min, // Membatasi ukuran Row
-                                  //     children: [
-                                  //       Icon(Icons.wc,
-                                  //           color: secondary, size: 22),
-                                  //       const SizedBox(width: 8),
-                                  //       const Text('Toilet',
-                                  //           style: TextStyle(
-                                  //               fontSize: 14,
-                                  //               fontWeight: FontWeight.w600,
-                                  //               color: Colors.black)),
-                                  //     ],
-                                  //   ),
-                                  // ),
+                                  isLoading
+                                      ? const Center(
+                                          child: SizedBox(
+                                            width: 10,
+                                            height: 10,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                            ),
+                                          ),
+                                        )
+                                      : // Bullet point
+                                      Expanded(
+                                          child: Text(
+                                              "Telepon: ${fieldCentre?.phoneNumber ?? ''}, Pemilik: ${fieldCentre?.user?.name ?? ''}",
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: secondary)),
+                                        ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        const Text(
+                          "Alamat Lapangan",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        // Daftar aturan dengan bullet poin
+                        Container(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  isLoading
+                                      ? const Center(
+                                          child: SizedBox(
+                                            width: 10,
+                                            height: 10,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                            ),
+                                          ),
+                                        )
+                                      : // Bullet point
+                                      Expanded(
+                                          child: Text(
+                                              fieldCentre?.address ?? '',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: secondary)),
+                                        ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        const Text(
+                          "Deskripsi Lapangan",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        // Daftar aturan dengan bullet poin
+                        Container(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  isLoading
+                                      ? const Center(
+                                          child: SizedBox(
+                                            width: 10,
+                                            height: 10,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                            ),
+                                          ),
+                                        )
+                                      : // Bullet point
+                                      Expanded(
+                                          child: Text(
+                                              fieldCentre?.descriptions ?? '',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: secondary)),
+                                        ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        const Text(
+                          "Aturan Lapangan",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        // Daftar aturan dengan bullet poin
+                        Container(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  isLoading
+                                      ? const Center(
+                                          child: SizedBox(
+                                            width: 10,
+                                            height: 10,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                            ),
+                                          ),
+                                        )
+                                      : // Bullet point
+                                      Expanded(
+                                          child: Text(fieldCentre?.rules ?? '',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: secondary)),
+                                        ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
-                                  for (var facility
-                                      in fieldCentre?.facilities ?? [])
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize
-                                            .min, // Membatasi ukuran Row
+                  //FASILITAS LAPANGAN
+                  Container(
+                    margin: const EdgeInsets.only(
+                        top: 0, bottom: 20, left: 16, right: 16),
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 0, left: 16, right: 16),
+                    // padding: const EdgeInsets.all(4.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Fasilitas',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+
+                        // Daftar Fasilitas Lapangan dengan Ikon
+                        Container(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Column(
+                            children: [
+                              Container(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    //Kolom Pertama dengan Expanded
+                                    Flexible(
+                                      child: Wrap(
+                                        crossAxisAlignment:
+                                            WrapCrossAlignment.start,
+                                        alignment: WrapAlignment.start,
+                                        spacing: 22,
+                                        runSpacing: 10,
                                         children: [
-                                          Icon(
-                                              facility.name == 'Toilet'
-                                                  ? Icons.wc
-                                                  : facility.name == 'WiFi'
-                                                      ? Icons.wifi
-                                                      : facility.name ==
-                                                              'Cafe & Resto'
-                                                          ? Icons.coffee_maker
+                                          for (var facility
+                                              in fieldCentre?.facilities ?? [])
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize
+                                                    .min, // Membatasi ukuran Row
+                                                children: [
+                                                  Icon(
+                                                      facility.name == 'Toilet'
+                                                          ? Icons.wc
                                                           : facility.name ==
-                                                                  'Musholla'
-                                                              ? Icons.mosque
+                                                                  'WiFi'
+                                                              ? Icons.wifi
                                                               : facility.name ==
-                                                                      'Parkir Mobil'
+                                                                      'Cafe & Resto'
                                                                   ? Icons
-                                                                      .car_rental
+                                                                      .coffee_maker
                                                                   : facility.name ==
-                                                                          'Parkir Motor'
+                                                                          'Musholla'
                                                                       ? Icons
-                                                                          .motorcycle
+                                                                          .mosque
                                                                       : facility.name ==
-                                                                              'Ruang Ganti'
+                                                                              'Parkir Mobil'
                                                                           ? Icons
-                                                                              .meeting_room
-                                                                          : facility.name == 'Tribun'
-                                                                              ? Icons.sports_soccer
-                                                                              : facility.name == 'Jual Makanan'
-                                                                                  ? Icons.food_bank
-                                                                                  : facility.name == 'Jual Minuman'
-                                                                                      ? Icons.local_drink_rounded
-                                                                                      : Icons.circle,
-                                              color: secondary,
-                                              size: 22),
-                                          const SizedBox(width: 8),
-                                          Text(facility.name,
-                                              style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black)),
+                                                                              .car_rental
+                                                                          : facility.name == 'Parkir Motor'
+                                                                              ? Icons.motorcycle
+                                                                              : facility.name == 'Ruang Ganti'
+                                                                                  ? Icons.meeting_room
+                                                                                  : facility.name == 'Tribun'
+                                                                                      ? Icons.sports_soccer
+                                                                                      : facility.name == 'Jual Makanan'
+                                                                                          ? Icons.food_bank
+                                                                                          : facility.name == 'Jual Minuman'
+                                                                                              ? Icons.local_drink_rounded
+                                                                                              : Icons.circle,
+                                                      color: secondary,
+                                                      size: 22),
+                                                  const SizedBox(width: 8),
+                                                  Text(facility.name,
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: Colors.black)),
+                                                ],
+                                              ),
+                                            ),
+                                          // Tambahkan padding atau children tambahan sesuai kebutuhan
                                         ],
                                       ),
                                     ),
-                                  // Tambahkan padding atau children tambahan sesuai kebutuhan
-                                ],
-                              ),
-                            ),
 
-                            const SizedBox(width: 20),
-                            //Kolom Kedua dengan Expanded
-                            // Expanded(
-                            //   child: Column(
-                            //     children: [
-                            //       Row(
-                            //         children: [
-                            //           Icon(Icons.motorcycle,
-                            //               color: secondary, size: 22),
-                            //           const SizedBox(width: 8),
-                            //           const Text('Parkir Motor',
-                            //               style: TextStyle(
-                            //                   fontSize: 14,
-                            //                   fontWeight: FontWeight.w600,
-                            //                   color: Colors.black)),
-                            //         ],
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                          ],
+                                    const SizedBox(width: 20),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      // const SizedBox(height: 10),
-                      // Container(
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.start,
-                      //     children: [
-                      //       //Kolom Pertama dengan Expanded
-                      //       Expanded(
-                      //         child: Column(
-                      //           children: [
-                      //             Row(
-                      //               children: [
-                      //                 Icon(Icons.wifi,
-                      //                     color: secondary, size: 22),
-                      //                 const SizedBox(width: 8),
-                      //                 const Text('WiFi',
-                      //                     style: TextStyle(
-                      //                         fontSize: 14,
-                      //                         fontWeight: FontWeight.w600,
-                      //                         color: Colors.black)),
-                      //               ],
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //       const SizedBox(width: 20),
-                      //       //Kolom Kedua dengan Expanded
-                      //       Expanded(
-                      //         child: Column(
-                      //           children: [
-                      //             Row(
-                      //               children: [
-                      //                 Icon(Icons.mosque,
-                      //                     color: secondary, size: 22),
-                      //                 const SizedBox(width: 8),
-                      //                 const Text('Musholla',
-                      //                     style: TextStyle(
-                      //                         fontSize: 14,
-                      //                         fontWeight: FontWeight.w600,
-                      //                         color: Colors.black)),
-                      //               ],
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 10),
-                      // Container(
-                      //   margin: const EdgeInsets.only(right: 10),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.start,
-                      //     children: [
-                      //       //Kolom Pertama dengan Expanded
-                      //       Expanded(
-                      //         child: Column(
-                      //           children: [
-                      //             Row(
-                      //               children: [
-                      //                 Icon(Icons.car_rental,
-                      //                     color: secondary, size: 22),
-                      //                 const SizedBox(width: 8),
-                      //                 const Text('Parkir Mobil',
-                      //                     style: TextStyle(
-                      //                         fontSize: 14,
-                      //                         fontWeight: FontWeight.w600,
-                      //                         color: Colors.black)),
-                      //               ],
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
 
-          const Spacer(),
+          // const Spacer(),
           Container(
             height: 75,
             decoration: BoxDecoration(
@@ -757,7 +692,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Mulai',
+                          'Mulai dari',
                           style: TextStyle(
                             fontSize: 10, // Ukuran font yang lebih kecil
                             color: Colors.grey, // Warna teks abu-abu
@@ -782,7 +717,11 @@ class FieldCenterState extends State<FieldCenterDetails> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SelectSchedule()),
+                            builder: (context) => SelectSchedule(
+                              // Mengirimkan ID Lapangan ke halaman berikutnya
+                              fieldCentreId: widget.fieldCentreId,
+                            ),
+                          ),
                         );
                       },
                       style: shortButton2,
