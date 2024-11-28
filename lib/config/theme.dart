@@ -7,6 +7,13 @@ Color tertiary = const Color(0xFFA7ADC3);
 Color white = const Color(0xFFFFFFFF);
 
 // Font Styles
+TextStyle superFont0 = TextStyle(
+  fontFamily: 'Poppins-Bold',
+  fontWeight: FontWeight.w300,
+  fontSize: 30,
+  color: primary,
+);
+
 TextStyle superFont1 = TextStyle(
   fontFamily: 'Poppins',
   fontWeight: FontWeight.w900,
@@ -128,6 +135,20 @@ TextStyle regulerFont10 = TextStyle(
 );
 
 // Button Font Styles
+TextStyle daftarButtonFont = TextStyle(
+  fontFamily: 'Source Sans Pro',
+  fontWeight: FontWeight.bold,
+  fontSize: 16,
+  color: white,
+);
+
+TextStyle masukButtonFont = TextStyle(
+  fontFamily: 'Source Sans Pro',
+  fontWeight: FontWeight.bold,
+  fontSize: 16,
+  color: white,
+);
+
 TextStyle buttonFont1 = TextStyle(
   fontFamily: 'Poppins',
   fontWeight: FontWeight.bold,
@@ -210,6 +231,30 @@ ButtonStyle shortButton1 = ElevatedButton.styleFrom(
       borderRadius: BorderRadius.circular(18),
     ),
     padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20));
+
+ButtonStyle daftarButton = ElevatedButton.styleFrom(
+    minimumSize: const Size(141, 52),
+    backgroundColor: primary,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+      side: const BorderSide(
+        color: Colors.white, // Warna stroke putih
+        width: 1.5, // Ketebalan stroke
+      ),
+    ),
+    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20));
+
+ButtonStyle masukButton = ElevatedButton.styleFrom(
+    minimumSize: const Size(141, 52),
+    backgroundColor: secondary,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+      side: const BorderSide(
+        color: Colors.white, // Warna stroke putih
+        width: 1.5, // Ketebalan stroke
+      ),
+    ),
+    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20));
 
 ButtonStyle shortButtonPrimary = ElevatedButton.styleFrom(
     minimumSize: const Size(131, 32),
