@@ -47,7 +47,7 @@ class RegisterPageState extends State<RegisterPage> {
       );
       Navigator.pushNamed(context, '/login');
     } else {
-      final errors = result['errors'];
+      final errors = result['errors'] ?? {};
 
       setState(() {
         _nameError = errors['name']?.first;
@@ -94,7 +94,7 @@ class RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10)
+                  const SizedBox(height: 30)
                 ],
               ),
               Center(
@@ -117,138 +117,242 @@ class RegisterPageState extends State<RegisterPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        const SizedBox(height: 20),
                         const Center(
                           child: Text(
-                            'Register',
+                            'Daftar',
                             style: TextStyle(
                                 color: Color(0xFF12215C),
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: "Source Sans Pro"),
                           ),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 35),
                         TextFormField(
                           controller: _phoneController,
                           decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.phone,
-                                color: Colors.grey, size: 20),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Icon(
+                                Icons.phone,
+                                color: Colors.grey, 
+                                size: 25,
+                              ),
+                            ), 
                             hintText: 'No. Telepon',
-                            hintStyle: const TextStyle(color: Colors.grey),
+                            hintStyle: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey
+                            ),
                             filled: true,
-                            fillColor: const Color.fromARGB(255, 233, 233, 233),
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 18, // Padding vertikal untuk memperbesar tinggi field
+                              horizontal: 18, // Padding horizontal untuk jarak teks dari tepi
+                            ),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+                              borderRadius: BorderRadius.circular(15),
                               borderSide: const BorderSide(
                                 color: Colors.grey,
-                                width: 0.8,
+                                width: 1.5,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+                              borderRadius: BorderRadius.circular(15),
                               borderSide: const BorderSide(
                                 color: Colors.grey,
-                                width: 0.8,
+                                width: 1.5,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                color: Colors.blue,
+                                width: 2.0, // Border lebih tebal saat fokus
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                color: Colors.red,
+                                width: 2.0, // Border lebih tebal saat error
                               ),
                             ),
                             errorText: _phoneError,
                           ),
                           style: const TextStyle(
                               fontFamily: "Source Sans Pro",
-                              fontWeight: FontWeight.w100,
+                              fontWeight: FontWeight.w400,
                               color: Color(0xFF0A0A0A),
-                              fontSize: 14),
+                              fontSize: 18),
                         ),
-                        // const SizedBox(height: 2),
                         // Text("Contoh: 081234567890 atau +621234567890",
-                        //     style: regulerFont3),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 20),
                         TextFormField(
                           controller: _emailController,
                           decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.email,
-                                color: Colors.grey, size: 20),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: 
+                                Icon(Icons.email,
+                                color: Colors.grey, size: 20,
+                              ),
+                            ), 
                             hintText: 'Email',
-                            hintStyle: const TextStyle(color: Colors.grey),
+                            hintStyle: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey
+                            ),
                             filled: true,
-                            fillColor: const Color.fromARGB(255, 233, 233, 233),
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 18, // Padding vertikal untuk memperbesar tinggi field
+                              horizontal: 18, // Padding horizontal untuk jarak teks dari tepi
+                            ),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+                              borderRadius: BorderRadius.circular(15),
                               borderSide: const BorderSide(
                                 color: Colors.grey,
-                                width: 0.8,
+                                width: 1.5,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+                              borderRadius: BorderRadius.circular(15),
                               borderSide: const BorderSide(
                                 color: Colors.grey,
-                                width: 0.8,
+                                width: 1.5,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                color: Colors.blue,
+                                width: 2.0, // Border lebih tebal saat fokus
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                color: Colors.red,
+                                width: 2.0, // Border lebih tebal saat error
                               ),
                             ),
                             errorText: _emailError,
                           ),
                           style: const TextStyle(
                               fontFamily: "Source Sans Pro",
-                              fontWeight: FontWeight.w100,
+                              fontWeight: FontWeight.w400,
                               color: Color(0xFF0A0A0A),
-                              fontSize: 14),
+                              fontSize: 18),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 20),
                         TextFormField(
                           controller: _nameController,
                           decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.account_circle,
-                                color: Colors.grey, size: 20),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: 
+                                Icon(Icons.account_circle,
+                                color: Colors.grey, size: 20,
+                              ),
+                            ), 
                             hintText: 'Username',
-                            hintStyle: const TextStyle(color: Colors.grey),
+                            hintStyle: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey
+                            ),
                             filled: true,
-                            fillColor: const Color.fromARGB(255, 233, 233, 233),
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 18, // Padding vertikal untuk memperbesar tinggi field
+                              horizontal: 18, // Padding horizontal untuk jarak teks dari tepi
+                            ),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+                              borderRadius: BorderRadius.circular(15),
                               borderSide: const BorderSide(
                                 color: Colors.grey,
-                                width: 0.8,
+                                width: 1.5,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+                              borderRadius: BorderRadius.circular(15),
                               borderSide: const BorderSide(
                                 color: Colors.grey,
-                                width: 0.8,
+                                width: 1.5,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                color: Colors.blue,
+                                width: 2.0, // Border lebih tebal saat fokus
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                color: Colors.red,
+                                width: 2.0, // Border lebih tebal saat error
                               ),
                             ),
                             errorText: _nameError,
                           ),
                           style: const TextStyle(
                               fontFamily: "Source Sans Pro",
-                              fontWeight: FontWeight.w100,
+                              fontWeight: FontWeight.w400,
                               color: Color(0xFF0A0A0A),
-                              fontSize: 14),
+                              fontSize: 18),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 20),
                         TextFormField(
                           controller: _passwordController,
                           obscureText: _isPasswordObscured,
                           decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.lock,
-                                color: Colors.grey, size: 20),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: 
+                                Icon(Icons.lock,
+                                color: Colors.grey, size: 20
+                              ),
+                            ),
                             hintText: 'Password',
-                            hintStyle: const TextStyle(color: Colors.grey),
+                            hintStyle: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey
+                            ),
                             filled: true,
-                            fillColor: const Color.fromARGB(255, 233, 233, 233),
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 18, // Padding vertikal untuk memperbesar tinggi field
+                              horizontal: 18, // Padding horizontal untuk jarak teks dari tepi
+                            ),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+                              borderRadius: BorderRadius.circular(15),
                               borderSide: const BorderSide(
                                 color: Colors.grey,
-                                width: 0.8,
+                                width: 1.5,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+                              borderRadius: BorderRadius.circular(15),
                               borderSide: const BorderSide(
                                 color: Colors.grey,
-                                width: 0.8,
+                                width: 1.5,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                color: Colors.blue,
+                                width: 2.0, // Border lebih tebal saat fokus
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                color: Colors.red,
+                                width: 2.0, // Border lebih tebal saat error
                               ),
                             ),
                             errorText: _passwordError,
@@ -258,7 +362,7 @@ class RegisterPageState extends State<RegisterPage> {
                                       ? Icons.visibility
                                       : Icons.visibility_off,
                                   color: Colors.grey,
-                                  size: 16),
+                                  size: 25),
                               onPressed: () {
                                 setState(() {
                                   _isPasswordObscured = !_isPasswordObscured;
@@ -268,32 +372,32 @@ class RegisterPageState extends State<RegisterPage> {
                           ),
                           style: const TextStyle(
                             fontFamily: "Source Sans Pro",
-                            fontWeight: FontWeight.w100,
+                            fontWeight: FontWeight.w400,
                             color: Color(0xFF0A0A0A),
-                            fontSize: 14,
+                            fontSize: 18,
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 30),
                         ElevatedButton(
                           onPressed: _register,
-                          style: shortButtonSecondary,
+                          style: daftarButtonSecondary,
                           child: Text(
-                            "Daftar",
-                            style: buttonFont3,
+                            "D A F T A R",
+                            style: daftarButtonFont,
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 25),
                         RichText(
                           text: TextSpan(
                             text: 'Sudah punya akun? ',
                             style: const TextStyle(
-                              fontSize: 12,
+                              fontSize: 14,
                               color: Color(0xFF12215C),
                               fontFamily: "Source Sans Pro",
                             ),
                             children: <TextSpan>[
                               TextSpan(
-                                  text: 'Login',
+                                  text: 'Masuk',
                                   style: const TextStyle(
                                       color: Colors.blue,
                                       fontWeight: FontWeight.bold),

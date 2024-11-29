@@ -41,8 +41,8 @@ class LoginPageState extends State<LoginPage> {
       final errors = result['errors'] ?? {};
 
       setState(() {
-        _emailError = errors['email']?.first ?? null;
-        _passwordError = errors['password']?.first ?? null;
+        _emailError = errors['email']?.first;
+        _passwordError = errors['password']?.first;
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -83,7 +83,7 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 120)
+                  const SizedBox(height: 100)
                 ],
               ),
               Center(
@@ -112,7 +112,7 @@ class LoginPageState extends State<LoginPage> {
                             'Masuk',
                             style: TextStyle(
                                 color: Color(0xFF12215C),
-                                fontSize: 28,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: "Source Sans Pro"),
                           ),

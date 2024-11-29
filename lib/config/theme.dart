@@ -244,6 +244,18 @@ ButtonStyle daftarButton = ElevatedButton.styleFrom(
     ),
     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20));
 
+ButtonStyle daftarButtonSecondary = ElevatedButton.styleFrom(
+    minimumSize: const Size(141, 52),
+    backgroundColor: secondary,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+      side: const BorderSide(
+        color: Colors.white, // Warna stroke putih
+        width: 1.5, // Ketebalan stroke
+      ),
+    ),
+    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20));
+
 ButtonStyle masukButton = ElevatedButton.styleFrom(
     minimumSize: const Size(141, 52),
     backgroundColor: secondary,
