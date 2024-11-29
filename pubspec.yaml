@@ -7,13 +7,10 @@ environment:
     sdk: ^3.5.3
 
 dependencies:
-    carousel_slider: 5.0.0
-    device_frame: 1.2.0
-    device_preview: ^1.2.0
-    flutter:
-        sdk: flutter
-    get: ^4.6.6
-    http: ^1.2.2
+  device_preview: ^1.2.0
+  flutter:
+    sdk: flutter
+  http: ^1.2.2
 
 dev_dependencies:
     flutter_test:
