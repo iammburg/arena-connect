@@ -61,6 +61,36 @@ class ApiService {
     }
   }
 
+  Future<Map<String, dynamic>> updateProfile(int userId, String name,
+      String email, String password, String role) async {
+    final url = Uri.parse('$baseUrl/users/$userId');
+    final token = await getToken();
+    final response = await http.put(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'name': name,
+        'email': email,
+        'password': password,
+        'role': role,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      return {
+        'success': true,
+        'data': User.fromJson(responseData['data']),
+      };
+    } else {
+      final errorData = jsonDecode(response.body);
+      return {'success': false, 'errors': errorData['data'] ?? errorData};
+    }
+  }
+
   Future<Booking?> createBooking(int userId, int fieldId, String bookingStart,
       String bookingEnd, String date, String cost) async {
     try {

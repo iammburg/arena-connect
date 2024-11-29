@@ -1,3 +1,4 @@
+import 'package:arena_connect/api/api_service.dart';
 import 'package:arena_connect/config/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,18 +18,36 @@ class _ChangeProfileState extends State<ChangeProfile> {
   File? _profileImage;
   final ImagePicker _picker = ImagePicker();
 
-  String initialUsername = 'Thora`s Times';
-  String initialPhone = '081234567891';
-  String initialEmail = 'thoraatime@gmail.com';
-
   bool isChanged = false;
+  String userId = '';
+  String userName = '';
+  String userEmail = '';
+  String userPhone = '';
+  bool isLoading = true;
+
+  Future<void> _getUserProfile() async {
+    final token = await ApiService().getToken();
+    if (token != null) {
+      final response = await ApiService().getUserProfile(token);
+      if (response['success']) {
+        setState(() {
+          userName = response['data']['id'].toString();
+          userName = response['data']['name'];
+          userEmail = response['data']['email'];
+          userPhone = response['data']['phone_number'];
+          usernameController.text = userName;
+          emailController.text = userEmail;
+          phoneController.text = userPhone;
+          isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    usernameController.text = initialUsername;
-    phoneController.text = initialPhone;
-    emailController.text = initialEmail;
+    _getUserProfile();
 
     // Add listeners to detect changes
     usernameController.addListener(checkChanges);
@@ -56,9 +75,9 @@ class _ChangeProfileState extends State<ChangeProfile> {
 
   void checkChanges() {
     setState(() {
-      isChanged = usernameController.text != initialUsername ||
-          phoneController.text != initialPhone ||
-          emailController.text != initialEmail;
+      isChanged = usernameController.text != userName ||
+          phoneController.text != userPhone ||
+          emailController.text != userEmail;
     });
   }
 
@@ -78,8 +97,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          backgroundColor:
-              white, // Mengubah background rectangle menjadi warna putih
+          backgroundColor: white,
           title: Center(
             child: Column(
               children: [
@@ -87,8 +105,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   'Simpan Perubahan',
                   style: superFont1.copyWith(color: primary),
                 ),
-                const SizedBox(
-                    height: 20), // Reduce the gap between title and the content
+                const SizedBox(height: 20),
                 Text(
                   'Apakah kamu yakin ingin menyimpan perubahan?',
                   textAlign: TextAlign.center,
@@ -97,15 +114,14 @@ class _ChangeProfileState extends State<ChangeProfile> {
               ],
             ),
           ),
-          contentPadding:
-              const EdgeInsets.all(20), // Adjusted padding for more space
+          contentPadding: const EdgeInsets.all(20),
           content: SizedBox(
-            height: 80, // Set height to maintain a balanced shape
+            height: 80,
             child: Column(
-              mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran dialog
-              mainAxisAlignment: MainAxisAlignment.center, // Center the content
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 30), // Jarak antara teks dan tombol
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -122,7 +138,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                           style: buttonFont2,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop(); // Menutup dialog
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
@@ -130,7 +146,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: secondary, // Warna tombol "Keluar"
+                          backgroundColor: secondary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -141,24 +157,19 @@ class _ChangeProfileState extends State<ChangeProfile> {
                           selectionColor: secondary,
                         ),
                         onPressed: () {
-                          Navigator.of(context)
-                              .pop(); // Tutup dialog setelah menyimpan
-                          // Tampilkan SnackBar untuk konfirmasi berhasil
+                          Navigator.of(context).pop();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content:
                                   const Text("Perubahan berhasil disimpan!"),
-                              backgroundColor: Colors
-                                  .lightGreen, // Warna hijau sesuai gambar
-                              duration: const Duration(
-                                  seconds: 2), // Durasi tampilan SnackBar
-                              behavior: SnackBarBehavior
-                                  .floating, // Menampilkan di tengah layar
+                              backgroundColor: Colors.lightGreen,
+                              duration: const Duration(seconds: 2),
+                              behavior: SnackBarBehavior.floating,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 40.0), // Margin horizontal
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 40.0),
                             ),
                           );
                         },
@@ -184,12 +195,10 @@ class _ChangeProfileState extends State<ChangeProfile> {
             left: 0,
             right: 0,
             child: AppBar(
-              backgroundColor: primary, // Dark blue background
-              automaticallyImplyLeading:
-                  false, // Remove the default back button
+              backgroundColor: primary,
+              automaticallyImplyLeading: false,
               flexibleSpace: Padding(
-                padding: const EdgeInsets.only(
-                    left: 10, top: 50, right: 10), // Adjust padding
+                padding: const EdgeInsets.only(left: 10, top: 50, right: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -199,20 +208,17 @@ class _ChangeProfileState extends State<ChangeProfile> {
                           icon: Icon(Icons.arrow_back_ios,
                               size: 20, color: white),
                           onPressed: () {
-                            Navigator.pop(context); // Handle back navigation
+                            Navigator.pop(context);
                           },
-                          padding: EdgeInsets.zero, // Remove default padding
-                          constraints:
-                              const BoxConstraints(), // Remove default size constraints
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
                         ),
-                        const SizedBox(
-                            width: 5), // Add space between icon and text
+                        const SizedBox(width: 5),
                         Text('Ubah Profile',
                             style: superFont1.copyWith(color: white)),
                       ],
                     ),
-                    const SizedBox(
-                        height: 50), // Space between title and profile avatar
+                    const SizedBox(height: 50),
                   ],
                 ),
               ),
@@ -227,13 +233,13 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   Stack(
                     children: [
                       Container(
-                        width: 115, // Same size as CircleAvatar's diameter
+                        width: 115,
                         height: 115,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: primary, // Border color
-                            width: 10, // Border width
+                            color: primary,
+                            width: 10,
                           ),
                         ),
                         child: CircleAvatar(
@@ -261,29 +267,23 @@ class _ChangeProfileState extends State<ChangeProfile> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       ListTile(
-                                        leading: Icon(
-                                          Icons.camera_alt,
-                                          color: primary,
-                                        ),
+                                        leading: Icon(Icons.camera_alt,
+                                            color: primary),
                                         title: const Text(
                                             'Ambil Foto dari Kamera'),
                                         onTap: () {
-                                          pickImageFromCamera(); // Tambahkan logika untuk mengambil foto dari kamera
-                                          Navigator.pop(
-                                              context); // Tutup popup setelah memilih opsi
+                                          pickImageFromCamera();
+                                          Navigator.pop(context);
                                         },
                                       ),
                                       ListTile(
-                                        leading: Icon(
-                                          Icons.photo,
-                                          color: primary,
-                                        ),
+                                        leading:
+                                            Icon(Icons.photo, color: primary),
                                         title:
                                             const Text('Tambahkan dari Galeri'),
                                         onTap: () {
-                                          pickImageFromGallery(); // Tambahkan logika untuk memilih foto dari galeri
-                                          Navigator.pop(
-                                              context); // Tutup popup setelah memilih opsi
+                                          pickImageFromGallery();
+                                          Navigator.pop(context);
                                         },
                                       ),
                                     ],
@@ -294,22 +294,17 @@ class _ChangeProfileState extends State<ChangeProfile> {
                           },
                           child: CircleAvatar(
                             backgroundColor: white,
-                            radius: 12, // Adjust the size of the small circle
-                            child: const Icon(
-                              Icons.add_a_photo_outlined,
-                              size: 15,
-                              color: Colors.black,
-                            ),
+                            radius: 12,
+                            child: const Icon(Icons.add_a_photo_outlined,
+                                size: 15, color: Colors.black),
                           ),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 50),
-                  // Mengatur padding yang lebih kecil untuk input fields
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10), // Padding horizontal lebih kecil
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: buildInputField(
                       labelText: 'Username',
                       controller: usernameController,
@@ -317,9 +312,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   ),
                   const SizedBox(height: 10),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ), // Padding horizontal lebih kecil
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: buildInputField(
                       labelText: 'No Telepon',
                       controller: phoneController,
@@ -327,15 +320,13 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   ),
                   const SizedBox(height: 10),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10), // Padding horizontal lebih kecil
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: buildInputField(
                       labelText: 'Email',
                       controller: emailController,
                     ),
                   ),
                   const SizedBox(height: 30),
-
                   ProfileOption(
                     text: 'Hapus Akun',
                     selectedItemColor: primary,
@@ -344,17 +335,11 @@ class _ChangeProfileState extends State<ChangeProfile> {
                     },
                     color: primary,
                   ),
-                  // Modifikasi untuk "Simpan Perubahan"
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: isChanged ? _showSaveConfirmationDialog : null,
                     style: longButton1,
-                    child: Text(
-                      'Simpan Perubahan',
-                      style: buttonFont1,
-                    ),
+                    child: Text('Simpan Perubahan', style: buttonFont1),
                   ),
                 ],
               ),
@@ -362,13 +347,8 @@ class _ChangeProfileState extends State<ChangeProfile> {
           ),
         ],
       ),
-      //   appBar: PreferredSize(
-      //   preferredSize: Size.fromHeight(150), // Increase the height to accommodate the profile picture
-
-      // ),
-
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3, // Set to Profile page index
+        currentIndex: 3,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: primary,
         unselectedItemColor: tertiary,
@@ -397,33 +377,32 @@ class _ChangeProfileState extends State<ChangeProfile> {
 
 Widget buildInputField({
   required String labelText,
-  required TextEditingController controller, // Untuk mengontrol input
-  TextInputType inputType = TextInputType.text, // Tipe input, default text
+  required TextEditingController controller,
+  TextInputType inputType = TextInputType.text,
 }) {
   return TextFormField(
-    controller: controller, // Menghubungkan input dengan controller
-    keyboardType: inputType, // Mengatur tipe keyboard berdasarkan tipe input
+    controller: controller,
+    keyboardType: inputType,
     decoration: InputDecoration(
-      labelText: labelText, // Menggunakan parameter untuk label
+      labelText: labelText,
       labelStyle: TextStyle(
-        color: tertiary, // Warna teks label
+        color: tertiary,
       ),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: tertiary, // Warna border ketika tidak aktif
+          color: tertiary,
           width: 1.0,
         ),
-        borderRadius: BorderRadius.circular(10), // Border radius
+        borderRadius: BorderRadius.circular(10),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: primary, // Warna border saat input difokuskan
+          color: primary,
           width: 2.0,
         ),
-        borderRadius: BorderRadius.circular(10), // Border radius
+        borderRadius: BorderRadius.circular(10),
       ),
-      contentPadding: const EdgeInsets.symmetric(
-          horizontal: 10, vertical: 15), // Padding dalam kotak input
+      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
     ),
     style: superFont4,
   );
