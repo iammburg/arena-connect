@@ -8,17 +8,17 @@ class HistoryScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: 100,
+        toolbarHeight: 120,
         backgroundColor: const Color(0xFF12215C),
         title: Padding(
-          padding: const EdgeInsets.only(top: 30.0),
+          padding: const EdgeInsets.only(top: 35, left: 15),
           child: Text('History Pertandingan',
               style: superFont1.copyWith(color: Colors.white)),
         ),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -73,10 +73,10 @@ class HistoryScreen extends StatelessWidget {
             }
           : null,
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          border: Border.all(color: const Color(0xFF12215C), width: 2),
-          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: const Color(0xFF12215C), width: 2.8),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,8 +84,8 @@ class HistoryScreen extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  width: 14,
-                  height: 14,
+                  width: 12,
+                  height: 12,
                   decoration: const BoxDecoration(
                     color: Color(0xFF12215C),
                     shape: BoxShape.circle,
@@ -106,27 +106,27 @@ class HistoryScreen extends StatelessWidget {
                 const SizedBox(width: 20),
                 Icon(icon, size: 18, color: const Color(0xFF12215C)),
                 const SizedBox(width: 6),
-                Text(level, style: superFont5),
+                Text(level, style: superFont4),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             Row(
               children: [
                 const SizedBox(width: 20),
                 const Icon(Icons.calendar_today,
                     size: 18, color: Color(0xFF12215C)),
                 const SizedBox(width: 6),
-                Text(dateTime, style: superFont5),
+                Text(dateTime, style: superFont4),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             Row(
               children: [
                 const SizedBox(width: 20),
                 const Icon(Icons.location_on_outlined,
                     size: 18, color: Color(0xFF12215C)),
                 const SizedBox(width: 6),
-                Text(location, style: superFont5),
+                Text(location, style: superFont4),
               ],
             ),
             const SizedBox(height: 2),
@@ -134,7 +134,7 @@ class HistoryScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Icon(Icons.arrow_forward_ios,
-                    size: 8, color: Color(0xFF12215C)),
+                    size: 15, color: Color(0xFF12215C)),
               ],
             ),
           ],
