@@ -30,14 +30,26 @@ class _SparringSearchState extends State<SparringSearch>
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title:
-            IconButton(onPressed: () {}, icon: const Icon(Icons.chevron_left)),
+        automaticallyImplyLeading: false,
+        // leading: Padding(
+        //   padding: const EdgeInsets.only(left: 16.0, top: 30),
+        //   child: IconButton(
+        //     onPressed: () {
+        //       Navigator.of(context).pop();
+        //     },
+        //     icon: const Icon(
+        //       Icons.chevron_left,
+        //       color: Color(0xFF12215C),
+        //     ),
+        //   ),
+        // ),
+
         bottom: TabBar(
           controller: _tabController,
-          labelColor: Colors.blue,
+          labelColor: const Color(0xFF12215C),
           unselectedLabelColor: Colors.grey,
           labelStyle: superFont3,
-          indicatorColor: Colors.blue,
+          indicatorColor: const Color(0xFF12215C),
           tabs: const [
             Tab(text: "Sparing"),
             Tab(text: "Kompetisi"),
@@ -55,7 +67,12 @@ class _SparringSearchState extends State<SparringSearch>
                   borderRadius: BorderRadius.circular(50),
                 ),
                 hintText: 'Cari...',
-                prefixIcon: const Icon(Icons.search),
+                hintStyle: superFont3.copyWith(color: Colors.grey),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: Color(0xFF12215C),
+                ),
+                prefixIconConstraints: const BoxConstraints(minWidth: 60),
               ),
             ),
           ),
@@ -79,30 +96,36 @@ class SparingTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        ListTile(
-          leading: const CircleAvatar(
-            backgroundImage: AssetImage('images/futsal.jpg'),
+    return Padding(
+      padding: const EdgeInsets.only(left: 20),
+      child: ListView(
+        children: [
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundImage: AssetImage('images/futsal.jpg'),
+            ),
+            title: Text('Lapangan Arena', style: superFont3),
+            subtitle:
+                Text('Futsal', style: regulerFont7.copyWith(fontSize: 14)),
           ),
-          title: Text('Lapangan Arena', style: superFont4),
-          subtitle: Text('Futsal', style: regulerFont7),
-        ),
-        ListTile(
-          leading: const CircleAvatar(
-            backgroundImage: AssetImage('images/futsal.jpg'),
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundImage: AssetImage('images/futsal.jpg'),
+            ),
+            title: Text('Lapangan Arena', style: superFont3),
+            subtitle:
+                Text('Futsal', style: regulerFont7.copyWith(fontSize: 14)),
           ),
-          title: Text('Lapangan Arena', style: superFont4),
-          subtitle: Text('Futsal', style: regulerFont7),
-        ),
-        ListTile(
-          leading: const CircleAvatar(
-            backgroundImage: AssetImage('images/badminton.jpg'),
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundImage: AssetImage('images/badminton.jpg'),
+            ),
+            title: Text('Lapangan Arena', style: superFont3),
+            subtitle:
+                Text('Badminton', style: regulerFont7.copyWith(fontSize: 14)),
           ),
-          title: Text('Lapangan Arena', style: superFont4),
-          subtitle: Text('Badminton', style: regulerFont7),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
