@@ -237,10 +237,10 @@ ButtonStyle daftarButton = ElevatedButton.styleFrom(
     backgroundColor: primary,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
-      side: const BorderSide(
-        color: Colors.white, // Warna stroke putih
-        width: 1.5, // Ketebalan stroke
-      ),
+      // side: const BorderSide(
+      //   color: Colors.white, // Warna stroke putih
+      //   width: 1.5, // Ketebalan stroke
+      // ),
     ),
     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20));
 
@@ -249,10 +249,10 @@ ButtonStyle daftarButtonSecondary = ElevatedButton.styleFrom(
     backgroundColor: secondary,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
-      side: const BorderSide(
-        color: Colors.white, // Warna stroke putih
-        width: 1.5, // Ketebalan stroke
-      ),
+      // side: const BorderSide(
+      //   color: Colors.white, // Warna stroke putih
+      //   width: 1.5, // Ketebalan stroke
+      // ),
     ),
     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20));
 
@@ -261,10 +261,10 @@ ButtonStyle masukButton = ElevatedButton.styleFrom(
     backgroundColor: secondary,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
-      side: const BorderSide(
-        color: Colors.white, // Warna stroke putih
-        width: 1.5, // Ketebalan stroke
-      ),
+      // side: const BorderSide(
+      //   color: Colors.white, // Warna stroke putih
+      //   width: 1.5, // Ketebalan stroke
+      // ),
     ),
     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20));
 
