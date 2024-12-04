@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:arena_connect/api/api_service.dart';
 import 'package:arena_connect/homescreen.dart';
+import 'package:arena_connect/screens/profile/change_password_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:arena_connect/screens/edit_password/edit_password.dart';
 import 'package:arena_connect/screens/profile/change_profile.dart';
@@ -310,7 +311,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ChangePasswordScreen()),
+                              builder: (context) => PasswordChangePage()),
                         );
                       },
                       color: primary,
