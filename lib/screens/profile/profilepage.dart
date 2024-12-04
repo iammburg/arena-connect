@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:arena_connect/api/api_service.dart';
+import 'package:arena_connect/homescreen.dart';
 import 'package:http/http.dart' as http;
 import 'package:arena_connect/screens/edit_password/edit_password.dart';
 import 'package:arena_connect/screens/profile/change_profile.dart';
@@ -44,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(25.0),
           ),
           backgroundColor: white,
           title: Center(
@@ -63,23 +64,26 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-          contentPadding: const EdgeInsets.all(20),
+          contentPadding:
+              const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
           content: SizedBox(
             height: 80,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 30),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Expanded(
+                    Container(
+                      height: 40,
+                      width: 115,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: primary,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(25),
                           ),
                         ),
                         child: Text(
@@ -91,13 +95,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         },
                       ),
                     ),
-                    const SizedBox(width: 20),
-                    Expanded(
+                    const SizedBox(width: 4),
+                    Container(
+                      height: 40,
+                      width: 115,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: secondary,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(25),
                           ),
                         ),
                         child: Text(
@@ -125,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(25.0),
           ),
           backgroundColor: white,
           title: Center(
@@ -144,45 +150,55 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-          contentPadding: const EdgeInsets.all(20),
+          contentPadding:
+              const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
           content: SizedBox(
             height: 80,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Expanded(
+                    Container(
+                      height: 40,
+                      width: 115,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: primary,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          'Kembali',
-                          style: buttonFont2,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: secondary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(25),
                           ),
                         ),
                         child: Text(
                           'Keluar',
+                          style: buttonFont2,
+                        ),
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()),
+                            (Route<dynamic> route) => false,
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Container(
+                      height: 40,
+                      width: 115,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: secondary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
+                        child: Text(
+                          'Batal',
                           style: buttonFont2,
                         ),
                         onPressed: () {
@@ -210,24 +226,25 @@ class _ProfilePageState extends State<ProfilePage> {
               top: 0,
               left: 0,
               right: 0,
-              child: AppBar(
-                backgroundColor: primary,
-                automaticallyImplyLeading: false,
-                flexibleSpace: Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 30, right: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text('Profile',
-                              style: superFont1.copyWith(color: white)),
-                        ],
-                      ),
-                      const SizedBox(height: 50),
-                    ],
+              child: Stack(
+                children: [
+                  Container(
+                    height: 110,
+                    color: primary,
                   ),
-                ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 30, top: 60, right: 10),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Profile',
+                          style: superFont1.copyWith(color: white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             Positioned.fill(
@@ -235,12 +252,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: <Widget>[
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 50),
                     Stack(
                       children: [
                         Container(
-                          width: 115,
-                          height: 115,
+                          width: 120,
+                          height: 120,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
@@ -272,7 +289,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       userEmail,
                       style: regulerFont1,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
                     ProfileOption(
                       icon: Icons.person,
                       text: 'Ubah Profile',
@@ -304,21 +321,35 @@ class _ProfilePageState extends State<ProfilePage> {
                       onPressed: () {
                         _showJoinAsOwnerDialog(context);
                       },
-                      style: longButton1,
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 18, horizontal: 55),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        backgroundColor: const Color(0xFF489DD6),
+                      ),
                       child: Text(
-                        'DAFTARKAN LAPANGANMU',
-                        style: buttonFont1,
+                        'Daftarkan Lapanganmu',
+                        style: buttonFont1.copyWith(fontSize: 16),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 15),
                     ElevatedButton(
                       onPressed: () {
                         _showLogoutDialog(context);
                       },
-                      style: longButton1,
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 18, horizontal: 125),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        backgroundColor: const Color(0xFF489DD6),
+                      ),
                       child: Text(
-                        'KELUAR',
-                        style: buttonFont1,
+                        'Keluar',
+                        style: buttonFont1.copyWith(fontSize: 16),
                       ),
                     ),
                   ],
@@ -370,9 +401,9 @@ class _ProfileOptionState extends State<ProfileOption> {
         },
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(15),
             border: Border.all(color: tertiary),
           ),
           child: Row(

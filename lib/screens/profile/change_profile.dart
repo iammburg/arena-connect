@@ -76,10 +76,9 @@ class _ChangeProfileState extends State<ChangeProfile> {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(25.0),
           ),
-          backgroundColor:
-              white, // Mengubah background rectangle menjadi warna putih
+          backgroundColor: white,
           title: Center(
             child: Column(
               children: [
@@ -87,8 +86,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   'Simpan Perubahan',
                   style: superFont1.copyWith(color: primary),
                 ),
-                const SizedBox(
-                    height: 20), // Reduce the gap between title and the content
+                const SizedBox(height: 20),
                 Text(
                   'Apakah kamu yakin ingin menyimpan perubahan?',
                   textAlign: TextAlign.center,
@@ -98,23 +96,25 @@ class _ChangeProfileState extends State<ChangeProfile> {
             ),
           ),
           contentPadding:
-              const EdgeInsets.all(20), // Adjusted padding for more space
+              const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
           content: SizedBox(
-            height: 80, // Set height to maintain a balanced shape
+            height: 80,
             child: Column(
-              mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran dialog
-              mainAxisAlignment: MainAxisAlignment.center, // Center the content
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 30), // Jarak antara teks dan tombol
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Expanded(
+                    Container(
+                      height: 40,
+                      width: 115,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: primary,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(25),
                           ),
                         ),
                         child: Text(
@@ -126,13 +126,15 @@ class _ChangeProfileState extends State<ChangeProfile> {
                         },
                       ),
                     ),
-                    const SizedBox(width: 20),
-                    Expanded(
+                    const SizedBox(width: 4),
+                    Container(
+                      height: 40,
+                      width: 115,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: secondary, // Warna tombol "Keluar"
+                          backgroundColor: secondary,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(25),
                           ),
                         ),
                         child: Text(
@@ -158,7 +160,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               margin: const EdgeInsets.symmetric(
-                                  horizontal: 40.0), // Margin horizontal
+                                  horizontal: 50.0, vertical: 20.0),
                             ),
                           );
                         },
@@ -177,43 +179,44 @@ class _ChangeProfileState extends State<ChangeProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       body: Stack(
         children: [
           Positioned(
             top: 0,
             left: 0,
             right: 0,
-            child: AppBar(
-              backgroundColor: primary, // Dark blue background
-              automaticallyImplyLeading:
-                  false, // Remove the default back button
-              flexibleSpace: Padding(
-                padding: const EdgeInsets.only(
-                    left: 10, top: 50, right: 10), // Adjust padding
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.arrow_back_ios,
-                              size: 20, color: white),
-                          onPressed: () {
-                            Navigator.pop(context); // Handle back navigation
-                          },
-                          padding: EdgeInsets.zero, // Remove default padding
-                          constraints:
-                              const BoxConstraints(), // Remove default size constraints
-                        ),
-                        const SizedBox(
-                            width: 5), // Add space between icon and text
-                        Text('Ubah Profile',
-                            style: superFont1.copyWith(color: white)),
-                      ],
-                    ),
-                    const SizedBox(
-                        height: 50), // Space between title and profile avatar
-                  ],
+            child: PreferredSize(
+              preferredSize: const Size.fromHeight(150),
+              child: AppBar(
+                backgroundColor: primary,
+                automaticallyImplyLeading: false,
+                flexibleSpace: Padding(
+                  padding: const EdgeInsets.only(left: 30, top: 60),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.arrow_back_ios,
+                                size: 20, color: white),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            'Ubah Profile',
+                            style: superFont1.copyWith(color: white),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 40),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -223,17 +226,17 @@ class _ChangeProfileState extends State<ChangeProfile> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: <Widget>[
-                  const SizedBox(height: 55),
+                  const SizedBox(height: 80),
                   Stack(
                     children: [
                       Container(
-                        width: 115, // Same size as CircleAvatar's diameter
-                        height: 115,
+                        width: 130,
+                        height: 130,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: primary, // Border color
-                            width: 10, // Border width
+                            color: white,
+                            width: 9,
                           ),
                         ),
                         child: CircleAvatar(
@@ -248,68 +251,69 @@ class _ChangeProfileState extends State<ChangeProfile> {
                         ),
                       ),
                       Positioned(
-                        bottom: 11,
-                        right: 14,
-                        child: GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Container(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      ListTile(
-                                        leading: Icon(
-                                          Icons.camera_alt,
-                                          color: primary,
+                          bottom: 11,
+                          right: 14,
+                          child: GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        ListTile(
+                                          leading: Icon(
+                                            Icons.camera_alt,
+                                            color: primary,
+                                          ),
+                                          title: Text(
+                                            'Ambil Foto dari Kamera',
+                                            style: regulerFont1.copyWith(
+                                                fontSize: 15),
+                                          ),
+                                          onTap: () {
+                                            pickImageFromCamera();
+                                            Navigator.pop(context);
+                                          },
                                         ),
-                                        title: const Text(
-                                            'Ambil Foto dari Kamera'),
-                                        onTap: () {
-                                          pickImageFromCamera(); // Tambahkan logika untuk mengambil foto dari kamera
-                                          Navigator.pop(
-                                              context); // Tutup popup setelah memilih opsi
-                                        },
-                                      ),
-                                      ListTile(
-                                        leading: Icon(
-                                          Icons.photo,
-                                          color: primary,
+                                        ListTile(
+                                          leading: Icon(
+                                            Icons.photo,
+                                            color: primary,
+                                          ),
+                                          title: Text(
+                                            'Tambahkan dari Galeri',
+                                            style: regulerFont1.copyWith(
+                                                fontSize: 15),
+                                          ),
+                                          onTap: () {
+                                            pickImageFromGallery();
+                                            Navigator.pop(context);
+                                          },
                                         ),
-                                        title:
-                                            const Text('Tambahkan dari Galeri'),
-                                        onTap: () {
-                                          pickImageFromGallery(); // Tambahkan logika untuk memilih foto dari galeri
-                                          Navigator.pop(
-                                              context); // Tutup popup setelah memilih opsi
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          child: CircleAvatar(
-                            backgroundColor: white,
-                            radius: 12, // Adjust the size of the small circle
-                            child: const Icon(
-                              Icons.add_a_photo_outlined,
-                              size: 15,
-                              color: Colors.black,
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: white,
+                              radius: 20,
+                              child: const Icon(
+                                Icons.add_a_photo_outlined,
+                                size: 23,
+                                color: Color(0xFF12215C),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
+                          )),
                     ],
                   ),
-                  const SizedBox(height: 50),
-                  // Mengatur padding yang lebih kecil untuk input fields
+                  const SizedBox(height: 40),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10), // Padding horizontal lebih kecil
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: buildInputField(
                       labelText: 'Username',
                       controller: usernameController,
@@ -319,7 +323,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
-                    ), // Padding horizontal lebih kecil
+                    ),
                     child: buildInputField(
                       labelText: 'No Telepon',
                       controller: phoneController,
@@ -327,30 +331,33 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   ),
                   const SizedBox(height: 10),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10), // Padding horizontal lebih kecil
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: buildInputField(
                       labelText: 'Email',
                       controller: emailController,
                     ),
                   ),
                   const SizedBox(height: 30),
-
-                  ProfileOption(
-                    text: 'Hapus Akun',
-                    selectedItemColor: primary,
-                    onTap: () {
-                      // Add your profile editing logic here
-                    },
-                    color: primary,
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: ProfileOption(
+                      text: 'Hapus Akun',
+                      selectedItemColor: primary,
+                      onTap: () {},
+                      color: primary,
+                    ),
                   ),
-                  // Modifikasi untuk "Simpan Perubahan"
                   const SizedBox(
                     height: 10,
                   ),
                   ElevatedButton(
                     onPressed: isChanged ? _showSaveConfirmationDialog : null,
-                    style: longButton1,
+                    style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(320, 50),
+                        backgroundColor: secondary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        )),
                     child: Text(
                       'Simpan Perubahan',
                       style: buttonFont1,
