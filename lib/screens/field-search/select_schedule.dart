@@ -66,9 +66,10 @@ class _SelectScheduleState extends State<SelectSchedule> {
           Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: primary,
-                  border: Border.all(color: Colors.white, width: 1)),
+                shape: BoxShape.circle,
+                color: primary,
+                // border: Border.all(color: Colors.white, width: 1)
+              ),
               child: const IconButton(
                   icon: Icon(Icons.calendar_month_outlined),
                   color: Colors.white,
@@ -83,15 +84,16 @@ class _SelectScheduleState extends State<SelectSchedule> {
         children: [
           Container(
               padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: primary,
-                  border: Border.all(color: Colors.white, width: 1)),
-              child: const IconButton(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                // border: Border.all(color: Colors.white, width: 1)
+              ),
+              child: IconButton(
                   icon: Icon(Icons.list_alt_rounded),
-                  color: Colors.white,
+                  color: primary,
                   onPressed: null,
-                  disabledColor: Colors.white)),
+                  disabledColor: primary)),
         ],
       );
     }
@@ -102,9 +104,10 @@ class _SelectScheduleState extends State<SelectSchedule> {
           Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: primary,
-                  border: Border.all(color: Colors.white, width: 1)),
+                shape: BoxShape.circle,
+                color: primary,
+                // border: Border.all(color: Colors.white, width: 1)
+              ),
               child: const IconButton(
                   icon: Icon(Icons.payments_outlined),
                   color: Colors.white,
@@ -206,16 +209,19 @@ class _SelectScheduleState extends State<SelectSchedule> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.arrow_back),
-                    color: white,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, top: 20),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back_ios),
+                      color: white,
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -377,7 +383,8 @@ class _SelectScheduleState extends State<SelectSchedule> {
                                               style: shortButton2,
                                               child: Text(
                                                 "Buat Booking",
-                                                style: buttonFont6,
+                                                style: buttonFont6.copyWith(
+                                                    fontSize: 11),
                                               ),
                                             ),
                                           ),
@@ -406,7 +413,7 @@ class _SelectScheduleState extends State<SelectSchedule> {
                 children: [
                   const Divider(
                     color: Colors.grey,
-                    thickness: 2,
+                    thickness: 0.5,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(14),
@@ -414,15 +421,21 @@ class _SelectScheduleState extends State<SelectSchedule> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Mulai", style: regulerFont10),
-                        Text(_selectedPrice, style: superFont4),
+                        Text("Mulai",
+                            style: regulerFont10.copyWith(fontSize: 13)),
+                        Text(_selectedPrice, style: superFont2),
                         const SizedBox(height: 12),
                         ElevatedButton(
                             onPressed: () {},
-                            style: longButton1,
+                            style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(400, 48),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                backgroundColor: secondary),
                             child: Text(
                               "Selanjutnya",
-                              style: buttonFont4,
+                              style: buttonFont2,
                             )),
                         const SizedBox(height: 18),
                       ],
