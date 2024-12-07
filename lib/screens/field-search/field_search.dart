@@ -20,15 +20,22 @@ class _FieldSearchState extends State<FieldSearch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Ayo Pilih Lapanganmu!',
-          style: superFont2,
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: primary),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            Text(
+              'Ayo Pilih Lapanganmu!',
+              style: superFont2,
+            ),
+          ],
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),
@@ -37,16 +44,23 @@ class _FieldSearchState extends State<FieldSearch> {
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: TextField(
               decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                hintText: 'Cari Lapangan',
-                hintStyle: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
-                prefixIcon: const Icon(Icons.search),
-              ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  hintText: 'Cari Lapangan',
+                  hintStyle: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14,
+                  ),
+                  prefixIcon: Icon(Icons.search, color: primary),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: BorderSide(color: primary),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: const BorderSide(color: Colors.grey),
+                  )),
             ),
           ),
         ),
@@ -62,7 +76,7 @@ class _FieldSearchState extends State<FieldSearch> {
                 onPressed: () {
                   _showFilterModal(context);
                 },
-                icon: const Icon(Icons.tune),
+                icon: Icon(Icons.tune, color: primary),
                 label: Text(
                   'Filter',
                   style: regulerFont1,
@@ -256,7 +270,7 @@ class _FieldSearchState extends State<FieldSearch> {
       ),
       builder: (BuildContext context) {
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -298,7 +312,10 @@ class _FieldSearchState extends State<FieldSearch> {
                     children: [
                       ElevatedButton(
                         onPressed: () {},
-                        style: shortButtonPrimary2,
+                        style: shortButtonPrimary2.copyWith(
+                            fixedSize: WidgetStateProperty.all(
+                          const Size(100, 30),
+                        )),
                         child: Text(
                           'Hari Ini',
                           style: buttonFont5,
@@ -307,7 +324,10 @@ class _FieldSearchState extends State<FieldSearch> {
                       const SizedBox(width: 8),
                       ElevatedButton(
                         onPressed: () {},
-                        style: shortButtonPrimary2,
+                        style: shortButtonPrimary2.copyWith(
+                            fixedSize: WidgetStateProperty.all(
+                          const Size(100, 30),
+                        )),
                         child: Text(
                           'Besok',
                           style: buttonFont5,
@@ -341,7 +361,9 @@ class _FieldSearchState extends State<FieldSearch> {
                           'Pagi (6-10)',
                           style: buttonFont5,
                         ),
-                        style: shortButtonPrimary2,
+                        style: shortButtonPrimary2.copyWith(
+                            minimumSize:
+                                WidgetStateProperty.all(const Size(0, 40))),
                       ),
                       const SizedBox(width: 8),
                       FilledButton.icon(
@@ -354,7 +376,9 @@ class _FieldSearchState extends State<FieldSearch> {
                           'Siang (11-14)',
                           style: buttonFont5,
                         ),
-                        style: shortButtonPrimary2,
+                        style: shortButtonPrimary2.copyWith(
+                            minimumSize:
+                                WidgetStateProperty.all(const Size(0, 40))),
                       ),
                     ],
                   ),
@@ -373,7 +397,9 @@ class _FieldSearchState extends State<FieldSearch> {
                           'Sore (15-17)',
                           style: buttonFont5,
                         ),
-                        style: shortButtonPrimary2,
+                        style: shortButtonPrimary2.copyWith(
+                            minimumSize:
+                                WidgetStateProperty.all(const Size(0, 40))),
                       ),
                       const SizedBox(width: 8),
                       FilledButton.icon(
@@ -386,7 +412,9 @@ class _FieldSearchState extends State<FieldSearch> {
                           'Malam (18-23)',
                           style: buttonFont5,
                         ),
-                        style: shortButtonPrimary2,
+                        style: shortButtonPrimary2.copyWith(
+                            minimumSize:
+                                WidgetStateProperty.all(const Size(0, 40))),
                       ),
                     ],
                   ),
@@ -395,10 +423,14 @@ class _FieldSearchState extends State<FieldSearch> {
               const SizedBox(height: 18),
               ElevatedButton(
                 onPressed: () {},
-                style: longButton1,
-                child: Text('Terapkan', style: buttonFont5),
+                style: longButton1.copyWith(
+                    fixedSize: WidgetStateProperty.all(const Size(100, 39)),
+                    shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)))),
+                child:
+                    Text('Terapkan', style: buttonFont5.copyWith(fontSize: 14)),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 15),
             ],
           ),
         );
