@@ -1,4 +1,5 @@
 import 'package:arena_connect/config/theme.dart';
+import 'package:arena_connect/screens/booking/booking_page.dart';
 import 'package:flutter/material.dart';
 
 class SelectSchedule extends StatefulWidget {
@@ -426,7 +427,9 @@ class _SelectScheduleState extends State<SelectSchedule> {
                         Text(_selectedPrice, style: superFont2),
                         const SizedBox(height: 12),
                         ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> BookingPage()));
+                            },
                             style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(400, 48),
                                 shape: RoundedRectangleBorder(
