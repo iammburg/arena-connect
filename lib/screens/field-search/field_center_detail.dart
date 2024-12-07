@@ -21,10 +21,11 @@ class FieldCenterState extends State<FieldCenterDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         leading: Padding(
           padding: const EdgeInsets.only(bottom: 16, left: 16),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back),
+            icon: Icon(Icons.arrow_back_ios, color: primary),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -81,14 +82,18 @@ class FieldCenterState extends State<FieldCenterDetails> {
 
                           //Background putih dengan Informasi di atasnya
                           Positioned(
-                            bottom: 0.55,
-                            left: 0.1,
-                            right: 0.1,
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
                             child: Container(
-                              height: 85.0,
-                              decoration: BoxDecoration(
+                              height: 87.5,
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(7.75),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    topRight: Radius.circular(8),
+                                    bottomLeft: Radius.circular(8),
+                                    bottomRight: Radius.circular(8)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black26, // Warna bayangan
@@ -228,9 +233,9 @@ class FieldCenterState extends State<FieldCenterDetails> {
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.7), // Warna bayangan
-                  spreadRadius: 1, // Sebaran bayangan
-                  blurRadius: 2, // Jarak blur
-                  offset: Offset(-0.5, 4), // Perpindahan bayangan (x,y)
+                  spreadRadius: 0, // Sebaran bayangan
+                  blurRadius: 3, // Jarak blur
+                  offset: Offset(0, 3), // Perpindahan bayangan (x,y)
                 ),
               ],
             ),
@@ -247,9 +252,7 @@ class FieldCenterState extends State<FieldCenterDetails> {
                       children: [
                         Text(
                           'Jl.Mulawarman Selatan, Tembalang, Semarang',
-                          style: TextStyle(
-                            fontSize: 10,
-                          ),
+                          style: TextStyle(fontSize: 10.2, color: primary),
                         ),
                       ],
                     ),
@@ -286,14 +289,9 @@ class FieldCenterState extends State<FieldCenterDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Aturan Lapangan",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 6),
+                SizedBox(height: 20),
+                Text("Aturan Lapangan", style: superFont3),
+                SizedBox(height: 10),
                 // Daftar aturan dengan bullet poin
                 Container(
                   padding: EdgeInsets.only(left: 15),
@@ -343,14 +341,9 @@ class FieldCenterState extends State<FieldCenterDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Fasilitas',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 16),
+                const SizedBox(height: 10),
+                Text('Fasilitas', style: superFont2),
+                SizedBox(height: 20),
 
                 // Daftar Fasilitas Lapangan dengan Ikon
                 Container(
@@ -488,16 +481,16 @@ class FieldCenterState extends State<FieldCenterDetails> {
 
           const Spacer(),
           Container(
-            height: 55,
+            height: 96,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(2.0),
               boxShadow: [
-                BoxShadow(
+                const BoxShadow(
                   color: Colors.black26, // Warna bayangan
-                  offset: Offset(4.5, 0), // Posisi bayangan
-                  blurRadius: 4.0, // Jarak blur bayangan
-                  spreadRadius: 3.5, // Jarak sebar bayangan
+                  offset: Offset(0, -4), // Posisi bayangan
+                  blurRadius: 10, // Jarak blur bayangan
+                  spreadRadius: 0, // Jarak sebar bayangan
                 ),
               ],
             ),
@@ -508,25 +501,22 @@ class FieldCenterState extends State<FieldCenterDetails> {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    margin: EdgeInsets.only(top: 10, bottom: 10, left: 30),
+                    margin:
+                        const EdgeInsets.only(top: 10, bottom: 10, left: 40),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const SizedBox(height: 15),
+                        const Text(
                           'Mulai',
                           style: TextStyle(
-                            fontSize: 10, // Ukuran font yang lebih kecil
-                            color: Colors.grey, // Warna teks abu-abu
+                            fontSize: 12,
+                            color: Colors.grey,
                           ),
                         ),
-                        Text(
-                          'Rp 30.000',
-                          style: TextStyle(
-                            fontSize: 15, // Ukuran font untuk harga
-                            fontWeight: FontWeight.bold,
-                            color: primary, // Warna teks biru gelap
-                          ),
-                        ),
+                        const SizedBox(height: 2),
+                        Text('Rp 30.000',
+                            style: superFont2.copyWith(fontSize: 19)),
                       ],
                     ),
                   ),
@@ -534,8 +524,8 @@ class FieldCenterState extends State<FieldCenterDetails> {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    margin: EdgeInsets.only(
-                        top: 10, bottom: 10, left: 20, right: 30),
+                    margin:
+                        const EdgeInsets.only(top: 10, bottom: 10, right: 40),
                     child: ElevatedButton(
                       onPressed: () {
                         // Aksi ketika tombol ditekan
@@ -545,14 +535,13 @@ class FieldCenterState extends State<FieldCenterDetails> {
                               builder: (context) => SelectSchedule()),
                         );
                       },
-                      style: shortButton3,
-                      child: Text(
-                        'Pilih Lapangan',
-                        style: TextStyle(
-                          fontSize: 12, // Ukuran teks tombol
-                          color: Colors.white, // Warna teks putih
-                        ),
-                      ),
+                      style: shortButton3.copyWith(
+                          fixedSize: WidgetStateProperty.all(const Size(0, 41)),
+                          shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)))),
+                      child: Text('Pilih Lapangan',
+                          style:
+                              superFont4.copyWith(color: white, fontSize: 14)),
                     ),
                   ),
                 ),
