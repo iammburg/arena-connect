@@ -507,13 +507,8 @@ class FieldCenterState extends State<FieldCenterDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 15),
-                        const Text(
-                          'Mulai',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
-                        ),
+                        Text('Mulai',
+                            style: regulerFont10.copyWith(fontSize: 13)),
                         const SizedBox(height: 2),
                         Text('Rp 30.000',
                             style: superFont2.copyWith(fontSize: 19)),
@@ -536,9 +531,9 @@ class FieldCenterState extends State<FieldCenterDetails> {
                         );
                       },
                       style: shortButton3.copyWith(
-                          fixedSize: WidgetStateProperty.all(const Size(0, 41)),
+                          fixedSize: WidgetStateProperty.all(const Size(0, 38)),
                           shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)))),
+                              borderRadius: BorderRadius.circular(8)))),
                       child: Text('Pilih Lapangan',
                           style:
                               superFont4.copyWith(color: white, fontSize: 14)),
