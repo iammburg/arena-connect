@@ -45,21 +45,24 @@ class BookingPage extends StatelessWidget {
           ),
           Column(
             children: [
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.chevron_left),
-                    color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, top: 20),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back_ios),
+                      color: white,
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -174,7 +177,7 @@ class BookingPage extends StatelessWidget {
                           const SizedBox(width: 7),
                           Text(
                             "Kota Semarang",
-                            style: regulerFont4,
+                            style: regulerFont2,
                           )
                         ],
                       ),
@@ -222,7 +225,7 @@ class BookingPage extends StatelessWidget {
                             children: [
                               Text(
                                 "Lapangan 1",
-                                style: superFont6,
+                                style: superFont5,
                               ),
                               const SizedBox(width: 7),
                               Padding(
@@ -239,17 +242,17 @@ class BookingPage extends StatelessWidget {
                               const SizedBox(width: 7),
                               Text(
                                 "Futsal",
-                                style: superFont6,
+                                style: superFont5,
                               )
                             ],
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 6),
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
                                 "Senin, 1 September 2024",
-                                style: regulerFont4,
+                                style: regulerFont3,
                               )
                             ],
                           ),
@@ -275,7 +278,7 @@ class BookingPage extends StatelessWidget {
                       left: 40,
                       child: Text(
                         "07.00 - 08.00",
-                        style: regulerFont3,
+                        style: regulerFont3.copyWith(fontSize: 12),
                       ),
                     ),
                     Positioned(
@@ -283,7 +286,7 @@ class BookingPage extends StatelessWidget {
                       right: 40,
                       child: Text(
                         "Rp 30.000",
-                        style: regulerFont3,
+                        style: regulerFont3.copyWith(fontSize: 12),
                       ),
                     )
                   ],
@@ -385,7 +388,7 @@ class BookingPage extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              height: 70,
+              height: 95,
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -398,7 +401,7 @@ class BookingPage extends StatelessWidget {
               ),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 22),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -407,11 +410,11 @@ class BookingPage extends StatelessWidget {
                       children: [
                         Text(
                           "Mulai",
-                          style: regulerFont9,
+                          style: regulerFont9.copyWith(fontSize: 12),
                         ),
                         Text(
                           "Rp 30.000",
-                          style: superFont2,
+                          style: superFont2.copyWith(fontSize: 19),
                         ),
                       ],
                     ),
@@ -423,13 +426,16 @@ class BookingPage extends StatelessWidget {
                                 builder: (context) => const Pembayaran()));
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF489DD6),
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
+                          backgroundColor: const Color(0xFF489DD6),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          minimumSize: const Size(190, 48)),
+                      child: Text(
+                        "Pilih Pembayaran",
+                        style: superFont4.copyWith(fontSize: 14, color: white),
                       ),
-                      child: const Text("Pilih Pembayaran"),
                     ),
                   ],
                 ),
