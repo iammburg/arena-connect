@@ -1,3 +1,4 @@
+import 'package:arena_connect/screens/booking/detail_pembayaran.dart';
 import 'package:flutter/material.dart';
 import 'package:arena_connect/config/theme.dart';
 import 'package:arena_connect/screens/field-search/select_schedule.dart';
@@ -57,21 +58,24 @@ class _PembayaranState extends State<Pembayaran> {
           ),
           Column(
             children: [
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.chevron_left),
-                    color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, top: 20),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back_ios),
+                      color: white,
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -101,8 +105,8 @@ class _PembayaranState extends State<Pembayaran> {
                         child: buildCircleIcon(
                           Icons.list_alt_rounded,
                           "Detail Booking",
-                          backgroundColor: Colors.white,
-                          iconColor: const Color(0xFF12215c),
+                          backgroundColor: primary,
+                          iconColor: white,
                         ),
                       ),
                     ],
@@ -119,7 +123,8 @@ class _PembayaranState extends State<Pembayaran> {
                       Container(
                         padding: const EdgeInsets.only(right: 40),
                         child: buildCircleIcon(
-                            Icons.payments_outlined, "Pemabayaran"),
+                            Icons.payments_outlined, "Pemabayaran",
+                            backgroundColor: white, iconColor: primary),
                       ),
                     ],
                   ),
@@ -135,7 +140,7 @@ class _PembayaranState extends State<Pembayaran> {
             child: FractionallySizedBox(
               widthFactor: 0.95,
               child: Container(
-                height: 78,
+                height: 80,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
@@ -156,7 +161,7 @@ class _PembayaranState extends State<Pembayaran> {
                     children: [
                       Text(
                         "Total Pembayaran",
-                        style: regulerFont7,
+                        style: regulerFont7.copyWith(fontSize: 12),
                       ),
                       Text(
                         "Rp 30.000",
@@ -175,7 +180,7 @@ class _PembayaranState extends State<Pembayaran> {
               children: [
                 Text(
                   "Metode Pembayaran",
-                  style: superFont4,
+                  style: superFont3,
                 )
               ],
             ),
@@ -317,7 +322,7 @@ class _PembayaranState extends State<Pembayaran> {
             left: 0,
             right: 0,
             child: Container(
-              height: 70,
+              height: 95,
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -330,23 +335,31 @@ class _PembayaranState extends State<Pembayaran> {
               ),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 257,
-                      height: 34,
+                      width: 378,
+                      height: 40,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PaymentScreen()));
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF489DD6),
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: const Text("Bayar"),
+                        child: Text(
+                          "Bayar",
+                          style: buttonFont2,
+                        ),
                       ),
                     ),
                   ],
