@@ -68,14 +68,14 @@ class _SelectScheduleState extends State<SelectSchedule> {
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: primary,
+                color: white,
                 // border: Border.all(color: Colors.white, width: 1)
               ),
-              child: const IconButton(
+              child: IconButton(
                   icon: Icon(Icons.calendar_month_outlined),
-                  color: Colors.white,
+                  color: primary,
                   onPressed: null,
-                  disabledColor: Colors.white)),
+                  disabledColor: primary)),
         ],
       );
     }
@@ -85,16 +85,16 @@ class _SelectScheduleState extends State<SelectSchedule> {
         children: [
           Container(
               padding: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white,
+                color: primary,
                 // border: Border.all(color: Colors.white, width: 1)
               ),
               child: IconButton(
                   icon: Icon(Icons.list_alt_rounded),
-                  color: primary,
+                  color: white,
                   onPressed: null,
-                  disabledColor: primary)),
+                  disabledColor: white)),
         ],
       );
     }
@@ -424,11 +424,15 @@ class _SelectScheduleState extends State<SelectSchedule> {
                       children: [
                         Text("Mulai",
                             style: regulerFont10.copyWith(fontSize: 13)),
-                        Text(_selectedPrice, style: superFont2),
+                        Text(_selectedPrice,
+                            style: superFont2.copyWith(fontSize: 19)),
                         const SizedBox(height: 12),
                         ElevatedButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> BookingPage()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => BookingPage()));
                             },
                             style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(400, 48),
