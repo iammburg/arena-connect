@@ -5,7 +5,7 @@ import 'package:arena_connect/models/res_fields.dart';
 import 'package:arena_connect/screens/booking/booking_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:arena_connect/models/booking.dart';
+import 'package:arena_connect/models/booking.dart' as booking;
 
 class SelectSchedule extends StatefulWidget {
   final int fieldCentreId;
@@ -123,37 +123,48 @@ class _SelectScheduleState extends State<SelectSchedule> {
         return AlertDialog(
           title: Text(
             'Konfirmasi Booking',
-            style: regulerFont1,
+            style: superFont2,
           ),
           content: Text(
-              'Apakah yakin ingin membuat booking ini? Booking tidak bisa dibatalkan, periksa kembali ya!'),
+              'Apakah yakin ingin membuat booking ini? Booking tidak bisa dibatalkan, periksa kembali ya!',
+              style: regulerFont2),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Batal'),
+              style: shortButton2,
+              child: Text(
+                'Batal',
+                style: buttonFont4,
+              ),
             ),
             TextButton(
               onPressed: () async {
                 try {
-                  Booking? booking = await ApiService().createBooking(
-                      userId, fieldId, bookingStart, bookingEnd, date, cost);
-                  print(booking);
-                  if (booking != null) {
+                  booking.Booking? newBooking = await ApiService()
+                      .createBooking(userId, fieldId, bookingStart, bookingEnd,
+                          date, cost);
+                  print('API response: $newBooking');
+                  if (newBooking != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Booking berhasil dibuat!'),
                         backgroundColor: Colors.green,
                       ),
                     );
+                    print(
+                        'Navigating to BookingPage with ID: ${newBooking.data.id}');
                     Navigator.of(context).pop();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const BookingPage(),
+                        builder: (context) =>
+                            BookingPage(bookingId: newBooking.data.id),
                       ),
                     );
+                  } else {
+                    throw Exception('Booking creation returned null');
                   }
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -165,7 +176,8 @@ class _SelectScheduleState extends State<SelectSchedule> {
                   Navigator.of(context).pop();
                 }
               },
-              child: const Text('Konfirmasi'),
+              style: shortButtonPrimary2,
+              child: Text('Konfirmasi', style: buttonFont4),
             ),
           ],
         );
@@ -559,7 +571,7 @@ class _SelectScheduleState extends State<SelectSchedule> {
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                          SnackBar(
+                                          const SnackBar(
                                             content: Text(
                                                 'Pilih jadwal dulu, dong 🤗'),
                                             backgroundColor: Colors.red,

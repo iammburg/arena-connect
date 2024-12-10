@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:arena_connect/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:arena_connect/models/booking.dart';
+import 'package:arena_connect/models/booking.dart' as booking;
 
 // const String baseUrl = 'http://127.0.0.1:8000/api';
 const String baseUrl = 'http://localhost:8000/api';
@@ -61,8 +61,8 @@ class ApiService {
     }
   }
 
-  Future<Booking?> createBooking(int userId, int fieldId, String bookingStart,
-      String bookingEnd, String date, String cost) async {
+  Future<booking.Booking?> createBooking(int userId, int fieldId,
+      String bookingStart, String bookingEnd, String date, String cost) async {
     try {
       String? token = await getToken();
       if (token == null) {
@@ -84,12 +84,30 @@ class ApiService {
         }),
       );
 
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
       if (response.statusCode == 201) {
-        return bookingFromJson(response.body);
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        print('Parsed response data: $responseData');
+        return booking.Booking.fromJson(responseData);
+      } else {
+        print('Failed to create booking: ${response.body}');
+        return null;
       }
     } catch (e) {
       print('Error creating booking: $e');
       return null;
+    }
+  }
+
+  Future<booking.Booking> getBooking(int bookingId) async {
+    final response = await http.get(Uri.parse('$baseUrl/bookings/$bookingId'));
+    if (response.statusCode == 200) {
+      print(response.body);
+      return booking.Booking.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load booking');
     }
   }
 
