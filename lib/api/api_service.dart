@@ -111,6 +111,53 @@ class ApiService {
     }
   }
 
+  Future<Map<String, dynamic>> createPayment({
+    required int userId,
+    required int bookingId,
+    required String totalPayment,
+    required String paymentMethod,
+    required String status,
+    required String orderId,
+    String? receipt,
+  }) async {
+    try {
+      String? token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final response = await http.post(
+        Uri.parse("$baseUrl/payments"),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          "user_id": userId,
+          "booking_id": bookingId,
+          "total_payment": totalPayment,
+          "payment_method": paymentMethod,
+          "status": status,
+          "order_id": orderId,
+          "receipt": receipt,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return {
+          'success': true,
+          'data': responseData['data'],
+        };
+      } else {
+        final errorData = jsonDecode(response.body);
+        return {'success': false, 'errors': errorData['data'] ?? errorData};
+      }
+    } catch (e) {
+      return {'success': false, 'errors': e.toString()};
+    }
+  }
+
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
