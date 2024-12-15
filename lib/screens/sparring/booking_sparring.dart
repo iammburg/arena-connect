@@ -417,10 +417,11 @@ class BookingPage extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Pembayaran()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => const Pembayaran(),
+                        //     ));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF489DD6),

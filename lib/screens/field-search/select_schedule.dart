@@ -3,6 +3,8 @@ import 'package:arena_connect/api/api_service.dart';
 import 'package:arena_connect/config/theme.dart';
 import 'package:arena_connect/models/res_fields.dart';
 import 'package:arena_connect/screens/booking/booking_page.dart';
+import 'package:arena_connect/screens/field-search/field_center_detail.dart';
+import 'package:arena_connect/screens/homepage/home.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:arena_connect/models/booking.dart' as booking;
@@ -145,7 +147,7 @@ class _SelectScheduleState extends State<SelectSchedule> {
                   booking.Booking? newBooking = await ApiService()
                       .createBooking(userId, fieldId, bookingStart, bookingEnd,
                           date, cost);
-                  print('API response: $newBooking');
+                  // print('API response: $newBooking');
                   if (newBooking != null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -352,6 +354,13 @@ class _SelectScheduleState extends State<SelectSchedule> {
                         IconButton(
                           onPressed: () {
                             Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FieldCenterDetails(
+                                    fieldCentreId: widget.fieldCentreId),
+                              ),
+                            );
                           },
                           icon: const Icon(Icons.arrow_back),
                           color: white,
