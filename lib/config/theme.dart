@@ -219,6 +219,15 @@ ButtonStyle shortButtonPrimary = ElevatedButton.styleFrom(
     ),
     padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20));
 
+ButtonStyle shortButtonPrimary2 = OutlinedButton.styleFrom(
+    minimumSize: const Size(90, 32),
+    backgroundColor: primary,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(6),
+    ),
+    side: BorderSide(color: primary),
+    padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20));
+
 ButtonStyle shortButtonSecondary = ElevatedButton.styleFrom(
     minimumSize: const Size(131, 32),
     backgroundColor: secondary,
@@ -234,3 +243,11 @@ ButtonStyle shortButton2 = ElevatedButton.styleFrom(
       borderRadius: BorderRadius.circular(5),
     ),
     padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 20));
+
+ButtonStyle shortButton3 = ElevatedButton.styleFrom(
+    minimumSize: const Size(42, 22),
+    backgroundColor: secondary,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5),
+    ),
+    padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 2));

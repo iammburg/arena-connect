@@ -30,8 +30,9 @@ class _SparringSearchState extends State<SparringSearch>
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title:
-            IconButton(onPressed: () {}, icon: const Icon(Icons.chevron_left)),
+        automaticallyImplyLeading: false,
+        // title:
+        //     IconButton(onPressed: () {}, icon: const Icon(Icons.chevron_left)),
         bottom: TabBar(
           controller: _tabController,
           labelColor: Colors.blue,
@@ -107,13 +108,9 @@ class SparingTab extends StatelessWidget {
   }
 }
 
-
-
-
-
 class KompetisiTab extends StatelessWidget {
   const KompetisiTab({Key? key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -133,7 +130,8 @@ class KompetisiTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ClipRRect(
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(15)),
                       child: Image.asset(
                         'images/footballcup.jpg',
                         width: double.infinity,
@@ -159,14 +157,16 @@ class KompetisiTab extends StatelessWidget {
                           Row(
                             children: [
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 8),
                                 decoration: BoxDecoration(
                                   color: primary,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.calendar_today, color: Colors.white, size: 18),
+                                    const Icon(Icons.calendar_today,
+                                        color: Colors.white, size: 18),
                                     const SizedBox(width: 5),
                                     Text(
                                       '6 Desember 2024',
@@ -177,14 +177,16 @@ class KompetisiTab extends StatelessWidget {
                               ),
                               const SizedBox(width: 20),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 8),
                                 decoration: BoxDecoration(
                                   color: primary,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.sports_soccer, color: Colors.white, size: 18),
+                                    const Icon(Icons.sports_soccer,
+                                        color: Colors.white, size: 18),
                                     const SizedBox(width: 5),
                                     Text(
                                       'Futsal',
@@ -213,7 +215,8 @@ class KompetisiTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ClipRRect(
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(15)),
                       child: Image.asset(
                         'images/footballcup.jpg',
                         width: double.infinity,
@@ -236,18 +239,19 @@ class KompetisiTab extends StatelessWidget {
                             style: superFont1,
                           ),
                           const SizedBox(height: 10),
-
                           Row(
                             children: [
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 8),
                                 decoration: BoxDecoration(
                                   color: primary,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.calendar_today, color: Colors.white, size: 18),
+                                    const Icon(Icons.calendar_today,
+                                        color: Colors.white, size: 18),
                                     const SizedBox(width: 5),
                                     Text(
                                       '6 Desember 2024',
@@ -258,18 +262,20 @@ class KompetisiTab extends StatelessWidget {
                               ),
                               const SizedBox(width: 20),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 8),
                                 decoration: BoxDecoration(
                                   color: primary,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.sports_soccer, color: Colors.white, size: 18),
+                                    const Icon(Icons.sports_soccer,
+                                        color: Colors.white, size: 18),
                                     const SizedBox(width: 5),
                                     Text(
                                       'Futsal',
-                                      style:buttonFont4,
+                                      style: buttonFont4,
                                     ),
                                   ],
                                 ),
@@ -283,89 +289,89 @@ class KompetisiTab extends StatelessWidget {
                 ),
               ),
 
-
               // Third card
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  elevation: 5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                        child: Image.asset(
-                          'images/badmintoncup.jpg',
-                          width: double.infinity,
-                          height: 180,
-                          fit: BoxFit.cover,
-                        ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                elevation: 5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(15)),
+                      child: Image.asset(
+                        'images/badmintoncup.jpg',
+                        width: double.infinity,
+                        height: 180,
+                        fit: BoxFit.cover,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Kota Semarang',
-                              style: regulerFont7,
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              'SEMARANG CUP',
-                              style: superFont1,
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                  decoration: BoxDecoration(
-                                    color: primary,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const Icon(Icons.calendar_today, color: Colors.white, size: 18),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        '6 Desember 2024',
-                                        style: buttonFont4,
-                                      ),
-                                    ],
-                                  ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Kota Semarang',
+                            style: regulerFont7,
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            'SEMARANG CUP',
+                            style: superFont1,
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: primary,
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                const SizedBox(width: 20),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                  decoration: BoxDecoration(
-                                    color: primary,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.sports_tennis, color: Colors.white, size: 18),
+                                    const Icon(Icons.calendar_today,
+                                        color: Colors.white, size: 18),
                                     const SizedBox(width: 5),
-                                      Text(
-                                        'Badminton',
-                                        style: buttonFont4,
-                                      ),
-                                    ],
-                                  ),
-
+                                    Text(
+                                      '6 Desember 2024',
+                                      style: buttonFont4,
+                                    ),
+                                  ],
                                 ),
-                                
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                              const SizedBox(width: 20),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: primary,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.sports_tennis,
+                                        color: Colors.white, size: 18),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'Badminton',
+                                      style: buttonFont4,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-
-
+              ),
             ],
           ),
         ),

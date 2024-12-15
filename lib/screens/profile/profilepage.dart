@@ -16,7 +16,7 @@ class _ProfilePageState extends State<ProfilePage> {
       _selectedIndex = index;
     });
   }
-  
+
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -33,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   'Keluar Akun',
                   style: superFont1.copyWith(color: primary),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   'Apakah kamu yakin ingin keluar akun kamu saat ini?',
                   textAlign: TextAlign.center,
@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-          contentPadding: EdgeInsets.all(20),
+          contentPadding: const EdgeInsets.all(20),
           content: Container(
             height: 80,
             child: Column(
@@ -184,9 +184,13 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 100,
         backgroundColor: primary,
-        title: Text('Profile', style: superFont1.copyWith(color: white)),
-        centerTitle: false,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 30.0),
+          child: Text('Profile', style: superFont1.copyWith(color: white)),
+        ),
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -255,32 +259,32 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Cari',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFF12215c),
-        unselectedItemColor: Colors.grey,
-        selectedLabelStyle: TextStyle(color: Color(0xFF12215c)),
-        unselectedLabelStyle: TextStyle(color: Colors.grey),
-        onTap: _onItemTapped,
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.history),
+      //       label: 'History',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.search),
+      //       label: 'Cari',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.person),
+      //       label: 'Profile',
+      //     ),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   selectedItemColor: Color(0xFF12215c),
+      //   unselectedItemColor: Colors.grey,
+      //   selectedLabelStyle: TextStyle(color: Color(0xFF12215c)),
+      //   unselectedLabelStyle: TextStyle(color: Colors.grey),
+      //   onTap: _onItemTapped,
+      // ),
     );
   }
 }
