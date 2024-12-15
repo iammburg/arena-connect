@@ -20,7 +20,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Terima Kasih!'),
-          content: const Text('Terima kasih atas rating Anda!'),
+          content: const Text('Terima kasih atas rating anda!'),
           actions: [
             TextButton(
               onPressed: () {
