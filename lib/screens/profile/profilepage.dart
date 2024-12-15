@@ -1,5 +1,10 @@
-import 'package:arena_connect/config/theme.dart';
+import 'dart:convert';
+import 'package:arena_connect/api/api_service.dart';
+import 'package:http/http.dart' as http;
+import 'package:arena_connect/screens/edit_password/edit_password.dart';
+import 'package:arena_connect/screens/profile/change_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:arena_connect/config/theme.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -9,12 +14,109 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  int _selectedIndex = 0;
+  String userName = '';
+  String userEmail = '';
+  bool isLoading = true;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _getUserProfile();
+  }
+
+  Future<void> _getUserProfile() async {
+    final token = await ApiService().getToken();
+    if (token != null) {
+      final response = await ApiService().getUserProfile(token);
+      if (response['success']) {
+        setState(() {
+          userName = response['data']['name'];
+          userEmail = response['data']['email'];
+          isLoading = false;
+        });
+      }
+    }
+  }
+
+  void _showJoinAsOwnerDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          backgroundColor: white,
+          title: Center(
+            child: Column(
+              children: [
+                Text(
+                  'Daftarkan Lapanganmu',
+                  style: superFont1.copyWith(color: primary),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Apakah kamu siap menjadi owner lapangan?',
+                  textAlign: TextAlign.center,
+                  style: regulerFont1.copyWith(color: primary),
+                ),
+              ],
+            ),
+          ),
+          contentPadding: const EdgeInsets.all(20),
+          content: SizedBox(
+            height: 80,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          'Kembali',
+                          style: buttonFont2,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: secondary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          'Daftar',
+                          style: buttonFont2,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void _showLogoutDialog(BuildContext context) {
@@ -43,13 +145,13 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           contentPadding: const EdgeInsets.all(20),
-          content: Container(
+          content: SizedBox(
             height: 80,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -70,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         },
                       ),
                     ),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -98,193 +200,134 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void _showRegisterFieldDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          backgroundColor: white,
-          title: Center(
-            child: Column(
-              children: [
-                Text(
-                  'Daftarkan Lapanganmu',
-                  style: superFont1.copyWith(color: primary),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: AppBar(
+                backgroundColor: primary,
+                automaticallyImplyLeading: false,
+                flexibleSpace: Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 30, right: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text('Profile',
+                              style: superFont1.copyWith(color: white)),
+                        ],
+                      ),
+                      const SizedBox(height: 50),
+                    ],
+                  ),
                 ),
-                SizedBox(height: 20),
-                Text(
-                  'Apakah Kamu Siap Jadi Owner Lapangan?',
-                  textAlign: TextAlign.center,
-                  style: regulerFont1.copyWith(color: primary),
-                ),
-              ],
+              ),
             ),
-          ),
-          contentPadding: EdgeInsets.all(20),
-          content: Container(
-            height: 80,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Positioned.fill(
+              child: Container(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
                   children: <Widget>[
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                    const SizedBox(height: 15),
+                    Stack(
+                      children: [
+                        Container(
+                          width: 115,
+                          height: 115,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: primary,
+                              width: 10,
+                            ),
+                          ),
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundColor: tertiary,
+                            child: Icon(
+                              Icons.person,
+                              size: 50,
+                              color: white,
+                            ),
                           ),
                         ),
-                        child: Text(
-                          'Kembali',
-                          style: buttonFont2,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    isLoading
+                        ? CircularProgressIndicator()
+                        : Text(
+                            userName,
+                            style: superFont1,
+                          ),
+                    const SizedBox(height: 5),
+                    Text(
+                      userEmail,
+                      style: regulerFont1,
+                    ),
+                    const SizedBox(height: 20),
+                    ProfileOption(
+                      icon: Icons.person,
+                      text: 'Ubah Profile',
+                      selectedItemColor: primary,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangeProfile()),
+                        );
+                      },
+                      color: primary,
+                    ),
+                    ProfileOption(
+                      icon: Icons.lock,
+                      text: 'Ubah Password',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePasswordScreen()),
+                        );
+                      },
+                      color: primary,
+                      selectedItemColor: primary,
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        _showJoinAsOwnerDialog(context);
+                      },
+                      style: longButton1,
+                      child: Text(
+                        'DAFTARKAN LAPANGANMU',
+                        style: buttonFont1,
                       ),
                     ),
-                    SizedBox(width: 20),
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: secondary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          'Daftar',
-                          style: buttonFont2,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          // Tambahkan logika untuk daftar lapangan di sini
-                        },
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        _showLogoutDialog(context);
+                      },
+                      style: longButton1,
+                      child: Text(
+                        'KELUAR',
+                        style: buttonFont1,
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        backgroundColor: primary,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 30.0),
-          child: Text('Profile', style: superFont1.copyWith(color: white)),
-        ),
-        automaticallyImplyLeading: false,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: <Widget>[
-            CircleAvatar(
-              radius: 50,
-              backgroundColor: tertiary,
-              child: Icon(
-                Icons.person,
-                size: 50,
-                color: white,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Thora`s Times',
-              style: superFont1,
-            ),
-            const SizedBox(height: 5),
-            Text(
-              'thoraatime@gmail.com',
-              style: regulerFont1,
-            ),
-            const SizedBox(height: 20),
-            ProfileOption(
-              icon: Icons.person,
-              text: 'Ubah Profile',
-              selectedItemColor: primary,
-              onTap: () {
-                // Add your profile editing logic here
-              },
-              color: primary,
-            ),
-            ProfileOption(
-              icon: Icons.lock,
-              text: 'Ubah Password',
-              onTap: () {
-                // Add password changing logic here
-              },
-              color: primary,
-              selectedItemColor: primary,
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                _showRegisterFieldDialog(context);
-              },
-              style: longButton1,
-              child: Text(
-                'DAFTARKAN LAPANGANMU',
-                style: buttonFont1,
-              ),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                _showLogoutDialog(context);
-              },
-              style: longButton1,
-              child: Text(
-                'KELUAR',
-                style: buttonFont1,
               ),
             ),
           ],
         ),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.history),
-      //       label: 'History',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.search),
-      //       label: 'Cari',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: 'Profile',
-      //     ),
-      //   ],
-      //   currentIndex: _selectedIndex,
-      //   selectedItemColor: Color(0xFF12215c),
-      //   unselectedItemColor: Colors.grey,
-      //   selectedLabelStyle: TextStyle(color: Color(0xFF12215c)),
-      //   unselectedLabelStyle: TextStyle(color: Colors.grey),
-      //   onTap: _onItemTapped,
-      // ),
     );
   }
 }
@@ -295,7 +338,8 @@ class ProfileOption extends StatefulWidget {
   final VoidCallback onTap;
   final Color color;
 
-  ProfileOption({
+  const ProfileOption({
+    super.key,
     required this.icon,
     required this.text,
     required this.onTap,

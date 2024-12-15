@@ -38,15 +38,21 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Center(
                     child: Text(
-                      "Welcome to Arena Connect",
-                      style: superFont1,
+                      "Welcome to",
+                      style: superFont0,
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      "Arena Connect",
+                      style: superFont0,
                     ),
                   )
                 ],
               ),
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.only(bottom: 60),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     mainAxisSize: MainAxisSize.max,
@@ -58,20 +64,20 @@ class HomeScreen extends StatelessWidget {
                             onPressed: () {
                               Navigator.pushNamed(context, '/login');
                             },
-                            style: shortButtonSecondary,
+                            style: masukButton,
                             child: Text(
-                              "Masuk",
-                              style: buttonFont3,
+                              "M A S U K",
+                              style: masukButtonFont,
                             ),
                           ),
                           ElevatedButton(
                             onPressed: () {
                               Navigator.pushNamed(context, '/register');
                             },
-                            style: shortButtonPrimary,
+                            style: daftarButton,
                             child: Text(
-                              "Daftar",
-                              style: buttonFont3,
+                              "D A F T A R",
+                              style: daftarButtonFont,
                             ),
                           ),
                         ],
