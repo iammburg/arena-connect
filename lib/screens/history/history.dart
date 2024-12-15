@@ -17,7 +17,7 @@ class HistoryScreen extends StatelessWidget {
         appBar: AppBar(
         backgroundColor: const Color(0xFF12215C),
         elevation: 0,
-        title: Text('History Pertandingan', style: buttonFont1),
+        title: Text('History Pembayaran', style: buttonFont1),
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(10), 
             child: Container(
@@ -37,20 +37,20 @@ class HistoryScreen extends StatelessWidget {
                 children: [
                   buildSimpleCard(
                     context: context,
-                    title: "Mabar Yok Guys -",
+                    title: "GOR DIPONEGORO",
                     icon: Icons.sports_soccer,
-                    level: "Futsal - semua level",
-                    dateTime: "Sen, 23 Sep 2024, 19.00-21.00",
-                    location: "Lap. Futsal Reham, Smg", 
+                    level: "Futsal",
+                    dateTime: "Jum, 5 Dec 2024, 09.00-10.00",
+                    location: "Lapangan Badminton 2A Diponegoro", 
                   ),
                   const SizedBox(height: 16),
                   buildSimpleCard(
                     context: context,
-                    title: "Tanding berani??",
+                    title: "GOR TRI LOMBA JUANG",
                     icon: Icons.sports_tennis,
-                    level: "Badminton - semua level",
-                    dateTime: "Min, 22 Sep 2024, 10.00-12.00",
-                    location: "Lap. Bad Bulusan, Temb",
+                    level: "Badminton",
+                    dateTime: "Rab, 27 Nov 2024, 08.00-09.00",
+                    location: "Lapangan Badminton 2A Tri Juang",
                     navigateToDetails: true,
                   ),
                 ],
