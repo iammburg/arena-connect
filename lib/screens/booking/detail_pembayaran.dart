@@ -1,16 +1,164 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:arena_connect/screens/booking/bukti_booking_lap.dart';
+import 'package:arena_connect/screens/booking/pembayaran.dart';
 import 'package:arena_connect/screens/field-search/select_schedule.dart';
+import 'package:arena_connect/screens/history/history.dart';
+import 'package:arena_connect/screens/homepage/home.dart';
 import 'package:flutter/material.dart';
 import 'package:arena_connect/config/theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:arena_connect/api/api_service.dart';
+import 'package:arena_connect/models/booking.dart';
 
 class PaymentScreen extends StatefulWidget {
+  final int paymentId;
+  final int totalPayment;
+  final BookingData bookingData;
+  final String orderId;
+  final String paymentMethod;
+
+  const PaymentScreen({
+    super.key,
+    required this.paymentId,
+    required this.totalPayment,
+    required this.bookingData,
+    required this.orderId,
+    required this.paymentMethod,
+  });
+
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  File? receipt;
+  bool isUploading = false;
+  bool isUploadButtonEnabled = true; // Tambahkan state untuk tombol kirim
+  Duration _remainingTime = const Duration(minutes: 60, seconds: 0);
+  Timer? _timer;
+
+  Future<void> rejectPayment() async {
+    var response = await ApiService().updatePayment(
+      paymentId: widget.paymentId,
+      userId: widget.bookingData.userId,
+      bookingId: widget.bookingData.id,
+      totalPayment: widget.totalPayment.toString(),
+      paymentMethod: widget.paymentMethod,
+      status: 'Ditolak',
+      orderId: widget.orderId,
+    );
+
+    if (response['success']) {
+      debugPrint('Pembayaran ditolak: ${response['data']}');
+      Navigator.pushNamed(context, '/history');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Pembayaran ditolak karena waktu habis'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } else {
+      debugPrint('Gagal mengubah status pembayaran: ${response['errors']}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content:
+              Text('Gagal mengubah status pembayaran: ${response['errors']}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_remainingTime.inSeconds > 0) {
+          _remainingTime = _remainingTime - const Duration(seconds: 1);
+        } else {
+          _timer?.cancel();
+          rejectPayment();
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> pickReceipt() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        receipt = File(image.path);
+        isUploadButtonEnabled = true; // Enable tombol kirim saat gambar dipilih
+      });
+      debugPrint('Image path: ${image.path}');
+      debugPrint('Image size: ${await image.length()} bytes');
+      debugPrint('Image mime type: ${image.mimeType}');
+    }
+  }
+
+  Future<void> uploadImage(File imageFile) async {
+    setState(() {
+      isUploading = true;
+    });
+
+    var response = await ApiService().uploadReceipt(
+      paymentId: widget.paymentId,
+      userId: widget.bookingData.userId,
+      bookingId: widget.bookingData.id,
+      totalPayment: widget.totalPayment.toString(),
+      paymentMethod: widget.paymentMethod,
+      status: 'Proses',
+      orderId: widget.orderId,
+      receiptPath: imageFile.path,
+    );
+
+    setState(() {
+      isUploading = false;
+    });
+
+    if (response['success']) {
+      setState(() {
+        isUploadButtonEnabled = false; // Disable tombol kirim setelah sukses
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              'Pembayaran berhasil diupload! Tunggu verifikasi dari admin, ya 😊'),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 6),
+        ),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HistoryScreen(),
+        ),
+      );
+    } else {
+      debugPrint('Gagal mengupload bukti pembayaran: ${response['errors']}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content:
+              Text('Gagal mengupload bukti pembayaran: ${response['errors']}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   Widget buildCircleIcon(IconData icon, String label,
       {Color? backgroundColor, Color? iconColor = Colors.white}) {
     return Column(mainAxisSize: MainAxisSize.min, children: [
@@ -49,12 +197,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
     }
   }
 
-  Future<void> uploadImage(File imageFile) async {
-    // Logika upload gambar ke server bisa ditambahkan di sini
-    print("Mengirim gambar: ${imageFile.path}");
-    // Contoh, upload gambar ke server atau lakukan aksi lainnya
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,18 +213,27 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ),
           Column(
             children: [
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 30, top: 20),
+                    padding: const EdgeInsets.only(left: 20, top: 20),
                     child: IconButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Pembayaran(
+                                paymentId: widget.paymentId,
+                                totalPayment: widget.totalPayment,
+                                bookingData: widget.bookingData,
+                                orderId: widget.orderId),
+                          ),
+                        );
                       },
-                      icon: const Icon(Icons.arrow_back_ios),
+                      icon: const Icon(Icons.arrow_back),
                       color: white,
                     ),
                   ),
@@ -152,13 +303,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 20), // Margin lebih kecil
-                  padding: EdgeInsets.all(30),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  padding: const EdgeInsets.all(30),
                   decoration: BoxDecoration(
                     color: white,
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Colors.grey,
                         blurRadius: 4,
@@ -192,23 +343,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             alignment: Alignment.center,
                             children: [
                               Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 40, vertical: 10),
                                 decoration: BoxDecoration(
-                                  color: Color(0XFFA8E911),
+                                  color: const Color(0XFFA8E911),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
                               Text(
-                                '00:59:11',
+                                '${_remainingTime.inMinutes.remainder(60).toString().padLeft(2, '0')}:${_remainingTime.inSeconds.remainder(60).toString().padLeft(2, '0')}',
                                 style: regulerFont1.copyWith(color: primary),
                               ),
                             ],
                           ),
                         ],
                       ),
-                      // const SizedBox(height: 15),
-                      // const Divider(color: Colors.grey),
                       const SizedBox(height: 25),
                       CustomPaint(
                         painter: DashedLinePainter(color: Colors.grey.shade400),
@@ -218,6 +367,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(
                           vertical: 15,
+                          horizontal: 10,
                         ),
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -233,16 +383,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            const SizedBox(width: 20),
-                            Image.asset(
-                              'images/bri.png',
-                              width: 48,
-                              height: 48,
-                            ),
-                            const SizedBox(width: 35),
-                            Text(
-                              'BAYAR MELALUI BRI',
-                              style: superFont3,
+                            const SizedBox(width: 0),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'BAYAR MELALUI ${widget.paymentMethod}',
+                                  style: superFont3,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'Order ID: ${widget.orderId}',
+                                  style: regulerFont1.copyWith(
+                                      color: secondary, fontSize: 12),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -256,7 +412,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             style: superFont3.copyWith(color: primary),
                           ),
                           Text(
-                            'Rp30.000',
+                            'Rp.${widget.totalPayment}',
                             style: superFont2.copyWith(color: primary),
                           ),
                         ],
@@ -274,13 +430,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                       horizontal: 10, vertical: 20), // Margin lebih kecil
-                  padding: EdgeInsets.all(17),
+                  padding: const EdgeInsets.all(17),
                   decoration: BoxDecoration(
                     color: white,
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Colors.grey,
                         blurRadius: 4,
@@ -314,10 +470,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         child:
                             image != null // Periksa apakah gambar sudah diinput
                                 ? ElevatedButton.icon(
-                                    onPressed: () async {
-                                      await uploadImage(
-                                          image!); // Logika pengiriman
-                                    },
+                                    onPressed: isUploadButtonEnabled
+                                        ? () async {
+                                            await uploadImage(
+                                                image!); // Logika pengiriman
+                                          }
+                                        : null,
                                     label: Text(
                                       'Kirim',
                                       style: superFont3.copyWith(color: white),
@@ -325,7 +483,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 40, vertical: 18.0),
-                                      backgroundColor: secondary,
+                                      backgroundColor: isUploadButtonEnabled
+                                          ? secondary
+                                          : Colors.grey, // Ubah warna tombol
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       ),
@@ -346,7 +506,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               },
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: Text('Upload Bukti Pembayaran',
                                   style: superFont2),
                             ),
@@ -366,7 +526,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   Widget scheduleChooseIcon() {
     return IconButton(
-      icon: Icon(Icons.calendar_month_outlined),
+      icon: const Icon(Icons.calendar_month_outlined),
       color: primary,
       onPressed: null,
       disabledColor: Colors.white,
@@ -375,7 +535,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   Widget bookingDetailIcon() {
     return IconButton(
-      icon: Icon(Icons.list_alt_rounded),
+      icon: const Icon(Icons.list_alt_rounded),
       color: primary,
       onPressed: null,
       disabledColor: Colors.white,
@@ -405,15 +565,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   Widget buildDashedLine() {
     return Transform.translate(
-      offset: Offset(0, -10),
-      child: Container(
+      offset: const Offset(0, -10),
+      child: SizedBox(
         width: 60,
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             return Flex(
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
                 10,
-                (index) => SizedBox(
+                (index) => const SizedBox(
                   width: 3,
                   height: 2,
                   child: DecoratedBox(
@@ -421,8 +583,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                 ),
               ),
-              direction: Axis.horizontal,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
             );
           },
         ),
