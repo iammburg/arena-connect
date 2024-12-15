@@ -1,6 +1,6 @@
-import 'package:arena_connect/config/theme.dart';
 import 'package:flutter/material.dart';
 
+// Color Palettes
 Color primary = const Color(0xFF12215C);
 Color tertiary = const Color(0xFFA7ADC3);
 Color white = const Color(0xFFFFFFFF);
@@ -20,7 +20,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Terima Kasih!'),
-          content: const Text('Terima kasih atas rating Anda!'),
+          content: const Text('Terima kasih atas rating anda!'),
           actions: [
             TextButton(
               onPressed: () {
@@ -61,16 +61,21 @@ class _HistoryDetailState extends State<HistoryDetail> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'History Pertandingan',
-          style: buttonFont1,
+          'History Pembayaran',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: white,
+          ),
         ),
         backgroundColor: primary,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back_ios, color: white), // Ikon back
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.of(context).pop(); // Aksi kembali
           },
         ),
+        leadingWidth: 20, // Atur lebar area leading agar lebih kecil
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(6.0),
           child: Container(
@@ -78,18 +83,31 @@ class _HistoryDetailState extends State<HistoryDetail> {
           ),
         ),
       ),
-      body: Column(
+            body: Column(
         children: [
           Container(
+            padding: const EdgeInsets.all(16.0),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 20),
-                  Text('Tanding Berani??', style: superFont3),
-                  const SizedBox(height: 1),
-                  Text('Bulusan, Tembalang, Kota Semarang',
-                      style: regulerFont1),
+                  Text(
+                    'GOR LOMBA TRI JUANG',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Lapangan Lomba Tri Juang 2A',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: primary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ],
               ),
             ),
@@ -113,9 +131,12 @@ class _HistoryDetailState extends State<HistoryDetail> {
                               const Icon(Icons.sports_tennis),
                               const SizedBox(width: 10),
                               Text(
-                                'Badminton - semua level',
-                                style: superFont5,
-                              )
+                                'Badminton',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -124,9 +145,11 @@ class _HistoryDetailState extends State<HistoryDetail> {
                               const Icon(Icons.calendar_today),
                               const SizedBox(width: 10),
                               Text(
-                                'Minggu, 22 September 2024\n10:00 - 12:00',
-                                style: superFont5,
-                              )
+                                'Jum, 5 Dec 2024\n09:00 - 10:00',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -135,8 +158,10 @@ class _HistoryDetailState extends State<HistoryDetail> {
                               const Icon(Icons.location_on),
                               const SizedBox(width: 10),
                               Text(
-                                'Lapangan Badminton Bulusan\nLapangan 2',
-                                style: superFont5,
+                                'Jl. Tri Lomba Juang, Mugassari',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
                               ),
                             ],
                           ),
@@ -146,8 +171,10 @@ class _HistoryDetailState extends State<HistoryDetail> {
                               const Icon(Icons.monetization_on),
                               const SizedBox(width: 10),
                               Text(
-                                'Biaya: 60.000',
-                                style: superFont5,
+                                'Biaya: 26.000',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
                               ),
                             ],
                           ),
@@ -158,7 +185,10 @@ class _HistoryDetailState extends State<HistoryDetail> {
                   const SizedBox(height: 20),
                   Text(
                     'Bagaimana Pengalamanmu?',
-                    style: superFont2,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -174,4 +204,3 @@ class _HistoryDetailState extends State<HistoryDetail> {
     );
   }
 }
-//
