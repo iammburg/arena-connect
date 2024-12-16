@@ -6,8 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:arena_connect/models/booking.dart' as booking;
 
 // const String baseUrl = 'http://127.0.0.1:8000/api';
-// const String baseUrl = 'http://localhost:8000/api';
-const String baseUrl = 'http://192.168.1.10:8000/api';
+const String baseUrl = 'http://localhost:8000/api';
+// const String baseUrl = 'http://192.168.1.10:8000/api';
 // const String imageUrl = 'http://localhost:8000/storage/images/';
 
 class ApiService {
