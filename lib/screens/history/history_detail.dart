@@ -184,7 +184,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'Bagaimana Pengalamanmu?',
+                    'Bagaimana Pengalaman Anda?',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
