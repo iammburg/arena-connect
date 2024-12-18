@@ -10,21 +10,10 @@ class HistoryScreen extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 120,
         backgroundColor: const Color(0xFF12215C),
-<<<<<<< HEAD
-        elevation: 0,
-        title: Text('History Pembayaran', style: buttonFont1),
-        bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(10), 
-            child: Container(
-            color: const Color(0xFF12215C),
-            height: 4.0, 
-            ),
-=======
         title: Padding(
           padding: const EdgeInsets.only(top: 35, left: 15),
-          child: Text('History Pertandingan',
+          child: Text('History Pembayaran',
               style: superFont1.copyWith(color: Colors.white)),
->>>>>>> 277f23f4722744267c271bac2d98fe68f56d3a58
         ),
         automaticallyImplyLeading: false,
       ),
@@ -38,26 +27,20 @@ class HistoryScreen extends StatelessWidget {
                 children: [
                   buildSimpleCard(
                     context: context,
-                    title: "GOR DIPONEGORO",
+                    title: "GOR DIPONEGORO ",
                     icon: Icons.sports_soccer,
-<<<<<<< HEAD
                     level: "Futsal",
-                    dateTime: "Jum, 5 Dec 2024, 09.00-10.00",
-                    location: "Lapangan Badminton 2A Diponegoro", 
-=======
-                    level: "Futsal - semua level",
-                    dateTime: "Sen, 23 Sep 2024, 19.00-21.00",
-                    location: "Lap. Futsal Reham, Smg",
->>>>>>> 277f23f4722744267c271bac2d98fe68f56d3a58
+                    dateTime: "Min, 23 Sep 2024, 08.00-09.00",
+                    location: "Lapangan Badminton 2A Diponegoro",
                   ),
                   const SizedBox(height: 16),
                   buildSimpleCard(
                     context: context,
-                    title: "GOR TRI LOMBA JUANG",
+                    title: "GOR LOMBA TRI JUANG ",
                     icon: Icons.sports_tennis,
                     level: "Badminton",
-                    dateTime: "Rab, 27 Nov 2024, 08.00-09.00",
-                    location: "Lapangan Badminton 2A Tri Juang",
+                    dateTime: "Jum, 5 Dec 2024, 09.00-10.00",
+                    location: "Lapangan Lomba Tri juang 2A",
                     navigateToDetails: true,
                   ),
                 ],
