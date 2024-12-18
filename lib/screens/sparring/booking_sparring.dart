@@ -1,6 +1,4 @@
-import 'package:arena_connect/homescreen.dart';
 import 'package:arena_connect/screens/booking/pembayaran.dart';
-import 'package:arena_connect/screens/homepage/home.dart';
 import 'package:flutter/material.dart';
 import 'package:arena_connect/config/theme.dart';
 import 'package:arena_connect/screens/field-search/select_schedule.dart';
@@ -54,13 +52,7 @@ class BookingPage extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      // Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Home(),
-                        ),
-                      );
+                      Navigator.pop(context);
                     },
                     icon: const Icon(Icons.chevron_left),
                     color: Colors.white,
@@ -282,7 +274,7 @@ class BookingPage extends StatelessWidget {
                       top: 95,
                       left: 40,
                       child: Text(
-                        "07.00 - 08.00",
+                        "sparring",
                         style: regulerFont3,
                       ),
                     ),
