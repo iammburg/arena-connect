@@ -86,30 +86,46 @@ class ApiService {
         }),
       );
 
-      print('Response status: ${response.statusCode}');
-      // print('Response body: ${response.body}');
+      debugPrint('Response status: ${response.statusCode}');
+      // debugPrint('Response body: ${response.body}');
 
       if (response.statusCode == 201) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        print('Parsed response data: $responseData');
+        debugPrint('Parsed response data: $responseData');
         return booking.Booking.fromJson(responseData);
       } else {
-        print('Failed to create booking: ${response.body}');
+        debugPrint('Failed to create booking: ${response.body}');
         return null;
       }
     } catch (e) {
-      print('Error creating booking: $e');
+      debugPrint('Error creating booking: $e');
       return null;
     }
   }
 
   Future<booking.Booking> getBooking(int bookingId) async {
-    final response = await http.get(Uri.parse('$baseUrl/bookings/$bookingId'));
-    if (response.statusCode == 200) {
-      print(response.body);
-      return booking.Booking.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load booking');
+    try {
+      String? token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final response = await http.get(
+        Uri.parse('$baseUrl/bookings/$bookingId'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        debugPrint(response.body);
+        return booking.Booking.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to load booking: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception('Error in getBooking: $e');
     }
   }
 
@@ -117,7 +133,6 @@ class ApiService {
     required int userId,
     required int bookingId,
     required String totalPayment,
-    required String paymentMethod,
     required String status,
     required String orderId,
     String? receipt,
@@ -138,7 +153,6 @@ class ApiService {
           "user_id": userId,
           "booking_id": bookingId,
           "total_payment": totalPayment,
-          "payment_method": paymentMethod,
           "status": status,
           "order_id": orderId,
           "receipt": receipt,
@@ -146,6 +160,40 @@ class ApiService {
       );
 
       if (response.statusCode == 201) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return {
+          'success': true,
+          'data': responseData['data'],
+        };
+      } else {
+        final errorData = jsonDecode(response.body);
+        debugPrint('Response status: ${response.statusCode}');
+        debugPrint('Response body: ${response.body}');
+        return {'success': false, 'errors': errorData['data'] ?? errorData};
+      }
+    } catch (e) {
+      debugPrint('Error creating payment: $e');
+      return {'success': false, 'errors': e.toString()};
+    }
+  }
+
+  Future<Map<String, dynamic>> getBanksByFieldCentreId(
+      int fieldCentreId) async {
+    try {
+      String? token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final response = await http.get(
+        Uri.parse("$baseUrl/payments/$fieldCentreId/banks"),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         return {
           'success': true,
@@ -165,7 +213,6 @@ class ApiService {
     required int userId,
     required int bookingId,
     required String totalPayment,
-    required String paymentMethod,
     required String status,
     required String orderId,
     String? receipt,
@@ -186,9 +233,9 @@ class ApiService {
           "user_id": userId,
           "booking_id": bookingId,
           "total_payment": totalPayment,
-          "payment_method": paymentMethod,
           "status": status,
           "order_id": orderId,
+          "payment_id": paymentId, // Add this field
           "receipt": receipt,
         }),
       );
@@ -213,7 +260,6 @@ class ApiService {
     required int userId,
     required int bookingId,
     required String totalPayment,
-    required String paymentMethod,
     required String status,
     required String orderId,
     required String receiptPath,
@@ -232,7 +278,6 @@ class ApiService {
       request.fields['user_id'] = userId.toString();
       request.fields['booking_id'] = bookingId.toString();
       request.fields['total_payment'] = int.parse(totalPayment).toString();
-      request.fields['payment_method'] = paymentMethod;
       request.fields['status'] = status;
       request.fields['order_id'] = orderId;
       request.files
@@ -258,6 +303,42 @@ class ApiService {
       }
     } catch (e) {
       return {'success': false, 'errors': e.toString()};
+    }
+  }
+
+  Future<Map<String, dynamic>> getPaymentDetails(int paymentId) async {
+    try {
+      String? token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final response = await http.get(
+        Uri.parse('http://127.0.0.1:8000/api/payments/$paymentId'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return {
+          'success': responseData['success'],
+          'data': responseData['data'],
+        };
+      } else {
+        final Map<String, dynamic> errorData = json.decode(response.body);
+        return {
+          'success': false,
+          'errors': errorData['message'] ?? 'Unknown error',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'errors': e.toString(),
+      };
     }
   }
 

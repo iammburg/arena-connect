@@ -1,21 +1,11 @@
 import 'package:arena_connect/api/api_service.dart';
 import 'package:arena_connect/models/booking.dart';
+import 'package:arena_connect/models/res_bank.dart';
 import 'package:arena_connect/screens/booking/booking_page.dart';
 import 'package:arena_connect/screens/booking/detail_pembayaran.dart';
 import 'package:flutter/material.dart';
 import 'package:arena_connect/config/theme.dart';
 import 'package:arena_connect/screens/field-search/select_schedule.dart';
-
-String getPaymentMethod(String? bayar) {
-  switch (bayar) {
-    case 'BRI':
-      return 'BRI - 223134127532643';
-    case 'BNI':
-      return 'BNI - 3412312385';
-    default:
-      return 'Belum Memilih';
-  }
-}
 
 class Pembayaran extends StatefulWidget {
   final int paymentId;
@@ -37,6 +27,35 @@ class Pembayaran extends StatefulWidget {
 
 class _PembayaranState extends State<Pembayaran> {
   String? bayar;
+  List<Bank> banks = [];
+  int? selectedBankId;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchBanks();
+  }
+
+  Future<void> fetchBanks() async {
+    final response = await ApiService()
+        .getBanksByFieldCentreId(widget.bookingData.field!.fieldCentreId);
+    if (response['success']) {
+      setState(() {
+        banks = (response['data'] as List)
+            .map((bank) => Bank.fromJson(bank))
+            .toList();
+      });
+
+      debugPrint(response['data'].toString());
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to load banks: ${response['errors']}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   void showSnackbar() {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -152,7 +171,7 @@ class _PembayaranState extends State<Pembayaran> {
                       Container(
                         padding: const EdgeInsets.only(right: 40),
                         child: buildCircleIcon(
-                            Icons.payments_outlined, "Pemabayaran"),
+                            Icons.payments_outlined, "Pembayaran"),
                       ),
                     ],
                   ),
@@ -221,123 +240,68 @@ class _PembayaranState extends State<Pembayaran> {
             child: FractionallySizedBox(
               widthFactor: 0.95,
               child: Container(
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 0,
-                      blurRadius: 4,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          const SizedBox(width: 18),
-                          Image.asset(
-                            'images/bri.png',
-                            width: 48,
-                            height: 48,
+                height: 200, // Adjust height as needed
+                child: ListView.builder(
+                  itemCount: banks.length,
+                  itemBuilder: (context, index) {
+                    final bank = banks[index];
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 0,
+                            blurRadius: 4,
+                            offset: const Offset(0, 4),
                           ),
-                          const SizedBox(width: 23),
-                          Text(
-                            'BRI - 223134127532643',
-                            style: superFont3,
-                          ),
-                          const SizedBox(width: 15),
-                          // Text("26215-xxxxxxxxxxxx", style: regulerFont1),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20.0),
-                        child: Radio<String>(
-                          value: 'BRI',
-                          groupValue: bayar,
-                          activeColor: const Color(0xFF12215c),
-                          onChanged: (String? value) {
-                            setState(() {
-                              bayar = value;
-                              showSnackbar();
-                            });
-                          },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                const SizedBox(width: 18),
+                                // Replace with dynamic image if available
+                                // Image.asset(
+                                //   'images/${bank.bankName.toLowerCase()}.png',
+                                //   width: 48,
+                                //   height: 48,
+                                // ),
+                                const SizedBox(width: 23),
+                                Text(
+                                  '${bank.bankName} - ${bank.accountNumber}',
+                                  style: superFont3,
+                                ),
+                                const SizedBox(width: 15),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20.0),
+                              child: Radio<int>(
+                                value: bank.id,
+                                groupValue: selectedBankId,
+                                activeColor: const Color(0xFF12215c),
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    selectedBankId = value;
+                                    bayar = bank.bankName;
+                                    showSnackbar();
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10.0),
-          Positioned(
-            top: 410,
-            left: 8,
-            right: 8,
-            child: FractionallySizedBox(
-              widthFactor: 0.95,
-              child: Container(
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 0,
-                      blurRadius: 4,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          const SizedBox(width: 20),
-                          Image.asset(
-                            'images/bni.png',
-                            width: 40,
-                            height: 40,
-                            fit: BoxFit.contain,
-                          ),
-                          const SizedBox(width: 30),
-                          Text(
-                            'BNI - 3412312385',
-                            style: superFont3,
-                          ),
-                          const SizedBox(width: 15),
-                          // Text("26215-xxxxxxxxxxxx", style: regulerFont1),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20.0),
-                        child: Radio<String>(
-                          value: 'BNI',
-                          groupValue: bayar,
-                          activeColor: const Color(0xFF12215c),
-                          onChanged: (String? value) {
-                            setState(() {
-                              bayar = value;
-                              showSnackbar();
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -369,7 +333,7 @@ class _PembayaranState extends State<Pembayaran> {
                       height: 34,
                       child: ElevatedButton(
                         onPressed: () async {
-                          if (bayar == null) {
+                          if (selectedBankId == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text(
@@ -382,13 +346,14 @@ class _PembayaranState extends State<Pembayaran> {
                           }
 
                           var response = await ApiService().updatePayment(
-                            paymentId: widget.paymentId,
+                            // paymentId: widget.paymentId,
                             userId: widget.bookingData.userId,
                             bookingId: widget.bookingData.id,
                             totalPayment: widget.totalPayment.toString(),
-                            paymentMethod: getPaymentMethod(bayar),
                             status: 'Proses',
                             orderId: widget.orderId,
+                            paymentId:
+                                selectedBankId!, // Use selectedBankId here
                           );
 
                           if (response['success']) {
@@ -408,7 +373,6 @@ class _PembayaranState extends State<Pembayaran> {
                                   totalPayment: widget.totalPayment,
                                   bookingData: widget.bookingData,
                                   orderId: widget.orderId,
-                                  paymentMethod: getPaymentMethod(bayar),
                                 ),
                               ),
                             );
