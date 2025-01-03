@@ -38,7 +38,6 @@ class Payment {
   int userId;
   int bookingId;
   String totalPayment;
-  String paymentMethod;
   String status;
   String orderId;
   String receipt;
@@ -53,7 +52,6 @@ class Payment {
     required this.userId,
     required this.bookingId,
     required this.totalPayment,
-    required this.paymentMethod,
     required this.status,
     required this.orderId,
     required this.receipt,
@@ -69,7 +67,6 @@ class Payment {
         userId: json["user_id"],
         bookingId: json["booking_id"],
         totalPayment: json["total_payment"],
-        paymentMethod: json["payment_method"],
         status: json["status"],
         orderId: json["order_id"],
         receipt: json["receipt"],
@@ -85,7 +82,6 @@ class Payment {
         "user_id": userId,
         "booking_id": bookingId,
         "total_payment": totalPayment,
-        "payment_method": paymentMethod,
         "status": status,
         "order_id": orderId,
         "receipt": receipt,

@@ -107,7 +107,7 @@ class BookingPage extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.only(right: 40),
                         child: buildCircleIcon(
-                            Icons.payments_outlined, "Pemabayaran"),
+                            Icons.payments_outlined, "Pembayaran"),
                       ),
                     ],
                   ),

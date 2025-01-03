@@ -83,7 +83,6 @@ class _BookingPageState extends State<BookingPage> {
                   userId: bookingData.userId,
                   bookingId: bookingData.id,
                   totalPayment: bookingData.cost,
-                  paymentMethod: 'Belum Memilih',
                   status: 'Belum',
                   orderId: orderId,
                 );
@@ -93,7 +92,7 @@ class _BookingPageState extends State<BookingPage> {
 
                 if (response['success']) {
                   debugPrint('Payment created: ${response['data']}');
-                  debugPrint('Response ID: ${response['data']['id']}');
+                  debugPrint('Payment ID: ${response['data']['id']}');
 
                   Navigator.pushReplacement(
                     context,
@@ -229,7 +228,7 @@ class _BookingPageState extends State<BookingPage> {
                             Container(
                               padding: const EdgeInsets.only(right: 40),
                               child: buildCircleIcon(
-                                  Icons.payments_outlined, "Pemabayaran"),
+                                  Icons.payments_outlined, "Pembayaran"),
                             ),
                           ],
                         ),

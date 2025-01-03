@@ -16,7 +16,6 @@ class PaymentScreen extends StatefulWidget {
   final int totalPayment;
   final BookingData bookingData;
   final String orderId;
-  final String paymentMethod;
 
   const PaymentScreen({
     super.key,
@@ -24,7 +23,6 @@ class PaymentScreen extends StatefulWidget {
     required this.totalPayment,
     required this.bookingData,
     required this.orderId,
-    required this.paymentMethod,
   });
 
   @override
@@ -34,8 +32,8 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   File? receipt;
   bool isUploading = false;
-  bool isUploadButtonEnabled = true; // Tambahkan state untuk tombol kirim
-  Duration _remainingTime = const Duration(minutes: 60, seconds: 0);
+  bool isUploadButtonEnabled = true;
+  Duration _remainingTime = const Duration(minutes: 1, seconds: 0);
   Timer? _timer;
 
   Future<void> rejectPayment() async {
@@ -44,14 +42,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
       userId: widget.bookingData.userId,
       bookingId: widget.bookingData.id,
       totalPayment: widget.totalPayment.toString(),
-      paymentMethod: widget.paymentMethod,
       status: 'Ditolak',
       orderId: widget.orderId,
     );
 
     if (response['success']) {
       debugPrint('Pembayaran ditolak: ${response['data']}');
-      Navigator.pushNamed(context, '/history');
+      Navigator.pushNamed(context, '/homepage');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Pembayaran ditolak karena waktu habis'),
@@ -77,7 +74,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (_remainingTime.inSeconds > 0) {
           _remainingTime = _remainingTime - const Duration(seconds: 1);
@@ -119,7 +116,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
       userId: widget.bookingData.userId,
       bookingId: widget.bookingData.id,
       totalPayment: widget.totalPayment.toString(),
-      paymentMethod: widget.paymentMethod,
       status: 'Proses',
       orderId: widget.orderId,
       receiptPath: imageFile.path,
@@ -131,7 +127,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
     if (response['success']) {
       setState(() {
-        isUploadButtonEnabled = false; // Disable tombol kirim setelah sukses
+        isUploadButtonEnabled = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -144,7 +140,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HistoryScreen(),
+          builder: (context) => BuktiBookingLapangan(
+            paymentId: response['data']['id'],
+          ),
         ),
       );
     } else {
@@ -287,7 +285,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       Container(
                         padding: const EdgeInsets.only(right: 40),
                         child: buildCircleIcon(
-                            Icons.payments_outlined, "Pemabayaran",
+                            Icons.payments_outlined, "Pembayaran",
                             backgroundColor: white, iconColor: primary),
                       ),
                     ],
@@ -389,7 +387,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'BAYAR MELALUI ${widget.paymentMethod}',
+                                  'BAYAR MELALUI',
                                   style: superFont3,
                                 ),
                                 const SizedBox(height: 5),

@@ -85,8 +85,7 @@ class _SelectScheduleState extends State<SelectSchedule> {
         throw Exception('Token not found');
       }
       final response = await http.get(
-        Uri.parse(
-            'http://127.0.0.1:8000/api/field-centres/${widget.fieldCentreId}/fields'),
+        Uri.parse('$baseUrl/field-centres/${widget.fieldCentreId}/fields'),
         headers: {'Authorization': 'Bearer $token'},
       );
       if (response.statusCode == 200) {
@@ -153,9 +152,10 @@ class _SelectScheduleState extends State<SelectSchedule> {
                       const SnackBar(
                         content: Text('Booking berhasil dibuat!'),
                         backgroundColor: Colors.green,
+                        duration: Duration(seconds: 1),
                       ),
                     );
-                    print(
+                    debugPrint(
                         'Navigating to BookingPage with ID: ${newBooking.data.id}');
                     Navigator.of(context).pop();
                     Navigator.push(

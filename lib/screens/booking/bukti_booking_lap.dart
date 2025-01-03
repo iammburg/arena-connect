@@ -1,185 +1,286 @@
 import 'package:arena_connect/config/theme.dart';
 import 'package:arena_connect/screens/field-search/select_schedule.dart';
+import 'package:arena_connect/screens/history/history.dart';
+import 'package:arena_connect/screens/homepage/home.dart';
 import 'package:flutter/material.dart';
+import 'package:arena_connect/api/api_service.dart';
+import 'package:intl/intl.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'dart:typed_data';
 
-class BuktiBookingLapangan extends StatelessWidget {
+class BuktiBookingLapangan extends StatefulWidget {
+  final int paymentId;
+
+  const BuktiBookingLapangan({super.key, required this.paymentId});
+
+  @override
+  _BuktiBookingLapanganState createState() => _BuktiBookingLapanganState();
+}
+
+class _BuktiBookingLapanganState extends State<BuktiBookingLapangan> {
+  Map<String, dynamic>? paymentData;
+  bool isLoading = true;
+  ScreenshotController screenshotController = ScreenshotController();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPaymentDetails();
+  }
+
+  Future<void> fetchPaymentDetails() async {
+    try {
+      final response = await ApiService().getPaymentDetails(widget.paymentId);
+      if (response['success']) {
+        setState(() {
+          paymentData = response['data'];
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load payment details');
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Future<void> downloadScreenshot() async {
+    final directory = (await getApplicationDocumentsDirectory()).path;
+    final fileName = 'bukti_booking_${paymentData?['order_id']}.png';
+    final filePath = '$directory/$fileName';
+
+    screenshotController.capture().then((Uint8List? image) {
+      if (image != null) {
+        File(filePath).writeAsBytes(image).then((File file) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Bukti booking berhasil diunduh: $filePath'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        });
+      }
+    }).catchError((onError) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Gagal mengunduh bukti booking: $onError'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Image.asset(
-              'images/top-wave-cropped.png',
-              fit: BoxFit.fitWidth,
-            ),
-          ),
-          Column(
-            children: [
-              const SizedBox(height: 28),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30, top: 40),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.arrow_back_ios),
-                      color: white,
-                    ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Image.asset(
+                    'images/top-wave-cropped.png',
+                    fit: BoxFit.fitWidth,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 46),
-                    // Memberikan jarak antara ikon dan teks
-                    child: Text(
-                        'Bukti Booking Lapangan', // Teks yang ingin ditampilkan
-                        style: superFont1.copyWith(color: white)),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+                Column(
                   children: [
-                    SizedBox(height: 16),
-                    Center(
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: Card(
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                    const SizedBox(height: 28),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, top: 40),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/homepage');
+                            },
+                            icon: const Icon(Icons.arrow_back),
+                            color: white,
                           ),
-                          color: Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.all(40),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Bukti',
-                                      style: superFont2,
-                                    ),
-                                    Text(
-                                      '1 September 2024',
-                                      style: superFont2,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 20),
-                                CustomPaint(
-                                  painter: DashedLinePainter(
-                                      color: Colors.grey.shade400),
-                                  size: Size(
-                                      MediaQuery.of(context).size.width, 0.5),
-                                ),
-                                SizedBox(height: 20),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Order ID',
-                                      style: regulerFont1,
-                                    ),
-                                    Text(
-                                      'XXXXXX', //data dinamis
-                                      style: regulerFont1,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  'Rincian',
-                                  style: superFont2,
-                                ),
-                                SizedBox(height: 20),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Icon(Icons.event, color: primary),
-                                    SizedBox(width: 8),
-                                    Column(
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 46),
+                          child: Text('Bukti Booking Lapangan',
+                              style: superFont1.copyWith(color: white)),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 16),
+                          Screenshot(
+                            controller: screenshotController,
+                            child: Center(
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: Card(
+                                  elevation: 3,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(40),
+                                    child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'Pelaksanaan',
-                                          style: superFont3,
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Bukti',
+                                              style: superFont2,
+                                            ),
+                                            Text(
+                                              DateFormat('EEEE, d MMMM yyyy',
+                                                          'id_ID')
+                                                      .format(DateTime.parse(
+                                                          "${paymentData?['booking']['date']}")) ??
+                                                  "",
+                                              style: superFont3,
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(height: 5),
-                                        Text(
-                                          'Lapangan 1',
-                                          style: regulerFont1.copyWith(
-                                              color: secondary),
+                                        const SizedBox(height: 20),
+                                        CustomPaint(
+                                          painter: DashedLinePainter(
+                                              color: Colors.grey.shade400),
+                                          size: Size(
+                                              MediaQuery.of(context).size.width,
+                                              0.5),
                                         ),
-                                        SizedBox(height: 5),
-                                        Text(
-                                          'Senin, 1 September 2024',
-                                          style: regulerFont1.copyWith(
-                                              color: secondary),
+                                        const SizedBox(height: 20),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Order ID',
+                                              style: regulerFont1,
+                                            ),
+                                            Text(
+                                              paymentData?['order_id'] ?? '',
+                                              style: regulerFont1,
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(height: 5),
+                                        const SizedBox(height: 8),
                                         Text(
-                                          'Sparring dimulai 07:00 - 08:00',
-                                          style: regulerFont1.copyWith(
-                                              color: secondary),
+                                          'Rincian:',
+                                          style: superFont2,
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Icon(Icons.event, color: primary),
+                                            const SizedBox(width: 8),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Pelaksanaan',
+                                                  style: superFont3,
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  paymentData?['field']
+                                                              ['field_centre']
+                                                          ['name'] ??
+                                                      '',
+                                                  style: regulerFont1.copyWith(
+                                                      color: secondary),
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  paymentData?['field']
+                                                          ['name'] ??
+                                                      '',
+                                                  style: regulerFont1.copyWith(
+                                                      color: secondary),
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  DateFormat('EEEE, d MMMM yyyy',
+                                                              'id_ID')
+                                                          .format(DateTime.parse(
+                                                              paymentData?[
+                                                                      'booking']
+                                                                  ['date'])) ??
+                                                      '',
+                                                  style: regulerFont1.copyWith(
+                                                      color: secondary),
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  'Booking dimulai: ${paymentData?['booking']['booking_start'].substring(0, 5)} - ${paymentData?['booking']['booking_end'].substring(0, 5)}',
+                                                  style: regulerFont1.copyWith(
+                                                      color: secondary),
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  'Booking atas nama: ${paymentData?['user']['name']}',
+                                                  style: regulerFont1.copyWith(
+                                                      color: secondary),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ElevatedButton.icon(
+                                style: shortButton2,
+                                onPressed: downloadScreenshot,
+                                icon: const Icon(
+                                  Icons.file_download_outlined,
+                                  color: Colors.white,
+                                ),
+                                label: Text(
+                                  'Unduh Bukti Booking',
+                                  style: buttonFont4,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                    // SizedBox(height: 20),
-                    // Align(
-                    //   alignment: Alignment.centerRight,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(right: 10.0),
-                    //     child: ElevatedButton.icon(
-                    //       onPressed: () {
-                    //         // Aksi ketika tombol ditekan
-                    //       },
-                    //       icon: Icon(Icons.download, color: Colors.white),
-                    //       label: Text(
-                    //         'Unduh Bukti Booking',
-                    //         style: superFont3.copyWith(color: Colors.white),
-                    //       ),
-                    //       style: ElevatedButton.styleFrom(
-                    //         padding: EdgeInsets.symmetric(
-                    //           horizontal: 28.0,
-                    //           vertical: 18.0,
-                    //         ),
-                    //         backgroundColor: secondary,
-                    //         shape: RoundedRectangleBorder(
-                    //           borderRadius: BorderRadius.circular(10),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),                                    
-                    // ),
                   ],
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
+              ],
+            ),
     );
   }
 }
