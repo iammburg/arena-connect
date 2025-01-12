@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:arena_connect/models/booking.dart' as booking;
 
 // const String baseUrl = 'http://127.0.0.1:8000/api';
-const String baseUrl = 'http://localhost:8000/api';
+const String baseUrl = 'https://arenaconnect.site/api';
 // const String baseUrl = 'http://192.168.1.10:8000/api';
 // const String imageUrl = 'http://localhost:8000/storage/images/';
 
@@ -215,6 +215,7 @@ class ApiService {
     required String totalPayment,
     required String status,
     required String orderId,
+    required int bankId,
     String? receipt,
   }) async {
     try {
@@ -235,7 +236,7 @@ class ApiService {
           "total_payment": totalPayment,
           "status": status,
           "order_id": orderId,
-          "payment_id": paymentId, // Add this field
+          "payment_id": bankId,
           "receipt": receipt,
         }),
       );
@@ -263,6 +264,7 @@ class ApiService {
     required String status,
     required String orderId,
     required String receiptPath,
+    required int bankId,
   }) async {
     try {
       String? token = await getToken();
@@ -280,6 +282,7 @@ class ApiService {
       request.fields['total_payment'] = int.parse(totalPayment).toString();
       request.fields['status'] = status;
       request.fields['order_id'] = orderId;
+      request.fields['payment_id'] = bankId.toString();
       request.files
           .add(await http.MultipartFile.fromPath('receipt', receiptPath));
 
@@ -314,7 +317,7 @@ class ApiService {
       }
 
       final response = await http.get(
-        Uri.parse('http://127.0.0.1:8000/api/payments/$paymentId'),
+        Uri.parse('https://arenaconnect.site/api/payments/$paymentId'),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
@@ -329,6 +332,50 @@ class ApiService {
         };
       } else {
         final Map<String, dynamic> errorData = json.decode(response.body);
+        return {
+          'success': false,
+          'errors': errorData['message'] ?? 'Unknown error',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'errors': e.toString(),
+      };
+    }
+  }
+
+  Future<Map<String, dynamic>> getPaymentsByUser() async {
+    try {
+      String? token = await getToken();
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      final userProfileResponse = await getUserProfile(token);
+      if (!userProfileResponse['success']) {
+        throw Exception('Failed to get user profile');
+      }
+
+      int userId = userProfileResponse['data']['id'];
+
+      final response = await http.get(
+        Uri.parse('$baseUrl/payments/user/$userId'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        debugPrint('Payments: $responseData');
+        return {
+          'success': responseData['success'],
+          'data': responseData['data'],
+        };
+      } else {
+        final errorData = json.decode(response.body);
         return {
           'success': false,
           'errors': errorData['message'] ?? 'Unknown error',

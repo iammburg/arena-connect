@@ -12,7 +12,7 @@ import 'package:arena_connect/layouts/bottom_navigation.dart';
 void main() {
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       tools: const [
         ...DevicePreview.defaultTools,
       ],
